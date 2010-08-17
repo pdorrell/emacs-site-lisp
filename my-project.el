@@ -85,12 +85,14 @@ other wise the current directory for the buffer)."
       (setq current-project (find-current-project)) )
   current-project)
 
-(defun project-value (key)
+(defun project-value (key &optional default)
   "Get the value for KEY in the current project, or from the default project if there is no current project."
   (let* ( (project (current-project) )
 	  (value (gethash key project)) )
     (if (not value)
-	(setq value (gethash key *default-project*)) )
+	(if default
+	    (setq value default)
+	  (setq value (gethash key *default-project*)) ) )
     value) )
 
 (defun project-file (key)
@@ -129,5 +131,14 @@ other wise the current directory for the buffer)."
     (find-file (concat project-dir "_project.el"))
     (insert ";; Project values\n\n(load-this-project\n `( (:key \"value\") ) )\n") ) )
 
+(make-local-variable 'run-file-function)
+
+(defun run-this-file()
+  (interactive)
+  (if run-file-function
+      (apply run-file-function (list (buffer-file-name)))
+    (message "No run-file-function defined in this buffer") ) )
+
 (global-set-key [?\M-p] 'visit-project-file)
 
+(global-set-key [C-M-f9] 'run-this-file)

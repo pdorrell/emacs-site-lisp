@@ -181,7 +181,7 @@ processed."
 	new-name)
     filename) )
 
-(defun run-this-file ()
+(defun execute-this-file ()
   (interactive)
   (let ( (file-name (buffer-file-name)) )
     (if file-name
@@ -368,7 +368,7 @@ processed."
 (global-set-key [C-f4] 'find-file-at-point-full-window)
 (global-set-key [S-f4] 'visit-file-line)
 (global-set-key [M-f4] 'run-file-at-point)
-(global-set-key [S-M-f4] 'run-this-file)
+(global-set-key [S-M-f4] 'execute-this-file)
 
 (global-set-key [f5] 'save-mouse-selection)
 

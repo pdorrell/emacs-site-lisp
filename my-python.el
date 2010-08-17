@@ -60,7 +60,7 @@
 
 (defun python-mode-hook-function ()
   (setq expansion-key 'python-expansion-key)
-  (local-set-key [C-M-f9] 'python-run-this-file)
+  (setq run-file-function #'python-run-file)
   (local-set-key [S-M-f9] 'python-run-main-file)
   (local-set-key [C-M-f11] 'python-run-this-file-with-localenv)
   (local-set-key "," 'insert-spaced-comma)
