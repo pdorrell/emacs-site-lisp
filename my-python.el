@@ -19,16 +19,11 @@
 
 (defun python-run-file (file)
   (interactive)
-  (save-this-buffer-and-others)
   (let ( (filename (windowize-filename file)) )
     (condition-case nil (kill-buffer "*python*") (error nil))
     (switch-to-buffer-other-window "*python*")
     (setq *current-output-buffer* "*python*")
     (start-process "python" "*python*" (project-file :python-executable) "-u" filename) ) )
-
-(defun python-run-this-file ()
-  (interactive)
-  (python-run-file (expand-file-name (buffer-file-name))) )
 
 (defun python-run-main-file ()
   "Run main python file as defined by variable *python-main-file*"

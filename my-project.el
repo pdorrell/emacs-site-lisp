@@ -131,10 +131,11 @@ other wise the current directory for the buffer)."
     (find-file (concat project-dir "_project.el"))
     (insert ";; Project values\n\n(load-this-project\n `( (:key \"value\") ) )\n") ) )
 
-(make-local-variable 'run-file-function)
+(make-variable-buffer-local 'run-file-function)
 
 (defun run-this-file()
   (interactive)
+  (save-this-buffer-and-others)
   (if run-file-function
       (apply run-file-function (list (buffer-file-name)))
     (message "No run-file-function defined in this buffer") ) )

@@ -14,6 +14,7 @@
   (setq expansion-key 'lisp-expansion-key)
   (local-set-key [?\C-m] 'return-and-indent)
   (local-set-key [?\C-w] 'lisp-search-for-identifier-at-point)
+  (setq run-file-function #'load)
   (setq filter-regexp emacs-lisp-filter-regexp)
   (local-set-key [f2] 'my-expand-abbrev)
   (setq comment-start ";;") ; Single semi-colon not for comment on new line
