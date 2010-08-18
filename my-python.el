@@ -8,10 +8,16 @@
 (defun python-run-file (file)
   (interactive)
   (let ( (filename (windowize-filename file)) )
+    (setq *show-project-log-buffer-function* 'show-python-output)
     (condition-case nil (kill-buffer "*python*") (error nil))
     (switch-to-buffer-other-window "*python*")
     (setq *current-output-buffer* "*python*")
     (start-process "python" "*python*" (project-file :python-executable) "-u" filename) ) )
+
+(defun show-python-output()
+  (interactive)
+  (switch-to-buffer "*python*")
+  (goto-char (point-max)) )
 
 (defun python-run-main-file ()
   "Run main python file as defined by variable *python-main-file*"

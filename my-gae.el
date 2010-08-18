@@ -5,6 +5,7 @@
 
 (defun stop-start-gae-server()
   (interactive)
+  (setq *show-project-log-buffer-function* 'show-gae-output)
   (stop-start-process "GAE process" '*gae-server-process* "*GAE*"
 		      (project-file :python-executable) (project-file :gae-server)
 		      (concat "--datastore_path=" (project-file :gae-datastore))
@@ -22,4 +23,3 @@
     (progn
       (message "No errors in gae output") ) ) )
 
-(global-set-key [?\C-\M-o] 'show-gae-output)

@@ -30,10 +30,6 @@
     (progn
       (message "No errors in django output") ) ) )
 
-(global-set-key [?\C-\M-k] 'stop-start-django-server)
-(global-set-key [?\C-\M-o] 'show-django-output)
-
-
 (def-html-abbrev "if" '("{% if " mark " %}" return return "{% endif %}" return goto-mark))
 (def-html-abbrev "e" '("{% else %}" return))
 (def-html-abbrev "ei" '("{% elseif %}" return))
