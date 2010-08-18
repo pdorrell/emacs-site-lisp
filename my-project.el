@@ -156,6 +156,22 @@ other wise the current directory for the buffer)."
   (interactive)
   (find-file-other-window (concat (project-value :base-directory) "_")) )
 
+(defun build-project()
+  (interactive)
+  (apply (project-value :build-function) nil) )
+
+(defun build-project-with-target (target)
+  (interactive "starget: ")
+  (apply (project-value :build-function) (list target)) )
+
+(defun project-compile-with-command (&optional target)
+  "Compile using a command"
+  (let ( (compile-command (project-value :compile-command)) )
+    (compile-with-command (if target (concat compile-command " " target) compile-command) rake-file) ) )
+
+(global-set-key [?\M-M] 'build-project)
+(global-set-key [?\C-\M-M] 'build-project-with-target)
+
 (global-set-key [?\M-p] 'visit-project-file)
 
 (global-set-key [C-M-f9] 'run-this-file)

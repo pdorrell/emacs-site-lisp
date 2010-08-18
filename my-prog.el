@@ -34,15 +34,9 @@
   (setq *current-output-buffer* "*compilation*")
   (end-of-buffer) )
   
-(defun compile-rake ()
+(defun compile-rake (&optional target)
   "Compile using rake"
-  (interactive)
-  (compile-with-command rake-command rake-file) )
-
-(defun compile-rake-target (target)
-  "Compile using rake"
-  (interactive "starget: ")
-  (compile-with-command (concat rake-command " " target) rake-file) )
+  (compile-with-command (if target (concat rake-command " " target) rake-command) rake-file) )
 
 (defun compile-ant ()
   "Compile using ant"
@@ -75,9 +69,7 @@
   
 
 ;;========================================================================
-(global-set-key [?\M-M] 'compile-rake)
 (global-set-key [?\M-k] 'visit-output-buffer)
-(global-set-key [?\C-\M-M] 'compile-rake-target)
 (global-set-key [?\M-N] 'compile-ant)
 (global-set-key [?\C-\M-N] 'compile-ant-target)
 (global-set-key [f12] 'next-error)
