@@ -140,6 +140,15 @@ other wise the current directory for the buffer)."
       (apply run-file-function (list (buffer-file-name)))
     (message "No run-file-function defined in this buffer") ) )
 
+(defun run-project()
+  (interactive)
+  (save-this-buffer-and-others)
+  (let ( (run-project-command (project-value :run-project-command)) )
+    (if run-project-command
+	(eval run-project-command)
+      (message "No run-project-command defined in this buffer") ) ) )
+
 (global-set-key [?\M-p] 'visit-project-file)
 
 (global-set-key [C-M-f9] 'run-this-file)
+(global-set-key [S-M-f9] 'run-project)

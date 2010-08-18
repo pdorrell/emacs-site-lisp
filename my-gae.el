@@ -22,5 +22,4 @@
     (progn
       (message "No errors in gae output") ) ) )
 
-(global-set-key [?\C-\M-k] 'stop-start-gae-server)
 (global-set-key [?\C-\M-o] 'show-gae-output)

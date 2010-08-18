@@ -5,18 +5,6 @@
 
 (condition-case nil (kill-buffer "*python*") (error nil))
 
-(defun python-search-for-identifier-at-point ()
-  (interactive)
-  (let ( (word (word-at word-alpha-table (point))) )
-    (if word
-	(python-search-for-identifier word)
-      (call-interactively 'python-search-for-identifier) ) ) )
-
-(defun python-search-for-identifier (identifier)
-  (interactive "sSearch for: ")
-  (show-search-buffer (list default-directory) '(".py") identifier) )
-
-
 (defun python-run-file (file)
   (interactive)
   (let ( (filename (windowize-filename file)) )
@@ -28,7 +16,9 @@
 (defun python-run-main-file ()
   "Run main python file as defined by variable *python-main-file*"
   (interactive)
-  (python-run-file (project-file :main-file)) )
+  (let ( (main-file (project-file :main-file)) )
+    (message "Running main file %s ..." main-file)
+    (python-run-file main-file) ) )
 
 (defun python-run-this-file-with-localenv ()
   (interactive)
@@ -56,7 +46,6 @@
 (defun python-mode-hook-function ()
   (setq expansion-key 'python-expansion-key)
   (setq run-file-function #'python-run-file)
-  (local-set-key [S-M-f9] 'python-run-main-file)
   (local-set-key [C-M-f11] 'python-run-this-file-with-localenv)
   (local-set-key "," 'insert-spaced-comma)
   (local-set-key [f2] 'my-expand-abbrev)
@@ -66,7 +55,6 @@
   (local-set-key [?\C-t] 'insert-self-equals)
   (local-set-key [?\C-m] 'return-and-indent)
   (local-set-key [?\M-s] 'python-insert-self-dot)
-  (local-set-key [?\C-w] 'python-search-for-identifier-at-point)
   (setq word-alpha-table python-word-table)
   (font-lock-mode 1)
   (setq filter-regexp "def\\|class")
