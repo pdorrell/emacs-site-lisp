@@ -323,7 +323,7 @@ processed."
 (defun open-base-file-menu-other-window ()
   "Open file file-menu in other window"
   (interactive)
-  (find-file-other-window base-file-menu) 
+  (find-file-other-window *base-file-menu*) 
   (message "%s" (buffer-file-name)) )
 
 (defun save-this-buffer-and-others ()

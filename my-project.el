@@ -148,7 +148,12 @@ other wise the current directory for the buffer)."
 	(eval run-project-command)
       (message "No run-project-command defined in this buffer") ) ) )
 
+(defun open-project-file-menu-other-window()
+  (interactive)
+  (find-file-other-window (concat (project-value :base-directory) "_")) )
+
 (global-set-key [?\M-p] 'visit-project-file)
 
 (global-set-key [C-M-f9] 'run-this-file)
 (global-set-key [S-M-f9] 'run-project)
+(global-set-key [C-M-f7] 'open-project-file-menu-other-window)
