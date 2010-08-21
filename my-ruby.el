@@ -16,7 +16,7 @@
       (kill-buffer "*webrick*") )
   (setf *webrick-process*
 	(start-process "webrick-process" "*webrick*"  (project-file :ruby-executable)
-		       (concat (project-base-directory) "script/server") "-b" "127.0.0.1") )
+		       (concat (project-base-directory-value) "script/server") "-b" "127.0.0.1") )
   (switch-to-buffer-other-window "*webrick*") )
 
 ;;(global-set-key [?\C-\M-k] 'webrick)

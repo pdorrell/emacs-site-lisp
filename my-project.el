@@ -1,5 +1,3 @@
-(set-default 'current-project nil)
-
 ;; A project object is a hashtable consisting of key/value pairs, defined for a project.
 ;; Each project is defined by a _project.el file in the base directory of the project,
 ;; which should include a call to load-this-project.
@@ -32,8 +30,8 @@ other wise the current directory for the buffer)."
 	(file-name-directory filename)
       default-directory) ) )
 
-(defvar *project-base-dir* nil 
-  "A global variable which stores the current project base directly, while loading an existing project file. ")
+(defvar *project-base-directory* nil 
+  "A variable which stores the current project base directly, while loading an existing project file. ")
 
 (defun get-current-project-dir-and-file()
   "Return the project directory and project file as a cons pair, or nil if no project file can be found."
@@ -51,15 +49,27 @@ other wise the current directory for the buffer)."
 	    (setq directory parent-directory) ) ) )
       nil) ) )
 
+(defun project-base-directory()
+  "Get base directory of current project, _without_ loading the project definition."
+  (if *project-base-directory*
+      *project-base-directory*
+    (car (get-current-project-dir-and-file)) ) )
+
+(defun project-base-directory-value()
+  "Get base directory of current project, as a project value. 
+(Don't call this _within_ a project definition, because it will then recursively attempt to load
+       the project definnition.)"
+  (project-value :base-directory) )
+
 (defun load-this-project (key-value-pairs)
   "This function is called from within a _project.el file with key/value pairs as a list of cons pairs. 
-   It assumes that *project-base-dir* is defined.
-   Can be invoked interatively from within the _project.el file to reload new project values."
-  (if (not load-file-name)
-      (setq *project-base-dir* (get-directory-for-project)) )
-  (let ( (project (create-project key-value-pairs (gethash *project-base-dir* *projects*))) )
-    (puthash :base-directory *project-base-dir* project)
-    (puthash *project-base-dir* project *projects*) ) )
+   It assumes that *project-base-directory* is defined.
+   Except, it can be invoked interatively from within the _project.el file to reload new project values,
+   in which case *project-base-directory* is set to be the current directory."
+  (let ( (*project-base-directory* (if load-file-name *project-base-directory* (get-directory-for-project))) )
+    (let ( (project (create-project key-value-pairs (gethash *project-base-directory* *projects*))) )
+      (puthash :base-directory *project-base-directory* project)
+      (puthash *project-base-directory* project *projects*) ) ) )
 
 (defun find-current-project ()
   "Find the project object for the current buffer"
@@ -69,8 +79,7 @@ other wise the current directory for the buffer)."
     (if project-dir
 	(let ( (project (gethash project-dir *projects*)) )
 	  (if (not project)
-	      (progn
-		(setq *project-base-dir* project-dir)
+	      (let ( (*project-base-directory* project-dir) )
 		(message "Loading project %s from %s ..." project-dir project-file)
 		(load project-file)
 		(setq project (gethash project-dir *projects*))
@@ -111,10 +120,6 @@ other wise the current directory for the buffer)."
     (if directory-file
 	(directory-file-name directory-file)
       nil) ) )
-
-(defun project-base-directory()
-  "Get base directory for the current project"
-  (project-value :base-directory) )
 
 (defun visit-project-file ()
   "Visit the current project file (or offer to create one if it can't be found)"

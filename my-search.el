@@ -41,7 +41,7 @@
 
 (defun project-search-for-identifier (identifier)
   (interactive "sSearch for: ")
-  (show-search-buffer (cons (project-base-directory) (project-value :extra-search-directories))
+  (show-search-buffer (cons (project-base-directory-value) (project-value :extra-search-directories))
 		      (project-value :search-extensions) identifier) )
 
 (global-set-key [M-f12] 'project-search-for-identifier-at-point)

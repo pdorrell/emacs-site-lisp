@@ -10,3 +10,4 @@
 (defvar *ruby-1.8-executable* nil "Ruby 1.8 executable")
 (defvar *java-executable* "java.exe" "Java executable")
 (defvar *python-executable* "python.exe" "Python executable")
+(defvar *python-3-executable* "python.exe" "Python executable")
