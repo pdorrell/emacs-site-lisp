@@ -157,9 +157,9 @@ other wise the current directory for the buffer)."
   (interactive)
   (apply *show-project-log-buffer-function* nil) )
 
-(defun open-project-file-menu-other-window()
+(defun open-project-file-menu()
   (interactive)
-  (find-file-other-window (concat (project-value :base-directory) "_")) )
+  (find-file (concat (project-value :base-directory) "_")) )
 
 (defun build-project()
   (interactive)
@@ -181,6 +181,6 @@ other wise the current directory for the buffer)."
 
 (global-set-key [C-M-f9] 'run-this-file)
 (global-set-key [S-M-f9] 'run-project)
-(global-set-key [C-M-f7] 'open-project-file-menu-other-window)
+(global-set-key [C-M-f7] 'open-project-file-menu)
 
 (global-set-key [?\C-\M-o] 'show-project-log-buffer)
