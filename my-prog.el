@@ -22,12 +22,12 @@
 	  (setq parent newparent) ) ) )
     (and found parent)) )
 
-(defun compile-with-command (command command-file)
-  (let ( (command-file-dir (find-parent-directory-with-file default-directory command-file)) )
-    (if command-file-dir
-	(setq default-directory command-file-dir) ) )
+(defun compile-with-command (command &optional command-file)
   (save-this-buffer-and-others)
-  (message "about to compile #%s#" command)
+  (if command-file
+      (let ( (command-file-dir (find-parent-directory-with-file default-directory command-file)) )
+	(if command-file-dir
+	    (find-file (concat command-file-dir command-file)) ) ) )
   (compile command)
   (other-window 1)
   (switch-to-buffer "*compilation*")
@@ -36,12 +36,12 @@
   
 (defun compile-rake (&optional target)
   "Compile using rake"
-  (compile-with-command (if target (concat rake-command " " target) rake-command) rake-file) )
+  (compile-with-command (if target (concat rake-command " " target) rake-command)) )
 
 (defun compile-ant ()
   "Compile using ant"
   (interactive)
-  (compile-with-command "ant -emacs -find build.xml" "build.xml") )
+  (compile-with-command "ant -emacs -find build.xml") )
 
 (defvar ant-before-target "" "extra stuff to put before ant target")
 (defvar ant-after-target "" "extra stuff to put after ant target")
@@ -49,7 +49,7 @@
 (defun compile-ant-target (target)
   "Compile using ant"
   (interactive "starget: ")
-  (compile-with-command (concat "ant -emacs -find build.xml " target) "build.xml") )
+  (compile-with-command (concat "ant -emacs -find build.xml " target)) )
 
 (defun previous-error ()
   "Go to previous error"

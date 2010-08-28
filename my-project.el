@@ -172,7 +172,7 @@ other wise the current directory for the buffer)."
 (defun project-compile-with-command (&optional target)
   "Compile using a command"
   (let ( (compile-command (project-value :compile-command)) )
-    (compile-with-command (if target (concat compile-command " " target) compile-command) rake-file) ) )
+    (compile-with-command (if target (concat compile-command " " target) compile-command)) ) )
 
 (global-set-key [?\M-M] 'build-project)
 (global-set-key [?\C-\M-M] 'build-project-with-target)
