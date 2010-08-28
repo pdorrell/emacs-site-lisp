@@ -552,6 +552,12 @@
 				   " run")) )
     (compile-with-command compilation-command) ) )
 
+(defun java-run-file (file)
+  (let ( (java-run-file-function (project-value :java-run-file-function)) )
+    (if java-run-file-function
+	(apply java-run-file-function nil)
+      (java-run-main) ) ) )
+
 (defun java-make-lower-case-var ()
   (interactive)
   (let ( (class (word-before java-word-table (point))) )
@@ -567,6 +573,7 @@
 (defun java-hook ()
   (setq expansion-key 'java-expansion-key)
   (local-set-key [?\C-m] 'java-return)
+  (setq run-file-function #'java-run-file)
   (setq filter-regexp java-filter-regexp)
   (setq c-basic-offset 2)
   (local-set-key [?\C-f] 'make-for-loop)

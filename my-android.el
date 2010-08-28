@@ -24,3 +24,9 @@
   (toggle-truncate-lines 1)
   (goto-char (point-max)) )
        
+(defun android-run-java-file ()
+  "Android version of java-run-main, which also shows android log buffer, so you can see std out"
+  (interactive)
+  (java-run-main)
+  (other-window 1)
+  (android-view-logs) )
