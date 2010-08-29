@@ -30,7 +30,8 @@
   (let ( (filename (windowize-filename (expand-file-name file))) )
     (switch-to-buffer-other-window "*ruby*")
     (clear-buffer)
-    (start-process "ruby" "*ruby*" (project-file :ruby-executable) filename) ) )
+    (apply #'start-process 
+	   `("ruby" "*ruby*" ,(project-file :ruby-executable) ,@(project-value :ruby-args) ,filename) ) ) )
 
 (defun ruby-visit-output-buffer()
   (interactive)

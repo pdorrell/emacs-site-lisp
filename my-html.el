@@ -103,8 +103,10 @@
     (message "Rejinnirating %s ..." filename)
     (switch-to-buffer-other-window "*ruby*" t)
     (clear-buffer)
-    (call-process (project-file :ruby-executable) nil "*ruby*" t 
-		  (concat (project-file :rejinnirate-directory) "/rejinnirate-run.rb") filename)
+    (apply #'call-process 
+	   `(,(project-file :ruby-executable) nil "*ruby*" t 
+	     ,@(project-value :ruby-args) 
+	     ,(concat (project-file :rejinnirate-directory) "/rejinnirate-run.rb") ,filename))
     (goto-char (point-max))
     (message "Finished rejinnirating %s" filename)
     (save-excursion
