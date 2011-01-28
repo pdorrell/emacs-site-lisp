@@ -12,7 +12,9 @@
     (condition-case nil (kill-buffer "*python*") (error nil))
     (switch-to-buffer-other-window "*python*")
     (setq *current-output-buffer* "*python*")
-    (start-process "python" "*python*" (project-file :python-executable) "-u" filename) ) )
+    (let ( (python-executable (project-file :python-executable)) )
+      (message "%s %s ..." python-executable filename)
+      (start-process "python" "*python*" python-executable  "-u" filename) ) ) )
 
 (defun show-python-output()
   (interactive)
@@ -84,5 +86,7 @@
 (def-python-abbrev "f" '("for " mark " in :" goto-mark))
 
 (def-python-abbrev "q" '("\"\"\"" mark "\"\"\"" goto-mark))
+
+(def-python-abbrev "main" '("if __name__ == \"__main__\":" return "main()" indent return))
 
 (set-extension-mode ".egg" 'archive-mode)
