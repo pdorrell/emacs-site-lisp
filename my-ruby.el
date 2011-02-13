@@ -96,10 +96,13 @@
 (def-ruby-abbrev "clt" '("class " indent mark "TestCase < Test::Unit::TestCase" return indent return "end" indent goto-mark))
 (def-ruby-abbrev "di" '("def initialize" indent return indent mark return "end" indent goto-mark))
 (def-ruby-abbrev "d" '("def " indent mark return "end" indent goto-mark))
+(def-ruby-abbrev "if" '("if " indent mark return "end" indent goto-mark))
 (def-ruby-abbrev "dt" '("def test" indent mark return "end" indent goto-mark))
 (def-ruby-abbrev "do" '("do |" indent mark "|" return "end" indent goto-mark))
 (def-ruby-abbrev "e" '("end" indent))
 (def-ruby-abbrev "r" '("return "))
+
+(def-ruby-abbrev "for" '("for " indent mark " in  do" return indent return "end" indent goto-mark))
 
 (def-ruby-abbrev "ar" '("attr_reader :" indent))
 (def-ruby-abbrev "aa" '("attr_accessor :" indent))
@@ -110,6 +113,8 @@
 (def-ruby-abbrev "kkk" '(indent "#==============================================================================="))
 
 (def-ruby-abbrev "mod" '("module " indent mark return "end" indent goto-mark))
+
+(def-ruby-abbrev "p" '("puts " indent "\"" mark "\"" goto-mark))
 
 (add-hook 'ruby-mode-hook 'ruby-mode-hook-function)
 
