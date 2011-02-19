@@ -31,7 +31,7 @@
     (switch-to-buffer-other-window "*ruby*")
     (clear-buffer)
     (let ( (ruby-executable (project-file :ruby-executable)) 
-	   (ruby-args (project-value :ruby-args)) )
+	   (ruby-args (project-value :ruby-args nil)) )
       (message "%s \"%s\" %s ..." ruby-executable ruby-args filename)
       (apply #'start-process 
 	     `("ruby" "*ruby*" ,ruby-executable ,@ruby-args ,filename) ) ) ) )
