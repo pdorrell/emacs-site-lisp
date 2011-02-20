@@ -12,6 +12,8 @@
 
 (column-number-mode t)
 
+(setq indent-tabs-mode nil)
+
 ;-----------------------------------------------------------------
 (set-face-background 'region "yellow")
 (set-cursor-color "blue")

@@ -86,6 +86,16 @@
 	  (setq filtering-minor-mode t) 
 	  (set-buffer-modified-p saved-modified ) ) )
 
+(defun filter-on-indent()
+  (interactive)
+  (save-excursion
+    (search-backward-regexp "^")
+    (if (looking-at "[ \t]*")
+        (let ( (indent-string (buffer-substring (match-beginning 0)
+						(match-end 0))) )
+	  (message "indent-string=#%s#" indent-string)
+	  ) ) ) )
+
 (setq filtering-minor-mode-map (make-sparse-keymap))
 
 (defun previous-visible-line ()
@@ -207,6 +217,7 @@
 (global-set-key [?\M-B] 'buffer-menu)
 (global-set-key [?\M-o] 'filter-on-word-at-point)
 (global-set-key [?\M-O] 'toggle-filtering)
+(global-set-key [?\M-I] 'filter-on-indent)
 (global-set-key [C-f6] 'start-or-end-kbd-macro)
 
 (global-set-key [S-C-f11] 'describe-key)
