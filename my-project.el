@@ -104,15 +104,15 @@ other wise the current directory for the buffer)."
 	  (setq value (gethash key *default-project*)) ) )
     value) )
 
-(defun project-file (key)
+(defun project-file (key &optional default)
   "Get the expanded name of a file from project value for KEY, expanded against project base directory (if it's relative)"
-  (let ( (file-name (project-value key) ) )
+  (let ( (file-name (project-value key default) ) )
     (if file-name
 	(let ( (base-directory (project-base-directory)) )
 	  (if base-directory
-	      (expand-file-name file-name base-directory) 
-	    nil) )
-      nil) ) )
+	      (setq file-name (expand-file-name file-name base-directory)) ) )
+      )
+    file-name) )
 
 (defun project-directory (key)
   "Get the expanded name of a directory from project value for KEY, expanded against project base directory (if it's relative)"

@@ -1,7 +1,7 @@
 (autoload 'ruby-mode "ruby-mode")
 (set-extension-mode ".rb" 'ruby-mode)
 
-(defvar *ruby-executable* nil "Ruby executable for project")
+(defvar *ruby-executable* *ruby-1.9-executable* "Ruby executable for project")
 
 (defvar *webrick-process* nil)
 
@@ -15,7 +15,7 @@
   (if (buffer-for-name "*webrick*")
       (kill-buffer "*webrick*") )
   (setf *webrick-process*
-	(start-process "webrick-process" "*webrick*"  (project-file :ruby-executable)
+	(start-process "webrick-process" "*webrick*"  (project-file :ruby-executable *ruby-executable*)
 		       (concat (project-base-directory-value) "script/server") "-b" "127.0.0.1") )
   (switch-to-buffer-other-window "*webrick*") )
 
@@ -30,9 +30,9 @@
   (let ( (filename (windowize-filename (expand-file-name file))) )
     (switch-to-buffer-other-window "*ruby*")
     (clear-buffer)
-    (let ( (ruby-executable (project-file :ruby-executable)) 
+    (let ( (ruby-executable (project-file :ruby-executable *ruby-executable*)) 
 	   (ruby-args (project-value :ruby-args nil)) )
-      (message "%s \"%s\" %s ..." ruby-executable ruby-args filename)
+      (message "%s %s %s ..." ruby-executable ruby-args filename)
       (apply #'start-process 
 	     `("ruby" "*ruby*" ,ruby-executable ,@ruby-args ,filename) ) ) ) )
 
