@@ -76,4 +76,4 @@
 (global-set-key [pause] 'next-error)
 (global-set-key [S-pause] 'previous-error) 
 (global-set-key [C-M-f10] 'comment-region)
-(global-set-key [?\C-\M-G] 'git-gui-this-directory)
+(global-set-key [?\M-G] 'git-gui-this-directory)
