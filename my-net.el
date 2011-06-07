@@ -4,7 +4,7 @@
   "Login in to user@host using plink (assuming keys already loaded into Pageant)"
   (interactive)
   (let ( (buffer-name (format "plink-%s" userAtHost)) )
-    (make-comint buffer-name "plink.exe" nil
+    (make-comint buffer-name *plink-executable* nil
 		 userAtHost)
     (switch-to-buffer (concat "*" buffer-name "*")) ) )
 
