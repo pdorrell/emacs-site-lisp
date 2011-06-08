@@ -6,6 +6,8 @@
 
 (setq inhibit-splash-screen t)
 
+(setq x-select-enable-clipboard t)
+
 (setq mouse-1-click-follows-link nil)
 
 (defvar *classpath-separator* ";")
