@@ -51,9 +51,10 @@
     (if running-windows
 	(let ( (drive (get-filename-drive new-dir)) )
 	  (if drive
-	      (run-command-in-shell (concat drive ":")) ) ) )
-    (run-command-in-shell (concat "cd \"" new-dir "\""))
-    (setq default-directory save-dir) ) )
+	      (run-command-in-shell (concat drive ":")) )
+	  (run-command-in-shell (concat "cd \"" new-dir "\"")) )
+      (run-command-in-shell (concat "cd " new-dir)) ) )
+    (setq default-directory save-dir) )
 
 
 (defun show-file-and-shell-this-dir ()
