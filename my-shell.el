@@ -64,7 +64,10 @@
 
 (setq shell-mode-hook '(shell-hook))
 
-(setq dirtrack-list (list (make-regexp '(seq start (paren (set "a-zA-Z") ":" (repeated any)) ">")) 1))
+(setq *shell-dirtrack-regexp*
+      (if running-windows
+	  (make-regexp '(seq start (paren (set "a-zA-Z") ":" (repeated any)) ">"))
+	 "\\(.+\\)> $") )
 
 (setq shell-filter-regexp
       (make-regexp '(seq (set "a-zA-Z") ":" (repeated (set "-a-zA-Z0-9_.\\")) ">" )
@@ -86,14 +89,15 @@
   (interactive)
   (show-completion-buffer-with-string "*shell-history*" (concat-lines (shell-history)) 'put-command-in-shell) )
 
+
 (defun shell-hook ()
   (local-set-key [?\M-H] 'show-history-list)
   (local-set-key [C-pause] 'comint-interrupt-subjob)
   (setq filter-regexp shell-filter-regexp)
   (setq word-alpha-table filename-word-table)
   (setq shell-dirtrackp nil)
-  (setq comint-preoutput-filter-functions
-			    (append (list 'dirtrack)
-				    comint-preoutput-filter-functions)) )
+  (setq dirtrack-list (list *shell-dirtrack-regexp* 1 nil))
+  (shell-dirtrack-mode -1)
+  (dirtrack-mode) )
 ;;========================================================================
 (global-set-key [C-M-S-f4] 'show-file-and-shell-this-dir)

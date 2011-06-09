@@ -2,6 +2,8 @@
 
 ;; Last changes (to all files) : 27 Sept 2000
 
+(setq running-windows (fboundp 'w32-using-nt))
+
 (load "cl")
 
 (autoload 'html-helper-mode "html-helper-mode" "Yay HTML" t)
@@ -71,8 +73,6 @@
 	    auto-mode-alist))
 
 (autoload 'spanish-minor-mode "my-spanish")
-
-(setq running-windows (fboundp 'w32-using-nt))
 
 (setq running-windows-9x (and (fboundp 'w32-using-nt) (not (w32-using-nt))))
 
