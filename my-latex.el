@@ -54,10 +54,8 @@
 
 (defun tex-mode-hook-function ()
   (local-set-key [?\M-N] 'tex-and-yap-file)
-  (local-set-key [C-M-kp-right] 'shift-close-bracket-one-word-right)
-  (local-set-key [C-M-right] 'shift-close-bracket-one-word-right)
-  (local-set-key [C-M-kp-left] 'shift-close-bracket-one-word-left)
-  (local-set-key [C-M-left] 'shift-close-bracket-one-word-left)
+  (local-set-key [C-M-S-kp-right] 'shift-close-bracket-one-word-right)
+  (local-set-key [C-M-S-kp-left] 'shift-close-bracket-one-word-left)
   (local-set-key [?\M-i] 'tex-insert-index)
   (local-set-key [C-M-f6] 'tex-run-main-file)
   (setq expansion-key 'latex-expansion-key)

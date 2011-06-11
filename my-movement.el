@@ -62,13 +62,9 @@
   (interactive)
   (scroll-right scroll-sideways-increment) )
 
-(global-set-key [C-left] 'scroll-left-a-bit)
-(global-set-key [C-right] 'scroll-right-a-bit)
 (global-set-key [C-kp-left] 'scroll-left-a-bit)
 (global-set-key [C-kp-right] 'scroll-right-a-bit)
 (setq automatic-hscrolling nil)
 
-(global-set-key [C-M-up] 'scroll-up-one)
-(global-set-key [C-M-kp-up] 'scroll-up-one)
-(global-set-key [C-M-down] 'scroll-down-one)
-(global-set-key [C-M-kp-down] 'scroll-down-one)
+(global-set-key [C-kp-up] 'scroll-up-one)
+(global-set-key [C-kp-down] 'scroll-down-one)

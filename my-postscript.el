@@ -10,8 +10,8 @@
   ;(local-set-key [C-kp-left] 'down-value-1)
   ;(local-set-key [C-kp-up] 'up-value-5)
   ;(local-set-key [C-kp-down] 'down-value-5)
-  ;(local-set-key [C-M-kp-up] 'up-value-20)
-  ;(local-set-key [C-M-kp-down] 'down-value-20)
+  ;(local-set-key [C-M-S-kp-up] 'up-value-20)
+  ;(local-set-key [C-M-S-kp-down] 'down-value-20)
   )
 
 (defun preview-postscript ()
