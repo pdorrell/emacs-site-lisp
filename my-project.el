@@ -98,12 +98,10 @@ other wise the current directory for the buffer)."
   "Get the value for KEY in the current project, or from the default project if there is no current project."
   (let* ( (project (current-project) )
 	  (value (gethash key project)) )
-    (message "project-value %s from current project = %s" key value)
     (if (not value)
 	(if default
 	    (setq value default)
 	  (setq value (gethash key *default-project*)) ) )
-    (message "project-value of key %s with default %s = %s" key default value)
     value) )
 
 (defun project-file (key &optional default)
