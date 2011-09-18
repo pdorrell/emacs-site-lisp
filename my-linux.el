@@ -2,7 +2,8 @@
   "Synchronous function to gedit current file using sudo"
   (interactive)
   (save-buffer)
-  (call-process "/usr/bin/xterm" nil "*sudo-buffer*" nil "-e" "/usr/bin/gksu" "-k" "/usr/bin/gedit" (buffer-file-name))
+  (start-process "gksu" nil "gksu" "gedit" (buffer-file-name))
+;;  (call-process "/usr/bin/xterm" nil "*sudo-buffer*" nil "-e" "/usr/bin/gksu" "-k" "/usr/bin/gedit" (buffer-file-name))
   (revert-if-saved) )
 
 (defun gedit ()

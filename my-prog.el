@@ -65,7 +65,7 @@
 (defun git-gui-this-directory()
   "Start git gui in this directory"
   (interactive)
-  (start-process "gitgui" nil *git-executable* "gui") )
+  (set-process-query-on-exit-flag (start-process "gitgui" nil *git-executable* "gui") t) )
   
 
 ;;========================================================================

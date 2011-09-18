@@ -65,6 +65,7 @@
 ;;(load "my-drools")
 (load "my-gae")
 (load "my-net")
+(load "my-linux")
 
 (load "nxml-mode-20041004/rng-auto.el")
 
