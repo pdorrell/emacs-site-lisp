@@ -3,6 +3,9 @@
 ;;========================================================================
 
 (defvar file-menu-file-name "_" "Name used for file menus")
+
+(defvar run-file-program "gnome-open")
+
 (defvar emacs-customisation-dir nil
   "File to visit in order to alter your own emacs customisations")
 
@@ -149,9 +152,11 @@ processed."
 (defun run-file (filename)
   (if (eql (string-match "http:" filename) 0)
       (browse-url filename)
-    (if (fboundp 'w32-shell-execute)
-	(w32-shell-execute "open" (windowize-filename (expand-file-name filename)))
-      (message "Running a file not defined for this OS") ) ) )
+    (let ( (expanded-file-name (expand-file-name filename)))
+      (message "Opening file %s" expanded-file-name)
+      (if (fboundp 'w32-shell-execute)
+	  (w32-shell-execute "open" (windowize-filename expanded-file-name))
+	(shell-command (concat run-file-program " \"" expanded-file-name "\"")) ) ) ) )
 
 (defun notepad-this-file ()
   "Edit this file in notepad (useful for printing)"
