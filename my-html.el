@@ -127,6 +127,7 @@
 (set-extension-mode ".rxml" 'html-helper-mode)
 (set-extension-mode ".html" 'html-helper-mode)
 (set-extension-mode ".rhtml" 'html-helper-mode)
+(set-extension-mode ".html.erb" 'html-helper-mode)
 
 (load "html-abbrev")
 

@@ -14,7 +14,7 @@
     (run-process-with-lines "search" startup-command input-lines nil t) ) )
 
 (defvar *default-search-extensions*
-  '(".el" ".java" ".html" ".txt" ".xml" ".ftl" ".tex" ".py" ".sty" ".dtx" ".c" ".h" ".cpp" ".def" ".plisp" ".lisp" ".afm" ".cls" ".ml" ".mli" ".rb" ".rhtml" ".rxml" ".js" ".hx" ".css" ".svg" ".drl")
+  '(".el" ".java" ".html" ".txt" ".xml" ".ftl" ".tex" ".py" ".sty" ".dtx" ".c" ".h" ".cpp" ".def" ".plisp" ".lisp" ".afm" ".cls" ".ml" ".mli" ".rb" ".rhtml" ".rxml" ".js" ".hx" ".css" ".svg" ".drl" ".propositional" ".erb")
   "List of extensions for files to search")
 
 (defun search-this-dir (string)

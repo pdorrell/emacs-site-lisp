@@ -26,7 +26,7 @@
   (interactive)
   (insert " => ") )
 
-(defun ruby-run-file (file)
+(defun ruby-run-file (file &rest args)
   (let ( (filename (windowize-filename (expand-file-name file))) )
     (switch-to-buffer-other-window "*ruby*")
     (clear-buffer)
@@ -34,7 +34,7 @@
 	   (ruby-args (project-value :ruby-args nil)) )
       (message "%s %s %s ..." ruby-executable ruby-args filename)
       (apply #'start-process 
-	     `("ruby" "*ruby*" ,ruby-executable ,@ruby-args ,filename) ) ) ) )
+	     `("ruby" "*ruby*" ,ruby-executable ,@ruby-args ,filename ,@args) ) ) ) )
 
 (defun ruby-visit-output-buffer()
   (interactive)

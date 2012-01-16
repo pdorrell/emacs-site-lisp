@@ -71,3 +71,7 @@
 (def-html-pair-abbrev "codep" "<pre class=\"code\"><code>\n" "\n</code></pre>")
 
 (def-html-pair-abbrev "r" "<%=" "%>")
+
+(def-html-pair-abbrev "prop" "<li>\n<div class=\"proposition\">" "</div>\n\n</li>\n")
+
+(def-html-pair-abbrev "aname" "<a name=\"" "\"></a>")
