@@ -38,7 +38,7 @@
 (defun propolize-run-file(file)
   (interactive)
   (save-this-buffer-and-others)
-  (ruby-run-file *propolize-ruby-script* file "..")  )
+  (ruby-run-file *propolize-ruby-script* file ".." "../")  )
 
 (defun my-propositional-hook ()
   (setq run-file-function #'propolize-run-file)

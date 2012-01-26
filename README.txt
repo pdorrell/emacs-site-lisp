@@ -20,7 +20,7 @@ This project consists of my personal GNU Emacs site-lisp directory.
 
 It may or may not be useful to anyone else, but it is designed
 so that it will hopefully run as is on any computer with GNU Emacs 23.2
-installed. (Currently I only use it on Microsoft Windows Vista.)
+installed. (Currently it runs on both Microsoft Windows Vista and Ubuntu.)
 
 It includes the following files by other authors:
 * html-helper-mode (v 3.0.4kilo)
