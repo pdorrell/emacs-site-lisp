@@ -94,7 +94,7 @@
   (setq file-editor *external-html-editor*)
   )
 
-(defun self-generate-this-file ()
+(defun rejinnirate-this-file ()
   "Self-generate this file from _pages.rb"
   (interactive)
   (save-this-buffer-and-others)
@@ -112,6 +112,30 @@
     (save-excursion
       (set-buffer file-buffer) 
       (revert-if-saved) ) ) )
+
+(defun rejenner-this-file ()
+  "Self-generate this file from _rejenner.rb"
+  (interactive)
+  (save-this-buffer-and-others)
+  (let ( (filename (expand-file-name (buffer-file-name)))
+	 (file-buffer (current-buffer)) )
+    (message "Regenerating %s ..." filename)
+    (switch-to-buffer-other-window "*ruby*" t)
+    (clear-buffer)
+    (apply #'call-process 
+	   `(,(project-file :ruby-executable) nil "*ruby*" t 
+	     ,@(project-value :ruby-args) 
+	     ,(concat (project-base-directory-value) "src/_rejenner.rb") ,filename))
+    (goto-char (point-max))
+    (message "Finished regenerating %s" filename)
+    (save-excursion
+      (set-buffer file-buffer) 
+      (revert-if-saved) ) ) )
+
+(defun self-generate-this-file ()
+  "Self-generate this file using :self-generate-command project value"
+  (interactive)
+  (apply (project-value :self-generate-command) '()) )
 
 (defun firefox-file (file)
   "Show this file in firefox"
