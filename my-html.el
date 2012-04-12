@@ -99,14 +99,16 @@
   (interactive)
   (save-this-buffer-and-others)
   (let ( (filename (expand-file-name (buffer-file-name)))
-	 (file-buffer (current-buffer)) )
+	 (file-buffer (current-buffer))
+	 (ruby-executable (project-file :ruby-executable))
+	 (ruby-args (project-value :ruby-args))
+	 (rejinnirate-directory (project-file :rejinnirate-directory)) )
     (message "Rejinnirating %s ..." filename)
     (switch-to-buffer-other-window "*ruby*" t)
     (clear-buffer)
     (apply #'call-process 
-	   `(,(project-file :ruby-executable) nil "*ruby*" t 
-	     ,@(project-value :ruby-args) 
-	     ,(concat (project-file :rejinnirate-directory) "/rejinnirate-run.rb") ,filename))
+	   `(,ruby-executable nil "*ruby*" t ,@ruby-args 
+	     ,(concat rejinnirate-directory "/rejinnirate-run.rb") ,filename))
     (goto-char (point-max))
     (message "Finished rejinnirating %s" filename)
     (save-excursion
@@ -118,14 +120,16 @@
   (interactive)
   (save-this-buffer-and-others)
   (let ( (filename (expand-file-name (buffer-file-name)))
-	 (file-buffer (current-buffer)) )
+	 (file-buffer (current-buffer))
+	 (ruby-executable (project-file :ruby-executable))
+	 (ruby-args (project-value :ruby-args))
+	 (base-directory (project-base-directory-value)) )
     (message "Regenerating %s ..." filename)
     (switch-to-buffer-other-window "*ruby*" t)
     (clear-buffer)
     (apply #'call-process 
-	   `(,(project-file :ruby-executable) nil "*ruby*" t 
-	     ,@(project-value :ruby-args) 
-	     ,(concat (project-base-directory-value) "src/_rejenner.rb") ,filename))
+	   `(,ruby-executable nil "*ruby*" t ,@ruby-args 
+	     ,(concat base-directory "src/_rejenner.rb") ,filename))
     (goto-char (point-max))
     (message "Finished regenerating %s" filename)
     (save-excursion
