@@ -15,8 +15,8 @@
 (defun stop-start-django-server()
   (interactive)
   (stop-start-process "Django process" '*django-server-process* "*django*"
-		      *python-executable* "-u"
-		      django-application-start-file "runserver") )
+		      *python-executable* 
+		      (list "-u" django-application-start-file "runserver") ) )
 
 (defun show-django-output()
   (interactive)

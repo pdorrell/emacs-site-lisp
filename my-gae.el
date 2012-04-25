@@ -7,9 +7,10 @@
   (interactive)
   (setq *show-project-log-buffer-function* 'show-gae-output)
   (stop-start-process "GAE process" '*gae-server-process* "*GAE*"
-		      (project-file :python-executable) (project-file :gae-server)
-		      (concat "--datastore_path=" (project-file :gae-datastore))
-		      "--admin_console_server" "--port=8080" (project-file :gae-app-directory)) )
+		      (project-file :python-executable) 
+		      (list (project-file :gae-server)
+			    (concat "--datastore_path=" (project-file :gae-datastore))
+			    "--admin_console_server" "--port=8080" (project-file :gae-app-directory)) ) )
 
 (defun show-gae-output()
   (interactive)

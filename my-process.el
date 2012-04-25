@@ -46,7 +46,7 @@
     (set-buffer old-buffer) ) )
 
 (defun stop-start-process (name process-variable process-buffer-name
-				executable &rest args)
+				executable args)
   (save-this-buffer-and-others)
    (let ( (process (symbol-value process-variable)) )
     (if (not (equal process-buffer-name (buffer-name (current-buffer))))
@@ -64,4 +64,23 @@
 	  (set process-variable new-process)
 	  (process-kill-without-query new-process)
 	  (message "%s STARTED" name) ) ) )) )
+
+(defun stop-then-start-process (name process-variable process-buffer-name
+				     executable args)
+  (save-this-buffer-and-others)
+  (let ( (process (symbol-value process-variable)) )
+    (if (not (equal process-buffer-name (buffer-name (current-buffer))))
+	(progn
+	  (switch-to-buffer-other-window process-buffer-name) ) )
+    (if (and process (not (memq (process-status process) '(exit signal))))
+	(progn
+	  (delete-process process)
+	  (set process-variable nil)
+	  (message "%s STOPPED" name) ) )
+    (clear-buffer)
+    (message "Starting new process %s %s" executable args)
+    (let ( (new-process (apply #'start-process name process-buffer-name executable args)) )
+      (set process-variable new-process)
+      (process-kill-without-query new-process)
+      (message "%s STARTED" name) ) ) )
 
