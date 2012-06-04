@@ -81,7 +81,7 @@
 
 (defun ruby-search-for-identifier (identifier)
   (interactive "sSearch for: ")
-  (show-search-buffer (list default-directory) '(".yaml" ".rb") identifier) )
+  (show-search-buffer (list default-directory) '(".yaml" ".rb" ".haml") identifier) )
 
 (defun ruby-mode-hook-function ()
   (setq expansion-key 'ruby-expansion-key)
