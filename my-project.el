@@ -174,6 +174,24 @@ other wise the current directory for the buffer)."
   (let ( (compile-command (project-value :compile-command)) )
     (compile-with-command (if target (concat compile-command " " target) compile-command)) ) )
 
+(defun run-database-for-project ()
+  "Run database for this project"
+  (interactive)
+  (let ( (run-database-command (project-value :run-database-command)) )
+    (if run-database-command
+	(eval run-database-command)
+      (message "No :run-database-command defined in this buffer") ) ) )
+
+(defvar *mongod-process* nil "Running Mongo server")
+
+(defun mongod (port directory)
+  "Run mongod (for development) on PORT and directory"
+    (switch-to-buffer-other-window "*mongod*")
+    (clear-buffer)
+    (stop-then-start-process "mongod" '*mongod-process* "*mongod*"
+			     "mongod" (list "-port" (number-to-string port) "-dbpath" directory) ) )
+  
+
 (global-set-key [?\M-M] 'build-project)
 (global-set-key [?\C-\M-M] 'build-project-with-target)
 
@@ -181,6 +199,7 @@ other wise the current directory for the buffer)."
 
 (global-set-key [C-M-f9] 'run-this-file)
 (global-set-key [S-M-f9] 'run-project)
+(global-set-key [S-M-f10] 'run-database-for-project)
 (global-set-key [C-M-f7] 'open-project-file-menu)
 
 (global-set-key [?\C-\M-o] 'show-project-log-buffer)
