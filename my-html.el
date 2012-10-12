@@ -116,8 +116,17 @@
       (revert-if-saved) ) ) )
 
 (defun rejenner-this-file ()
-  "Self-generate this file from _rejenner.rb"
+  "Self-generate this file from _rejenner.rb" 
   (interactive)
+  (regenerate-this-file-using-ruby-script (concat base-directory "src/_rejenner.rb")) )
+
+(defun regenerate-this-file ()
+  "Self-generate this file from regenerate.rb" 
+  (interactive)
+  (regenerate-this-file-using-ruby-script (concat *regenerate-dir* "/lib/regenerate.rb")) )
+
+(defun regenerate-this-file-using-ruby-script (ruby-script)
+  "Self-generate this file from RUBY-SCRIPT"
   (save-this-buffer-and-others)
   (let ( (filename (expand-file-name (buffer-file-name)))
 	 (file-buffer (current-buffer))
@@ -129,7 +138,7 @@
     (clear-buffer)
     (apply #'call-process 
 	   `(,ruby-executable nil "*ruby*" t ,@ruby-args 
-	     ,(concat base-directory "src/_rejenner.rb") ,filename))
+	     ,ruby-script ,filename))
     (goto-char (point-max))
     (message "Finished regenerating %s" filename)
     (save-excursion
