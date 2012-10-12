@@ -39,10 +39,12 @@
 (defvar *ruby-process* nil "Running ruby program")
 
 (defun ruby-run-file (file &rest args)
-  (let ( (filename (windowize-filename (expand-file-name file))) )
+  (let ( (filename (windowize-filename (expand-file-name file))) 
+	 (current-directory default-directory) )
     (let ( (ruby-executable (project-file :ruby-executable *ruby-executable*)) 
 	   (ruby-args (project-value :ruby-args nil)) )
     (switch-to-buffer-other-window "*ruby*")
+    (setq default-directory current-directory)
     (clear-buffer)
     (stop-then-start-process "ruby" '*ruby-process* "*ruby*" 
 			     ruby-executable (append ruby-args (list filename) args) ) ) ) )
