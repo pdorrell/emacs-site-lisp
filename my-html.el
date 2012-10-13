@@ -123,9 +123,9 @@
 (defun regenerate-this-file ()
   "Self-generate this file from regenerate.rb" 
   (interactive)
-  (regenerate-this-file-using-ruby-script (concat *regenerate-dir* "/lib/regenerate.rb")) )
+  (regenerate-this-file-using-ruby-script "-S" "regenerate") )
 
-(defun regenerate-this-file-using-ruby-script (ruby-script)
+(defun regenerate-this-file-using-ruby-script (&rest ruby-script-args)
   "Self-generate this file from RUBY-SCRIPT"
   (save-this-buffer-and-others)
   (let ( (filename (expand-file-name (buffer-file-name)))
@@ -133,12 +133,12 @@
 	 (ruby-executable (project-file :ruby-executable))
 	 (ruby-args (project-value :ruby-args))
 	 (base-directory (project-base-directory-value)) )
-    (message "Regenerating %s ..." filename)
+    (message "Regenerating %s with ruby command %s ..." filename ruby-script-args)
     (switch-to-buffer-other-window "*ruby*" t)
     (clear-buffer)
     (apply #'call-process 
 	   `(,ruby-executable nil "*ruby*" t ,@ruby-args 
-	     ,ruby-script ,filename))
+	     ,@ruby-script-args ,filename))
     (goto-char (point-max))
     (message "Finished regenerating %s" filename)
     (save-excursion
