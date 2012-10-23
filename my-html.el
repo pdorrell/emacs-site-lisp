@@ -125,6 +125,12 @@
   (interactive)
   (regenerate-this-file-using-ruby-script "-S" "regenerate") )
 
+(defun dev-regenerate-this-file ()
+  "Self-generate this file from dev version of regenerate.rb" 
+  (interactive)
+  (regenerate-this-file-using-ruby-script (concat "-I" *regenerate-dir* "/lib") 
+					  (concat *regenerate-dir* "/lib/regenerate.rb") ) )
+
 (defun regenerate-this-file-using-ruby-script (&rest ruby-script-args)
   "Self-generate this file from RUBY-SCRIPT"
   (save-this-buffer-and-others)
@@ -136,6 +142,7 @@
     (message "Regenerating %s with ruby command %s ..." filename ruby-script-args)
     (switch-to-buffer-other-window "*ruby*" t)
     (clear-buffer)
+    (message "ruby-args = %s, ruby-script-args = %s, filename = %s" ruby-args ruby-script-args filename)
     (apply #'call-process 
 	   `(,ruby-executable nil "*ruby*" t ,@ruby-args 
 	     ,@ruby-script-args ,filename))
