@@ -117,17 +117,17 @@
 (defun rejenner-this-file ()
   "Self-generate this file from _rejenner.rb" 
   (interactive)
-  (regenerate-this-file-using-ruby-script (concat base-directory "src/_rejenner.rb")) )
+  (compile-this-file-using-ruby-script (concat base-directory "src/_rejenner.rb")) )
 
 (defun regenerate-this-file ()
   "Self-generate this file from regenerate.rb" 
   (interactive)
-  (regenerate-this-file-using-ruby-script "-S" "regenerate") )
+  (compile-this-file-using-ruby-script "-S" "regenerate") )
 
 (defun dev-regenerate ()
   "Self-generate this file or directory from dev version of regenerate.rb" 
   (interactive)
-  (regenerate-this-file-using-ruby-script (concat "-I" *regenerate-dir* "/lib") 
+  (compile-this-file-using-ruby-script (concat "-I" *regenerate-dir* "/lib") 
 					  (concat *regenerate-dir* "/lib/regenerate.rb") ) )
 
 (defun get-this-file-or-directory-name()
@@ -136,8 +136,8 @@
 	(setq buffer-file-name default-directory) )
     (expand-file-name (buffer-file-name)) ) )
 
-(defun regenerate-this-file-using-ruby-script (&rest ruby-script-args)
-  "Self-generate this file or directory from RUBY-SCRIPT"
+(defun compile-this-file-using-ruby-script (&rest ruby-script-args)
+  "Compile this file or directory from RUBY-SCRIPT"
   (save-this-buffer-and-others)
   (let ( (filename (get-this-file-or-directory-name))
 	 (file-buffer (current-buffer))
