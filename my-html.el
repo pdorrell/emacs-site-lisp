@@ -144,7 +144,7 @@
     (clear-buffer)
     (message "ruby-args = %s, ruby-script-args = %s, filename = %s" ruby-args ruby-script-args filename)
     (apply #'call-process 
-	   `(,ruby-executable nil "*ruby*" t ,@ruby-args 
+	   `(,ruby-executable nil ("*ruby*" t) t ,@ruby-args 
 	     ,@ruby-script-args ,filename))
     (goto-char (point-max))
     (message "Finished regenerating %s" filename)
