@@ -84,7 +84,6 @@
   (local-set-key [?\M-\C-\ ] "&nbsp;")
   (local-set-key [f2] 'expand-html-abbrev)
   (local-set-key [S-f5] 'make-wiki-link) 
-  (local-set-key [M-C-f8] 'self-generate-this-file)
   (setq run-file-function #'firefox-file)
   (local-set-key [?\M-e] 'edit-this-file)
   (local-set-key [?\C-b] 'html-make-bold)
@@ -157,11 +156,6 @@
     (save-excursion
       (set-buffer file-buffer) 
       (revert-if-saved) ) ) )
-
-(defun self-generate-this-file ()
-  "Self-generate this file using :self-generate-command project value"
-  (interactive)
-  (apply (project-value :self-generate-command) '()) )
 
 (defun firefox-file (file)
   "Show this file in firefox"
