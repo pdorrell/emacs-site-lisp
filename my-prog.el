@@ -66,9 +66,15 @@
   "Start git gui in this directory"
   (interactive)
   (set-process-query-on-exit-flag (start-process "gitgui" nil *git-executable* "gui") nil) )
+
+(defun compile-this-file()
+  "Compile this file"
+  (interactive)
+  (apply (project-value :compile-file-command) '()) )
   
 
 ;;========================================================================
+(global-set-key [M-C-f8] 'compile-this-file)
 (global-set-key [?\M-k] 'visit-output-buffer)
 (global-set-key [?\M-N] 'compile-ant)
 (global-set-key [?\C-\M-N] 'compile-ant-target)

@@ -125,16 +125,22 @@
   (interactive)
   (regenerate-this-file-using-ruby-script "-S" "regenerate") )
 
-(defun dev-regenerate-this-file ()
-  "Self-generate this file from dev version of regenerate.rb" 
+(defun dev-regenerate ()
+  "Self-generate this file or directory from dev version of regenerate.rb" 
   (interactive)
   (regenerate-this-file-using-ruby-script (concat "-I" *regenerate-dir* "/lib") 
 					  (concat *regenerate-dir* "/lib/regenerate.rb") ) )
 
+(defun get-this-file-or-directory-name()
+  (let ( (buffer-file-name (buffer-file-name)) )
+    (if (not buffer-file-name)
+	(setq buffer-file-name default-directory) )
+    (expand-file-name (buffer-file-name)) ) )
+
 (defun regenerate-this-file-using-ruby-script (&rest ruby-script-args)
-  "Self-generate this file from RUBY-SCRIPT"
+  "Self-generate this file or directory from RUBY-SCRIPT"
   (save-this-buffer-and-others)
-  (let ( (filename (expand-file-name (buffer-file-name)))
+  (let ( (filename (get-this-file-or-directory-name))
 	 (file-buffer (current-buffer))
 	 (ruby-executable (project-file :ruby-executable))
 	 (ruby-args (project-value :ruby-args))
