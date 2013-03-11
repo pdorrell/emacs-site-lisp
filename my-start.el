@@ -89,3 +89,5 @@
 
 (global-unset-key [f2])
 (global-set-key [f2] 'my-expand-abbrev)
+
+(setq enable-local-variables :safe)
