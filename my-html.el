@@ -84,7 +84,7 @@
   (local-set-key [?\M-\C-\ ] "&nbsp;")
   (local-set-key [f2] 'expand-html-abbrev)
   (local-set-key [S-f5] 'make-wiki-link) 
-  (setq run-file-function #'firefox-file)
+  (setq run-file-function #'open-file-in-web-browser)
   (local-set-key [?\M-e] 'edit-this-file)
   (local-set-key [?\C-b] 'html-make-bold)
   (local-set-key [?\M-\C-i] 'html-make-italic)
@@ -157,12 +157,12 @@
       (set-buffer file-buffer) 
       (revert-if-saved) ) ) )
 
-(defun firefox-file (file)
-  "Show this file in firefox"
+(defun open-file-in-web-browser (file)
+  "Show this file in chosen web-browser as specified by variable *web-browser-executable*"
   (interactive)
-  (start-process "*firefox*" "*firefox*" 
-		 *firefox-executable* (concat "file:///" (expand-file-name file)))
-  (switch-to-buffer-other-window "*firefox*") )
+  (start-process "*web-browser*" "*web-browser*" 
+		 *web-browser-executable* (concat "file:///" (expand-file-name file)))
+  (switch-to-buffer-other-window "*web-browser*") )
   
 (add-hook 'html-helper-mode-hook 'html-helper-mode-hook-function)
 
