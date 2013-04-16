@@ -1,3 +1,4 @@
 *.elc
 *~
 /java/build/
+_test.*
