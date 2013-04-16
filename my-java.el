@@ -1,18 +1,20 @@
-;; Copyright (C) 2000,2001 Philip Dorrell
+;; Copyright (C) 2000-2013 Philip Dorrell
 
 ;;========================================================================
 (setq java-word-table
       (make-alpha-table letters-digits-string "_") )
 
+(make-variable-buffer-local 'word-alpha-table)
+
 (defun make-for-loop ()
   "Make for loop using preceding variable name"
   (interactive)
-  (let ( (var (word-before java-word-table (point)))
+  (let ( (var (word-before word-alpha-table (point)))
 	 saved-point)
     (if var
 	(progn
 	  (delete-backward-char (length var))
-	  (insert "for (int " var "=0; " var "<")
+	  (insert "for (" for-loop-variable-declarer " " var "=0; " var "<")
 	  (setq saved-point (point))
 	  (insert "; " var "++) {\n")
 	  (indent-for-tab-command)
@@ -20,11 +22,10 @@
 	  (goto-char saved-point) )
       (message "No variable name given for for loop") ) ) )
 
-
 (defun insert-this-equals ()
   "Do this.x=x on preceding x"
   (interactive)
-  (let* ( (var (word-before java-word-table (point)))
+  (let* ( (var (word-before word-alpha-table (point)))
 	  (member-var var) )
     (if var
 	(progn
@@ -33,8 +34,6 @@
       (message "No variable name given") ) ) )
 
 (setq equals-op-table (make-alpha-table "+-=/*&|^%<>!"))
-
-    
 
 (defun insert-spaced-equals ()
   "Insert = with spaced around, unless part of another operator"
@@ -560,7 +559,7 @@
 
 (defun java-make-lower-case-var ()
   (interactive)
-  (let ( (class (word-before java-word-table (point))) )
+  (let ( (class (word-before word-alpha-table (point))) )
     (if class
 	(progn
 	  (insert " ")
@@ -569,7 +568,8 @@
       (message "No word before point") ) ) )
 
 ;;-----------------------------------------------------------------
-(setq java-mode-hook '(java-hook))
+(add-hook 'java-mode-hook 'java-hook)
+
 (defun java-hook ()
   (setq expansion-key 'java-expansion-key)
   (local-set-key [?\C-m] 'java-return)
@@ -592,6 +592,7 @@
   (local-set-key [f10] 'shift-initial-case)
   (local-set-key [S-f10] 'java-make-lower-case-var)
   (setq word-alpha-table java-word-table)
+  (setq for-loop-variable-declarer "int")
   (setq indent-tabs-mode nil)
   (local-set-key [C-f8] 'visit-java-source-file-for-class)
   (local-set-key [C-M-f8] 'java-insert-import-line-if-needed)
@@ -619,8 +620,6 @@
   (show-search-buffer (list (java-get-base-src-dir)) '(".java") identifier) )
 
 (load "java-abbrev")
-
-(set-extension-mode ".js" 'java-mode)
 
 (defvar *java-main-source-file* "" "Current java main program")
 
