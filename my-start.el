@@ -80,7 +80,7 @@
 (setq running-windows-9x (and (fboundp 'w32-using-nt) (not (w32-using-nt))))
 
 (if (boundp 'w32-fixed-font-alist)	
-	(set-default-font "Fixedsys")
+	(set-default-font "Consolas-11")
   (set-default-font "Liberation Mono-13") )
 
 (setq transient-mark-mode nil)
