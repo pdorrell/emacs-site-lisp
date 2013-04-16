@@ -13,6 +13,7 @@
 (defun javascript-hook ()
   (message "javascript-hook")
   (setq expansion-key 'javascript-expansion-key)
+  (setq js-indent-level 2)
   (local-set-key [?\C-m] 'return-and-indent)
   (setq c-basic-offset 2)
   (local-set-key [?\C-f] 'make-for-loop)
