@@ -5,6 +5,7 @@
       (make-alpha-table letters-digits-string "_") )
 
 (make-variable-buffer-local 'word-alpha-table)
+(make-variable-buffer-local 'for-loop-variable-declarer)
 
 (defun make-for-loop ()
   "Make for loop using preceding variable name"

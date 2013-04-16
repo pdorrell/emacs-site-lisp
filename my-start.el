@@ -46,6 +46,7 @@
 (load "my-shell")
 (load "my-prog")
 (load "my-java")
+(load "my-javascript")
 (load "my-android")
 (load "my-html")
 (load "my-window")
