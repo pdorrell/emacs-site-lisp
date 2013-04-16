@@ -150,7 +150,9 @@ other wise the current directory for the buffer)."
   (save-this-buffer-and-others)
   (let ( (run-project-command (project-value :run-project-command)) )
     (if run-project-command
-	(eval run-project-command)
+	(progn
+	  (message "Running project command %s ..." run-project-command)
+	  (eval run-project-command) )
       (message "No run-project-command defined in this buffer") ) ) )
 
 (defun show-project-log-buffer()
