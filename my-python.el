@@ -5,6 +5,9 @@
 
 (condition-case nil (kill-buffer "*python*") (error nil))
 
+(defun execution-logging-time-string()
+  (format-time-string "%Y-%m-%d %H:%M:%S") )
+
 (defun python-run-file (file)
   (interactive)
   (let ( (filename (windowize-filename file)) )
@@ -13,8 +16,9 @@
     (switch-to-buffer-other-window "*python*")
     (setq *current-output-buffer* "*python*")
     (let ( (python-executable (project-file :python-executable)) )
-      (insert (format "%s -u %s\n\n" python-executable filename))
+      (insert (format "%s -u %s [%s]\n\n" python-executable filename (execution-logging-time-string)))
       (goto-char (point-min))
+      (other-window 1)
       (message "%s %s ..." python-executable filename)
       (start-process "python" "*python*" python-executable "-u" filename) ) ) )
 
