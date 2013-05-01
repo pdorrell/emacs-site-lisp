@@ -13,8 +13,10 @@
     (switch-to-buffer-other-window "*python*")
     (setq *current-output-buffer* "*python*")
     (let ( (python-executable (project-file :python-executable)) )
+      (insert (format "%s -u %s\n\n" python-executable filename))
+      (goto-char (point-min))
       (message "%s %s ..." python-executable filename)
-      (start-process "python" "*python*" python-executable  "-u" filename) ) ) )
+      (start-process "python" "*python*" python-executable "-u" filename) ) ) )
 
 (defun show-python-output()
   (interactive)
