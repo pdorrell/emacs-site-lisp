@@ -150,7 +150,7 @@ processed."
   (w32-shell-execute "explore" (windowize-filename (expand-file-name dir))) )
 
 (defun run-file (filename)
-  (if (eql (string-match "http:" filename) 0)
+  (if (eql (string-match "http\\(s\\|\\):" filename) 0)
       (browse-url filename)
     (let ( (expanded-file-name (expand-file-name filename)))
       (message "Opening file %s" expanded-file-name)
