@@ -22,6 +22,7 @@
   (local-set-key [?\C-=] 'insert-equals)
   (local-set-key "," 'insert-spaced-comma)
   (local-set-key [f2] 'my-expand-abbrev)
+  (local-set-key [f10] 'shift-initial-case)
   (setq word-alpha-table javascript-word-table)
   (setq for-loop-variable-declarer "var")
   (setq indent-tabs-mode nil)
