@@ -49,6 +49,7 @@
 (def-html-pair-abbrev "exp" "<@explainPage>" "</@explainPage>")
 
 (def-html-pair-abbrev "div" "<div class=\"" "\"></div>")
+(def-html-pair-abbrev "blt" "<b>&lt;" "&gt;</b>")
 (def-html-pair-abbrev "span" "<span class=\"" "\"></span>")
 
 (def-html-abbrev "style" '("<style type=\"text/css\">" return "<!--" return mark return
