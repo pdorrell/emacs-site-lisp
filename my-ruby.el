@@ -56,14 +56,26 @@
 (defun ruby-insert-member-equals ()
   "Do @x=x on preceding x"
   (interactive)
-  (let* ( (var (word-before ruby-word-table (point)))
-	  (member-var var)
-	  article )
-    (if var
-	(progn
-	  (delete-backward-char (length var))
-	  (insert "@" member-var " = " var) )
-      (message "No variable name given") ) ) )
+  (insert-tranformed-word 
+   ruby-word-table 
+   (lambda (var) (concat "@" var " = " var) )
+   "variable name") )
+
+(defun ruby-insert-print-this ()
+  "Do puts \"x=#{x}\"; on preceding x"
+  (interactive)
+  (insert-tranformed-word 
+   ruby-word-table 
+   (lambda (var) (concat "puts \"" var " = #{" var "}\""))
+   "variable name") )
+
+(defun ruby-insert-print-this-inspected ()
+  "Do puts \"x=#{x}\"; on preceding x"
+  (interactive)
+  (insert-tranformed-word 
+   ruby-word-table 
+   (lambda (var) (concat "puts \"" var " = #{" var ".inspect}\""))
+   "variable name") )
 
 (defun hyphen-to-camel-case ()
   (interactive)
@@ -88,6 +100,8 @@
 (defun ruby-mode-hook-function ()
   (setq expansion-key 'ruby-expansion-key)
   (local-set-key [?\C-t] 'ruby-insert-member-equals)
+  (local-set-key [?\C-p] 'ruby-insert-print-this)
+  (local-set-key [?\C-\S-p] 'ruby-insert-print-this-inspected)
   (local-set-key [?\C-m] 'return-and-indent)
   (local-set-key [?\C-w] 'ruby-search-for-identifier-at-point)
   (setq run-file-function #'ruby-run-file)

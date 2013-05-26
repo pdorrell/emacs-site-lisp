@@ -71,7 +71,16 @@
   "Compile this file"
   (interactive)
   (apply (project-value :compile-file-command) '()) )
-  
+
+(defun insert-tranformed-word (word-table transformer description)
+  "Replace preceding word in buffer (according to WORD-TABLE) by applying TRANSFORMER to it.
+  If no word is found to replace, warn that the DESCRIPTION is not there."
+  (let* ( (word (word-before word-table (point))) )
+    (if word
+	(progn
+	  (delete-backward-char (length word))
+	  (insert (funcall transformer word)) )
+      (message "No %s given" descriptipon) ) ) )
 
 ;;========================================================================
 (global-set-key [M-C-f8] 'compile-this-file)
