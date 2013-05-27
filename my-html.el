@@ -93,32 +93,6 @@
   (setq file-editor *external-html-editor*)
   )
 
-(defun rejinnirate-this-file ()
-  "Self-generate this file from _pages.rb"
-  (interactive)
-  (save-this-buffer-and-others)
-  (let ( (filename (expand-file-name (buffer-file-name)))
-	 (file-buffer (current-buffer))
-	 (ruby-executable (project-file :ruby-executable))
-	 (ruby-args (project-value :ruby-args))
-	 (rejinnirate-directory (project-file :rejinnirate-directory)) )
-    (message "Rejinnirating %s ..." filename)
-    (switch-to-buffer-other-window "*ruby*" t)
-    (clear-buffer)
-    (apply #'call-process 
-	   `(,ruby-executable nil "*ruby*" t ,@ruby-args 
-	     ,(concat rejinnirate-directory "/rejinnirate-run.rb") ,filename))
-    (goto-char (point-max))
-    (message "Finished rejinnirating %s" filename)
-    (save-excursion
-      (set-buffer file-buffer) 
-      (revert-if-saved) ) ) )
-
-(defun rejenner-this-file ()
-  "Self-generate this file from _rejenner.rb" 
-  (interactive)
-  (compile-this-file-using-ruby-script (concat base-directory "src/_rejenner.rb")) )
-
 (defun regenerate-this-file ()
   "Self-generate this file from regenerate.rb" 
   (interactive)
