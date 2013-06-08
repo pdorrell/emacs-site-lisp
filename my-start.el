@@ -64,7 +64,6 @@
 (load "my-haxe")
 ;;(load "my-django")
 ;;(load "my-drools")
-(load "my-propositional")
 (load "my-gae")
 (load "my-net")
 (load "my-linux")
