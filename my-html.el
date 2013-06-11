@@ -102,7 +102,7 @@
   "Self-generate this file or directory from dev version of regenerate.rb" 
   (interactive)
   (compile-this-file-using-ruby-script (concat "-I" *regenerate-dir* "/lib") 
-					  (concat *regenerate-dir* "/lib/regenerate.rb") ) )
+					  (concat *regenerate-dir* "/bin/regenerate") ) )
 
 (defun get-this-file-or-directory-name()
   (let ( (buffer-file-name (buffer-file-name)) )
