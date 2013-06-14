@@ -97,6 +97,16 @@
   (interactive "sSearch for: ")
   (show-search-buffer (list default-directory) '(".yaml" ".rb" ".haml") identifier) )
 
+(defvar *rails-process* nil "Development Ruby on Rails process")
+
+(defun run-rails-server (base-dir)
+  (interactive)
+  (let ( (ruby-executable (project-value :ruby-executable "ruby")) )
+    (switch-to-buffer-other-window "*rails*")
+    (clear-buffer)
+    (stop-then-start-process "rails" '*rails-process* "*rails*" 
+			      "run-rails-server" (list ruby-executable base-dir) ) ) )
+
 (defun ruby-mode-hook-function ()
   (setq expansion-key 'ruby-expansion-key)
   (local-set-key [?\C-t] 'ruby-insert-member-equals)
