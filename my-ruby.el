@@ -99,13 +99,13 @@
 
 (defvar *rails-process* nil "Development Ruby on Rails process")
 
-(defun run-rails-server (base-dir)
+(defun run-rails-server (run-server-script base-dir)
   (interactive)
   (let ( (ruby-executable (project-value :ruby-executable "ruby")) )
     (switch-to-buffer-other-window "*rails*")
     (clear-buffer)
     (stop-then-start-process "rails" '*rails-process* "*rails*" 
-			      "run-rails-server" (list ruby-executable base-dir) ) ) )
+			      run-server-script (list ruby-executable base-dir) ) ) )
 
 (defun ruby-mode-hook-function ()
   (setq expansion-key 'ruby-expansion-key)
