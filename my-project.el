@@ -104,6 +104,12 @@ other wise the current directory for the buffer)."
 	  (setq value (gethash key *default-project*)) ) )
     value) )
 
+(defun project-required-value (key)
+  (let ( (value (project-value key)) )
+    (if (not value)
+	(error "No value found for project key %s" key)
+      value) ) )
+
 (defun project-file (key &optional default)
   "Get the expanded name of a file from project value for KEY, expanded against project base directory (if it's relative)"
   (let ( (file-name (project-value key default) ) )

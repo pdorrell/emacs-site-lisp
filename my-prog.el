@@ -82,8 +82,21 @@
 	  (insert (funcall transformer word)) )
       (message "No %s given" descriptipon) ) ) )
 
+(defvar *database-process* nil "Process running development database")
+
+(defun run-database ()
+  (interactive)
+  (let ( (current-directory default-directory)
+	 (database-command (project-required-value :run-database-command)) )
+    (switch-to-buffer-other-window "*database*")
+    (setq default-directory current-directory)
+    (clear-buffer)
+    (stop-then-start-process "database" '*database-process* "*database*" 
+			     (first database-command) (rest database-command)) ) )
+
 ;;========================================================================
 (global-set-key [M-C-f8] 'compile-this-file)
+(global-set-key [M-C-S-f8] 'run-database)
 (global-set-key [?\M-k] 'visit-output-buffer)
 (global-set-key [?\M-N] 'compile-ant)
 (global-set-key [?\C-\M-N] 'compile-ant-target)
