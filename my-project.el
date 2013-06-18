@@ -185,10 +185,8 @@ other wise the current directory for the buffer)."
 (defun run-database-for-project ()
   "Run database for this project"
   (interactive)
-  (let ( (run-database-command (project-value :run-database-command)) )
-    (if run-database-command
-	(eval run-database-command)
-      (message "No :run-database-command defined in this buffer") ) ) )
+  (let ( (run-database-command (project-required-value :run-database-command)) )
+    (eval run-database-command) ) )
 
 (defvar *mongod-process* nil "Running Mongo server")
 
@@ -207,7 +205,7 @@ other wise the current directory for the buffer)."
 
 (global-set-key [C-M-f9] 'run-this-file)
 (global-set-key [S-M-f9] 'run-project)
-(global-set-key [S-M-f10] 'run-database-for-project)
+(global-set-key [C-S-M-f8] 'run-database-for-project)
 (global-set-key [C-M-f7] 'open-project-file-menu)
 
 (global-set-key [?\C-\M-o] 'show-project-log-buffer)
