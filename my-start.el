@@ -91,3 +91,6 @@
 (global-set-key [f2] 'my-expand-abbrev)
 
 (setq enable-local-variables :safe)
+
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
