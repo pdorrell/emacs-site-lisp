@@ -6,6 +6,7 @@
 (defvar *webrick-process* nil)
 
 (set-file-name-mode "rakefile" 'ruby-mode)
+(set-file-name-mode "Rakefile" 'ruby-mode)
 
 (setq ruby-word-table
       (make-alpha-table letters-digits-string "_") )
