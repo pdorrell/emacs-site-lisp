@@ -108,6 +108,20 @@
     (stop-then-start-process "rails" '*rails-process* "*rails*" 
 			      run-server-script (list ruby-executable base-dir) ) ) )
 
+(defun rspec-file (file)
+  (interactive)
+  (let ( (filename (windowize-filename file)) )
+    (condition-case nil (kill-buffer "*rspec*") (error nil))
+    (switch-to-buffer-other-window "*rspec*")
+    (setq *current-output-buffer* "*rspec*")
+    (let ( (rspec-command (project-value :rspec-command '("ruby" "-S" "rspec"))) )
+      (insert (format "%s -u %s [%s]\n\n" rspec-command filename (execution-logging-time-string)))
+      (goto-char (point-min))
+      (other-window 1)
+      (message "%s %s ..." rspec-command filename)
+      (apply #'start-process 
+	     `("rspec" "*rspec*" ,@rspec-command ,filename ) ) ) ) )
+
 (defun ruby-mode-hook-function ()
   (setq expansion-key 'ruby-expansion-key)
   (local-set-key [?\C-t] 'ruby-insert-member-equals)
@@ -116,6 +130,8 @@
   (local-set-key [?\C-m] 'return-and-indent)
   (local-set-key [?\C-w] 'ruby-search-for-identifier-at-point)
   (setq run-file-function #'ruby-run-file)
+  (if (string-ends-with (buffer-name) "_spec.rb")
+      (setq run-file-function #'rspec-file) )
   (local-set-key "," 'insert-spaced-comma)
   (local-set-key [f2] 'my-expand-abbrev)
   (local-set-key "=" 'insert-spaced-equals)
