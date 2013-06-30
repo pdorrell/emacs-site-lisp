@@ -173,3 +173,6 @@
 (add-hook 'ruby-mode-hook 'ruby-mode-hook-function)
 
 (global-set-key [?\M-r] 'ruby-visit-output-buffer)
+
+(def-ruby-abbrev "describe" '("describe " indent "\"" mark "\" do" return indent return "end" indent goto-mark))
+(def-ruby-abbrev "it" '("it " indent "\"" mark "\" do" return indent return "end" indent goto-mark))
