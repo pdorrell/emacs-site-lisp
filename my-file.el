@@ -249,12 +249,16 @@ processed."
 
 (defun visit-grep-n-line (file-name line-number-string)
   (let ( (line-number (string-to-number line-number-string)) )
+    ;; (message "visiting file %s line %s ..." file-name line-number)
     (find-file file-name)
     (goto-line line-number) ) )
 
 ;; [ \\t\\n]*\\(from \\)?
 (setq grep-n-matcher (list "[ \t]*\\(?:from \\|\\)\\([a-zA-Z]?[:]?[^:]+\\):\\([0-9]+\\):?"
 			   1 2) )
+
+(setq rspec-line-matcher
+      (list "[ \t]*# \\([^:]*\\):\\([0-9]+\\):" 1 2) )
 
 (setq java-exception-line-matcher
       (list (make-regexp '(seq (maybe "+") (at-least-once (set " \t")) "at " 
@@ -281,7 +285,8 @@ processed."
       "") ) )
 
 (defvar file-line-matchers
-  '((visit-grep-n-line grep-n-matcher)
+  '((visit-grep-n-line rspec-line-matcher)
+    (visit-grep-n-line grep-n-matcher)
     (visit-grep-n-line python-line-matcher)
     (visit-java-exception-line java-exception-line-matcher)) )
 
