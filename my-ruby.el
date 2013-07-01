@@ -176,3 +176,5 @@
 
 (def-ruby-abbrev "describe" '("describe " indent "\"" mark "\" do" return indent return "end" indent goto-mark))
 (def-ruby-abbrev "it" '("it " indent "\"" mark "\" do" return indent return "end" indent goto-mark))
+
+(def-ruby-abbrev "utf" '("# -*- coding: utf-8 -*-"))
