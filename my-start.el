@@ -4,6 +4,12 @@
 
 (setq running-windows (fboundp 'w32-using-nt))
 
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
 (load "cl")
 
 (autoload 'html-helper-mode "html-helper-mode" "Yay HTML" t)
@@ -95,3 +101,4 @@
 
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+
