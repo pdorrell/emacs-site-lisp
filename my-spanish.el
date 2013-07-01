@@ -1,4 +1,4 @@
-;; Spanish minor mode - easy typing of Spanish accented characters
+;; Spanish accent toggling - easy typing of Spanish accented characters
 
 ;; Copyright (C) 1999  Philip Dorrell
      
@@ -15,9 +15,9 @@
 ;;     A copy of the GNU General Public License is included with the
 ;;     GNU Emacs distribution.
 
-;; Email : pdorrell@.com      (add "pobox" after "@" and before ".com").
+;; Email : pdorrell@.com      (add "thinkinghard" after "@" and before ".com").
 ;; (The previous line is to confuse spambots trying to read this page.)
-;; Web : www.1729.com
+;; Web : www.thinkinghard.com
 
 ;; Standard GNU emacs contains two main functions that help with
 ;; editing accented non-English languages -
@@ -28,28 +28,12 @@
 ;; iso-accents-mode, which allows one to use keys `'"^/~ as special
 ;; accent keys to compose accented characters
 
-;; In Spanish, the following is almost true -
-;; For every accented or non-ASCII character, there is one
-;; corresponding ASCII character, and no ASCII character has more
-;; than one corresponding non-ASCII character. The exceptions are
-;; the raised a and o's use with ordinal numbers.
-;; spanish-minor-mode defines two toggle keys (here set to be F2 and F3)
-;; F3 toggles a and o to the ordinal endings, F2 toggles all other
-;; possibilities with characters AaEeIiNnOoUu!?
-;; F2 and F3 toggle the characters preceding the cursor, i.e. the 
-;; character just types, So to type � Como est�s ?, type -
-;; ? F2 (space) C o m o (space) e s t a F2 s ?
-;; It is also easy to add accents to text previously typed without
-;; accents.
+;; This file defines spanish-toggle-accent which toggles between accented and 
+;; non-accented characters (or rotates around the choices if there is more than
+;; one accented character for a given non-accented character).
 
-;; To make this mode accessible, add the following lines (uncommented)
-;; to your _emacs file or to "site-lisp/default.el" -
+;; This file is encoded in UTF-8.
 
-;;(autoload 'spanish-minor-mode "spanish")
-;;(global-set-key [?\M-\C-S] 'spanish-minor-mode)
-
-;; Shift-Meta-Control S will then toggle spanish-minor-mode
-;; (= Shift-Alt-Control S on Win 95/NT)
 (require 'cl)
 ;-----------------------------------------------------------------
 ;; These next two are utility routines that help you to see
@@ -87,7 +71,7 @@
 ;-----------------------------------------------------------------
 (defun make-toggle-array (&rest strings)
   "Make a lookup array to toggle characters around the STRINGS"
-  (let ( (toggle-array (make-vector 256 nil)) )
+  (let ( (toggle-array (make-vector 65536 nil)) )
     (dolist (string strings)
       (let ( (len (length string)) j)
 	(dotimes (i len)
@@ -98,15 +82,9 @@
 
 (defvar spanish-accents-toggler
   (make-toggle-array
-   "a\341" "e\351" "i\355" "o\363" "u\372" "n\361"
-   "A\301" "E\311" "I\315" "O\323" "U\332" "N\321"
-   "!\241" "?\277" ) 
+   "AÁ" "aáª" "EÉ" "eé" "IÍ" "ií" "NÑ" "nñ" "OÓ" "oóº" "UÚÜ" "uúü" "?¿" "!¡" "$€" "\"«»" "'‹›")
   "Array to toggle normal ASCII characters with most
 common Spanish variants")
-
-(defvar spanish-ordinal-toggler
-  (make-toggle-array "a\252" "o\272")
-  "Array to toggle normal ASCII characters with ordinal suffixes")
 
 (defun toggle-character (toggle-array)
   "Toggle character just before cursor according to
@@ -128,87 +106,5 @@ toggle array"
   (interactive)
   (toggle-character spanish-accents-toggler) )
 
-(defun spanish-toggle-ordinal()
-  "Toggle Spanish a or o to ordinal suffix"
-  (interactive)
-  (toggle-character spanish-ordinal-toggler) )
+(global-set-key [f8] 'spanish-toggle-accent)
 
-(defvar spanish-minor-mode nil
-  "If NON-nil, F2 and F3 toggle Spanish accents and ordinals" )
-
-(defvar spanish-minor-mode-keymap
-  (make-sparse-keymap))
-
-(if spanish-minor-mode-keymap
-    (progn
-      (define-key spanish-minor-mode-keymap [f2] 'spanish-toggle-accent)
-      (define-key spanish-minor-mode-keymap [f3] 'spanish-toggle-ordinal) ) )
-
-(if (not (assq 'spanish-minor-mode minor-mode-alist))
-    (setq minor-mode-alist
-	  (append minor-mode-alist '((spanish-minor-mode " Spanish"))) ) )
-
-(if (not (assq 'spanish-minor-mode minor-mode-map-alist))
-    (setq minor-mode-map-alist
-	  (cons (cons 'spanish-minor-mode spanish-minor-mode-keymap)
-		minor-mode-map-alist)))
-
-(defun spanish-minor-mode()
-  "Turn on F2 and F3 toggling of Spanish accents and ordinals"
-  (interactive)
-  (if spanish-minor-mode
-      (progn
-	(setq spanish-minor-mode nil)
-	(standard-display-european -1) )
-    (progn
-      (setq spanish-minor-mode t)
-      (standard-display-european +1) ) )
-  (redraw-display) )
-
-
-
-;;========================================================================
-(defvar maori-accents-toggler
-  (make-toggle-array
-   "a\344" "e\353" "i\357" "o\366" "u\374" 
-   "A\304" "E\313" "I\317" "O\326" "U\334" ) 
-  "Array to toggle normal ASCII characters with most
-common Maori variants")
-
-
-(defun maori-toggle-accent()
-  "Toggle Maori accent or other special character"
-  (interactive)
-  (toggle-character maori-accents-toggler) )
-
-
-(defvar maori-minor-mode nil
-  "If NON-nil, F2 toggles Maori accents" )
-
-(defvar maori-minor-mode-keymap
-  (make-sparse-keymap))
-
-(if maori-minor-mode-keymap
-    (progn
-      (define-key maori-minor-mode-keymap [f2] 'maori-toggle-accent) ) )
-
-(if (not (assq 'maori-minor-mode minor-mode-alist))
-    (setq minor-mode-alist
-	  (append minor-mode-alist '((maori-minor-mode " Maori"))) ) )
-
-(if (not (assq 'maori-minor-mode minor-mode-map-alist))
-    (setq minor-mode-map-alist
-	  (cons (cons 'maori-minor-mode maori-minor-mode-keymap)
-		minor-mode-map-alist)))
-
-(defun maori-minor-mode()
-  "Turn on F2 toggling of Maori accents"
-  (interactive)
-  (if maori-minor-mode
-      (progn
-	(setq maori-minor-mode nil)
-	(standard-display-european -1) )
-    (progn
-      (setq maori-minor-mode t)
-      (standard-display-european +1) ) )
-  (redraw-display) )
