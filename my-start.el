@@ -74,6 +74,7 @@
 (load "my-net")
 (load "my-linux")
 (load "my-treetop")
+(load "my-sass")
 
 (load "nxml-mode-20041004/rng-auto.el")
 
@@ -101,4 +102,3 @@
 
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
-
