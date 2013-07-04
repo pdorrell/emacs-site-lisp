@@ -247,6 +247,13 @@ processed."
       (list "[ ]*File[ ]*\"\\([^\"]*\\)\",[ ]*line[ ]*\\([0-9]+\\)"
 	    1 2) )
 
+(defun visit-project-file-grep-n-line (file-name line-number-string)
+  (let ( (full-file-name (expand-file-name file-name (project-base-directory)))
+	 (line-number (string-to-number line-number-string)) )
+    ;; (message "visiting file %s line %s ..." full-file-name line-number)
+    (find-file full-file-name)
+    (goto-line line-number) ) )
+
 (defun visit-grep-n-line (file-name line-number-string)
   (let ( (line-number (string-to-number line-number-string)) )
     ;; (message "visiting file %s line %s ..." file-name line-number)
@@ -285,7 +292,7 @@ processed."
       "") ) )
 
 (defvar file-line-matchers
-  '((visit-grep-n-line rspec-line-matcher)
+  '((visit-project-file-grep-n-line rspec-line-matcher)
     (visit-grep-n-line grep-n-matcher)
     (visit-grep-n-line python-line-matcher)
     (visit-java-exception-line java-exception-line-matcher)) )
