@@ -292,7 +292,7 @@ processed."
       "") ) )
 
 (defvar file-line-matchers
-  '((visit-project-file-grep-n-line rspec-line-matcher)
+  '((visit-grep-n-line rspec-line-matcher)
     (visit-grep-n-line grep-n-matcher)
     (visit-grep-n-line python-line-matcher)
     (visit-java-exception-line java-exception-line-matcher)) )
