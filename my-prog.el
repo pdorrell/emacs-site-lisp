@@ -23,16 +23,21 @@
     (and found parent)) )
 
 (defun compile-with-command (command &optional command-file)
-  (save-this-buffer-and-others)
-  (if command-file
-      (let ( (command-file-dir (find-parent-directory-with-file default-directory command-file)) )
-	(if command-file-dir
-	    (find-file (concat command-file-dir command-file)) ) ) )
-  (compile command)
-  (other-window 1)
-  (switch-to-buffer "*compilation*")
-  (setq *current-output-buffer* "*compilation*")
-  (end-of-buffer) )
+  (let ( (project-base-dir (project-base-directory)) )
+    (save-this-buffer-and-others)
+    (if command-file
+	(let ( (command-file-dir (find-parent-directory-with-file default-directory command-file)) )
+	  (if command-file-dir
+	      (find-file (concat command-file-dir command-file)) ) ) )
+    (compile command)
+    (other-window 1)
+    (switch-to-buffer "*compilation*")
+    (if project-base-dir
+	(progn
+	  (message "In compile-with-command, cd compilation buffer to %s" project-base-dir)
+	  (cd project-base-dir) ) )
+    (setq *current-output-buffer* "*compilation*")
+    (end-of-buffer) ) )
   
 (defun compile-rake (&optional target)
   "Compile using rake"

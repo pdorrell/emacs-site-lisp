@@ -179,7 +179,6 @@ other wise the current directory for the buffer)."
 
 (defun project-compile-with-command (&optional target)
   "Compile using a command"
-  (cd (project-base-directory))
   (let ( (compile-command (project-value :compile-command)) )
     (compile-with-command (if target (concat compile-command " " target) compile-command)) ) )
 
