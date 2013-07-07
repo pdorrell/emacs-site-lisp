@@ -75,6 +75,7 @@
 (load "my-linux")
 (load "my-treetop")
 (load "my-sass")
+(load "my-maori")
 
 (load "nxml-mode-20041004/rng-auto.el")
 

@@ -2,7 +2,7 @@
 
 ;;========================================================================
 (defun make-alpha-table (&rest strings)
-  (let ( (table (make-vector 256 nil)) )
+  (let ( (table (make-vector 400 nil)) )
     (dolist (string strings)
       (let ((len (length string)))
 	(dotimes (i len)
