@@ -14,10 +14,10 @@
     (if word
 	(progn
 	  (message "Looking up word %s in Maori dictionary ..." word)
-	  (browse-url (maori-dictionary-search-url word)) )
+	  (dolist (query-url *maori-dictionary-query-urls*)
+	    (let ( (url (concat query-url word)) )
+	      (message " browsing %s ..." url)
+	      (browse-url url) ) ) )
       (message "No word at point") ) ) )
-
-(defun maori-dictionary-search-url(maori-word)
-  (concat "http://www.maoridictionary.co.nz/index.cfm?dictionaryKeywords=" maori-word) )
 
 (global-set-key [?\C-\M-l] 'maori-lookup-word-in-dictionary)
