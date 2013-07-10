@@ -25,10 +25,11 @@
 (defun get-directory-for-project()
   "Find directory to be used as starting point to search for project file (either directory of buffer file,
 other wise the current directory for the buffer)."
-  (let ( (filename (buffer-file-name)) )
-    (if filename
-	(file-name-directory filename)
-      default-directory) ) )
+  (let* ( (filename (buffer-file-name))
+	  (directory-name (if filename
+			      (file-name-directory filename)
+			    default-directory)) )
+    (expand-file-name directory-name) ) )
 
 (defvar *project-base-directory* nil 
   "A variable which stores the current project base directly, while loading an existing project file. ")
