@@ -50,6 +50,16 @@
     (stop-then-start-process "ruby" '*ruby-process* "*ruby*" 
 			     ruby-executable (append ruby-args (list filename) args) ) ) ) )
 
+(defun execute-ruby (&rest args)
+  (let ( (current-directory default-directory) )
+    (let ( (ruby-executable (project-file :ruby-executable *ruby-executable*)) 
+	   (ruby-args (project-value :ruby-args nil)) )
+    (switch-to-buffer-other-window "*ruby*")
+    (setq default-directory current-directory)
+    (clear-buffer)
+    (stop-then-start-process "ruby" '*ruby-process* "*ruby*" 
+			     ruby-executable (append ruby-args args) ) ) ) )
+
 (defun ruby-visit-output-buffer()
   (interactive)
   (switch-to-buffer "*ruby*") )
