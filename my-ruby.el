@@ -140,7 +140,7 @@
   (local-set-key [?\C-m] 'return-and-indent)
   (local-set-key [?\C-w] 'ruby-search-for-identifier-at-point)
   (setq run-file-function #'ruby-run-file)
-  (if (string-ends-with (buffer-name) "_spec.rb")
+  (if (string-ends-with (buffer-file-name) "_spec.rb")
       (setq run-file-function #'rspec-file) )
   (local-set-key "," 'insert-spaced-comma)
   (local-set-key [f2] 'my-expand-abbrev)
