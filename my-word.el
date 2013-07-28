@@ -10,7 +10,7 @@
     table) )
 
 (defun make-inverse-alpha-table (&rest strings)
-  (let ( (table (make-vector 256 t)) )
+  (let ( (table (make-vector 400 t)) )
     (dolist (string strings)
       (let ((len (length string)))
 	(dotimes (i len)
