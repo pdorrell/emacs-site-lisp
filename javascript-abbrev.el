@@ -10,3 +10,5 @@
 (def-javascript-abbrev "r" "return ")
 (def-javascript-abbrev "rf" "return false;")
 (def-javascript-abbrev "rt" "return true;")
+
+(def-javascript-abbrev "pr" '("prototype = {" return indent))
