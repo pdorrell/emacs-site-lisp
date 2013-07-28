@@ -149,9 +149,13 @@ processed."
 (defun explore-directory (dir)
   (w32-shell-execute "explore" (windowize-filename (expand-file-name dir))) )
 
+(defun browse-in-dev-browser(url)
+  (start-process "chromium-dev" nil "chromium-browser" "--allow-file-access-from-files" url) )
+
 (defun run-file (filename)
-  (if (eql (string-match "http\\(s\\|\\):" filename) 0)
-      (browse-url filename)
+  (if (or (string-ends-with filename ".html")
+	  (eql (string-match "http\\(s\\|\\):" filename) 0) )
+      (browse-in-dev-browser filename)
     (let ( (expanded-file-name (expand-file-name filename)))
       (message "Opening file %s" expanded-file-name)
       (if (fboundp 'w32-shell-execute)
