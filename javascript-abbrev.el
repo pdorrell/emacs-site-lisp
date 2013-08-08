@@ -11,4 +11,5 @@
 (def-javascript-abbrev "rf" "return false;")
 (def-javascript-abbrev "rt" "return true;")
 
-(def-javascript-abbrev "pr" '("prototype = {" return indent))
+(def-javascript-abbrev "pr" '("prototype = {" return indent mark return "};" goto-mark))
+(def-javascript-abbrev "vtt" '("var $this = this;" indent))
