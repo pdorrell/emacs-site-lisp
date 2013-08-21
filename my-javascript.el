@@ -4,11 +4,24 @@
 (setq javascript-word-table
       (make-alpha-table letters-digits-string "_$") )
 
+(setq javascript-dotted-word-table
+      (make-alpha-table letters-digits-string "._$") )
+
+(set-extension-mode ".json" 'javascript-mode)
+
 (defun java-identifier-at-point ()
   (word-at word-alpha-table (point)) )
 
 ;;-----------------------------------------------------------------
 (add-hook 'js-mode-hook 'javascript-hook)
+
+(defun javascript-insert-print-this-inspected ()
+  "Do puts \"x=#{x}\"; on preceding x"
+  (interactive)
+  (insert-tranformed-word 
+   javascript-dotted-word-table 
+   (lambda (var) (concat "console.log(\"" var " = \" + inspect(" var ");"))
+   "dotted name") )
 
 (defun javascript-hook ()
   (message "javascript-hook")
@@ -23,6 +36,7 @@
   (local-set-key "," 'insert-spaced-comma)
   (local-set-key [f2] 'my-expand-abbrev)
   (local-set-key [f10] 'shift-initial-case)
+  (local-set-key [?\C-\S-p] 'javascript-insert-print-this-inspected)
   (setq word-alpha-table javascript-word-table)
   (setq for-loop-variable-declarer "var")
   (setq indent-tabs-mode nil)
