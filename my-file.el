@@ -150,7 +150,7 @@ processed."
   (w32-shell-execute "explore" (windowize-filename (expand-file-name dir))) )
 
 (defun browse-in-dev-browser(url)
-  (start-process "chromium-dev" nil "chromium-browser" "--allow-file-access-from-files" url) )
+  (start-process "chromium-dev" nil "chromium-browser" "--allow-file-access-from-files" "--disable-popup-blocking" url) )
 
 (defun run-file (filename)
   (if (or (string-ends-with filename ".html")
