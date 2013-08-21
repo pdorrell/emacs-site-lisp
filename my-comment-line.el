@@ -43,7 +43,7 @@
   "Find comment line forward"
   (interactive)
   (forward-char)
-  (if (re-search-forward "^....[=-][=-][=-][=-][=-]" nil t)
+  (if (re-search-forward "^......[=-][=-][=-][=-][=-]" nil t)
       (progn
 	(beginning-of-line)
 	(recenter 0) )
@@ -54,7 +54,7 @@
   "Find comment line backward"
   (interactive)
   (forward-char -1)
-  (if (re-search-backward "^....[=-][=-][=-][=-][=-]" nil t)
+  (if (re-search-backward "^......[=-][=-][=-][=-][=-]" nil t)
       (progn
 	(beginning-of-line)
 	(recenter 0) )
