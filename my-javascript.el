@@ -15,12 +15,42 @@
 ;;-----------------------------------------------------------------
 (add-hook 'js-mode-hook 'javascript-hook)
 
+(defun javascript-run-file (file &rest args)
+  (let ( (run-javascript-function (project-value :run-javascript-function #'nodejs-run-file)) )
+    (apply run-javascript-function (cons file args)) ) )
+
+(defvar *nodejs-process* nil)
+
+(defun nodejs-run-file (file &rest args)
+  (let ( (filename (windowize-filename (expand-file-name file))) 
+	 (current-directory default-directory) )
+    (let ( (javascript-executable (project-file :javascript-executable "/usr/bin/nodejs")) )
+      (switch-to-buffer-other-window "*nodejs*")
+      (setq default-directory current-directory)
+      (clear-buffer)
+      (stop-then-start-process "nodejs" '*nodejs-process* "*nodejs*" 
+			     javascript-executable (list filename) ) ) ) )
+
+
+(defvar *phantomjs-process* nil)
+
+(defun phantomjs-run-file (file &rest args)
+  (let ( (filename (windowize-filename (expand-file-name file))) 
+	 (current-directory default-directory) )
+    (let ( (javascript-executable (project-file :javascript-executable "/usr/bin/phantomjs"))
+	   (javascript-run-script (project-file :run-javascript-file)) )
+      (switch-to-buffer-other-window "*phantomjs*")
+      (setq default-directory current-directory)
+      (clear-buffer)
+      (stop-then-start-process "phantomjs" '*phantomjs-process* "*phantomjs*" 
+			     javascript-executable (list javascript-run-script filename) ) ) ) )
+
 (defun javascript-insert-print-this-inspected ()
   "Do puts \"x=#{x}\"; on preceding x"
   (interactive)
   (insert-tranformed-word 
    javascript-dotted-word-table 
-   (lambda (var) (concat "console.log(\"" var " = \" + inspect(" var ");"))
+   (lambda (var) (concat "console.log(\"" var " = \" + inspect(" var "));"))
    "dotted name") )
 
 (defun javascript-hook ()
@@ -39,6 +69,7 @@
   (local-set-key [?\C-\S-p] 'javascript-insert-print-this-inspected)
   (setq word-alpha-table javascript-word-table)
   (setq for-loop-variable-declarer "var")
+  (setq run-file-function #'javascript-run-file)
   (setq indent-tabs-mode nil)
   (font-lock-mode 1)
   (setq comment-start "/*")

@@ -121,6 +121,20 @@ other wise the current directory for the buffer)."
       )
     file-name) )
 
+(defun* project-or-emacs-load-path-file(filename)
+  "Look for a file in the project dir, or otherwise in the Emacs load path"
+  (let ( (search-path (cons (project-base-directory) load-path)) )
+    (dolist (dir search-path)
+      (let ( (full-file-name (concat (file-name-as-directory dir) filename) ) )
+	(message "Searching for %s ..." full-file-name)
+	(if (file-exists-p full-file-name)
+	    (progn 
+	      (message "Found it")
+	      (return-from project-or-emacs-load-path-file full-file-name) ) )
+	) )
+    (message "Didn't find %s" filename)
+    (error "Failed to find %s in project directory or Emacs load path" filename) ) )
+
 (defun project-directory (key)
   "Get the expanded name of a directory from project value for KEY, expanded against project base directory (if it's relative)"
   (let ( (directory-file (project-file key)) )
