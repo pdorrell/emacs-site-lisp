@@ -26,6 +26,9 @@
 	 (current-directory default-directory) )
     (let ( (javascript-executable (project-file :javascript-executable "/usr/bin/nodejs")) )
       (switch-to-buffer-other-window "*nodejs*")
+      (setq file-line-matchers
+	    '((visit-grep-n-line unprefixed-grep-n-matcher)
+	      (visit-grep-n-line node-exception-line-matcher)))
       (setq default-directory current-directory)
       (clear-buffer)
       (stop-then-start-process "nodejs" '*nodejs-process* "*nodejs*" 
