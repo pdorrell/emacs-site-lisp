@@ -2,6 +2,14 @@
 
 ;; Last changes (to all files) : 27 Sept 2000
 
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")))
+
+(require 'package)
+(package-initialize)
+
+(require 'coffee-mode)
+(setq coffee-tab-width 2)
+
 (setq running-windows (fboundp 'w32-using-nt))
 
 (setq locale-coding-system 'utf-8)
@@ -76,6 +84,7 @@
 (load "my-treetop")
 (load "my-sass")
 (load "my-maori")
+(load "my-coffee")
 
 (load "nxml-mode-20041004/rng-auto.el")
 

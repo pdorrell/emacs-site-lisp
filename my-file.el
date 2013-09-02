@@ -302,13 +302,13 @@ processed."
 	(substring method-name 0 package-end)
       "") ) )
 
-(make-variable-buffer-local 'file-line-matchers)
-
 (defvar file-line-matchers
   '((visit-grep-n-line rspec-line-matcher)
     (visit-grep-n-line grep-n-matcher)
     (visit-grep-n-line python-line-matcher)
     (visit-java-exception-line java-exception-line-matcher)) )
+
+(make-variable-buffer-local 'file-line-matchers)
 
 (defun visit-file-line ()
   "Visit line of file given in grep output"
