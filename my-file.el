@@ -276,7 +276,7 @@ processed."
       (list "[ \t]*# \\([^:]*\\):\\([0-9]+\\)" 1 2) )
 
 (setq node-exception-line-matcher
-      (list "[ \t]*at [^(]*(\\([^:]+\\):\\([0-9]+\\):" 1 2) )
+      (list "[ \t]*at [^(]*(\\([^:]+\\):\\([0-9]+\\)" 1 2) )
 
 (setq java-exception-line-matcher
       (list (make-regexp '(seq (maybe "+") (at-least-once (set " \t")) "at " 
