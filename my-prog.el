@@ -72,6 +72,11 @@
   (interactive)
   (set-process-query-on-exit-flag (start-process "gitgui" nil *git-executable* "gui") nil) )
 
+(defun gitk-this-directory()
+  "Start gitk in this directory"
+  (interactive)
+  (set-process-query-on-exit-flag (start-process "gitk" nil *gitk-executable*) nil) )
+
 (defun compile-this-file()
   "Compile this file"
   (interactive)
@@ -99,3 +104,4 @@
 (global-set-key [S-pause] 'previous-error) 
 (global-set-key [C-M-f10] 'comment-region)
 (global-set-key [?\M-G] 'git-gui-this-directory)
+(global-set-key [S-M-f10] 'gitk-this-directory)
