@@ -23,10 +23,6 @@
 
 (load "cl")
 
-;;(autoload 'html-helper-mode "html-helper-mode" "Yay HTML" t)
-
-;;(setq html-script-toggle-key [C-M-S-pause])
-
 (if (fboundp 'blink-cursor-mode) (blink-cursor-mode -1))
 
 (column-number-mode t)

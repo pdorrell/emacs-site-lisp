@@ -1,6 +1,6 @@
 ;; Copyright (C) 2000 Philip Dorrell
 
-(list-faces-display)
+;;(list-faces-display)
 ;(list-colors-display)
 
 (font-lock-mode -1)
@@ -26,17 +26,6 @@
 (copy-face 'font-lock-keyword-face 'web-mode-html-attr-name-face)
 (copy-face 'font-lock-function-name-face 'web-mode-html-tag-bracket-face)
 
-
-(copy-face 'html-tag-face 'ftl-tag-face)
-(set-face-background 'ftl-tag-face "LightSkyBlue1")
-(setq ftl-tag-face 'ftl-tag-face)
-(copy-face 'html-tag-face 'ftl-macro-tag-face)
-(set-face-background 'ftl-macro-tag-face "khaki1")
-(setq ftl-macro-tag-face 'ftl-macro-tag-face)
-
-(copy-face 'html-tag-face 'ftl-expr-face)
-(setq ftl-expr-face 'ftl-expr-face)
-(set-face-background 'ftl-expr-face "misty rose")
 
 (defmacro def-bg-face (name color)
   `(progn
