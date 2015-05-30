@@ -124,18 +124,19 @@
 	 (file-buffer (current-buffer))
 	 (ruby-executable (project-file :ruby-executable))
 	 (ruby-args (project-value :ruby-args))
-	 (base-directory (project-base-directory-value)) ) 
+	 (base-directory (project-base-directory-value))
+         (ruby-buffer (get-buffer-create "*ruby*")) )
     (message "Regenerating %s with ruby command %s ..." filename ruby-script-args)
-    (display-buffer "*ruby*")
-    (save-window-excursion
-      (set-buffer "*ruby*")
+    (display-buffer ruby-buffer)
+    (save-selected-window
+      (set-buffer ruby-buffer)
       (clear-buffer)
       (message "ruby-args = %s, ruby-script-args = %s, filename = %s" ruby-args ruby-script-args filename)
       (apply #'call-process 
-             `(,ruby-executable nil ("*ruby*" t) t ,@ruby-args 
+             `(,ruby-executable nil (t t) t ,@ruby-args 
                                 ,@ruby-script-args ,filename))
-      (goto-char (point-max))
-      (message "Finished regenerating %s" filename) )
+      (message "Finished regenerating %s" filename)
+      (set-window-point (get-buffer-window ruby-buffer) (point-max)) )
     (revert-if-saved) ) )
 
 (defun open-file-in-web-browser (file)
