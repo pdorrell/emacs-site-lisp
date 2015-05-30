@@ -109,7 +109,7 @@
   "Self-generate this file or directory from dev version of regenerate.rb" 
   (interactive)
   (compile-this-file-using-ruby-script (concat "-I" *regenerate-dir* "/lib") 
-					  (concat *regenerate-dir* "/bin/regenerate") ) )
+                                       (concat *regenerate-dir* "/bin/regenerate") ) )
 
 (defun get-this-file-or-directory-name()
   (let ( (buffer-file-name (buffer-file-name)) )
@@ -124,19 +124,19 @@
 	 (file-buffer (current-buffer))
 	 (ruby-executable (project-file :ruby-executable))
 	 (ruby-args (project-value :ruby-args))
-	 (base-directory (project-base-directory-value)) )
+	 (base-directory (project-base-directory-value)) ) 
     (message "Regenerating %s with ruby command %s ..." filename ruby-script-args)
-    (switch-to-buffer-other-window "*ruby*" t)
-    (clear-buffer)
-    (message "ruby-args = %s, ruby-script-args = %s, filename = %s" ruby-args ruby-script-args filename)
-    (apply #'call-process 
-	   `(,ruby-executable nil ("*ruby*" t) t ,@ruby-args 
-	     ,@ruby-script-args ,filename))
-    (goto-char (point-max))
-    (message "Finished regenerating %s" filename)
-    (save-excursion
-      (set-buffer file-buffer) 
-      (revert-if-saved) ) ) )
+    (display-buffer "*ruby*")
+    (save-window-excursion
+      (set-buffer "*ruby*")
+      (clear-buffer)
+      (message "ruby-args = %s, ruby-script-args = %s, filename = %s" ruby-args ruby-script-args filename)
+      (apply #'call-process 
+             `(,ruby-executable nil ("*ruby*" t) t ,@ruby-args 
+                                ,@ruby-script-args ,filename))
+      (goto-char (point-max))
+      (message "Finished regenerating %s" filename) )
+    (revert-if-saved) ) )
 
 (defun open-file-in-web-browser (file)
   "Show this file in chosen web-browser as specified by variable *web-browser-executable*"
