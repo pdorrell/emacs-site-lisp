@@ -1,6 +1,6 @@
 ;; Copyright (C) 2000 Philip Dorrell
 
-;(list-faces-display)
+(list-faces-display)
 ;(list-colors-display)
 
 (font-lock-mode -1)
@@ -22,7 +22,10 @@
 (set-face-foreground font-lock-warning-face "black")
 (set-face-background font-lock-warning-face "LemonChiffon2")
 
-(copy-face 'font-lock-function-name-face 'html-tag-face)
+(copy-face 'font-lock-function-name-face 'web-mode-html-tag-face)
+(copy-face 'font-lock-keyword-face 'web-mode-html-attr-name-face)
+(copy-face 'font-lock-function-name-face 'web-mode-html-tag-bracket-face)
+
 
 (copy-face 'html-tag-face 'ftl-tag-face)
 (set-face-background 'ftl-tag-face "LightSkyBlue1")
