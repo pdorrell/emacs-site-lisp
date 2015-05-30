@@ -1,5 +1,12 @@
 ;; Copyright (C) 2000 Philip Dorrell
 
+(require 'web-mode)
+
+(dolist (extension '(".erb" ".html"))
+  (set-extension-mode extension 'web-mode) )
+
+(setq web-mode-markup-indent-offset 2)
+
 (defmacro def-html-pair-abbrev (abbrev part1 &optional part2)
   (if part2
       `(def-html-abbrev ,abbrev '(,part1 mark ,part2 goto-mark))
@@ -76,6 +83,7 @@
       (make-regexp '(seq (repeated (set " \t")) "<" (at-least-once (not-set "/>")) ">")) )
 
 (defun html-helper-mode-hook-function ()
+  (setq indent-tabs-mode nil)
   (use-local-map html-mode-keymap)
   (setq abbrev-word-table html-abbrev-word-table)
   (setf word-alpha-table html-alpha-table)
@@ -83,7 +91,6 @@
   (local-set-key [f10] 'shift-initial-case)
   (local-set-key [?\M-\C-\ ] "&nbsp;")
   (local-set-key [f2] 'expand-html-abbrev)
-  (local-set-key [S-f5] 'make-wiki-link) 
   (setq run-file-function #'open-file-in-web-browser)
   (local-set-key [?\M-e] 'edit-this-file)
   (local-set-key [?\C-b] 'html-make-bold)
@@ -138,7 +145,7 @@
 		 *web-browser-executable* (concat "file:///" (expand-file-name file)))
   (switch-to-buffer-other-window "*web-browser*") )
   
-(add-hook 'html-helper-mode-hook 'html-helper-mode-hook-function)
+(add-hook 'web-mode-hook 'html-helper-mode-hook-function)
 
 (set-extension-mode ".ftl" 'html-helper-mode)
 ;;(set-extension-mode ".xml" 'html-helper-mode)

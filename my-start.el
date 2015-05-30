@@ -2,7 +2,10 @@
 
 ;; Last changes (to all files) : 27 Sept 2000
 
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")))
+(setq-default indent-tabs-mode nil)
+
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+			 ("melpa" . "http://melpa.org/packages/")))
 
 (require 'package)
 (package-initialize)
@@ -20,9 +23,9 @@
 
 (load "cl")
 
-(autoload 'html-helper-mode "html-helper-mode" "Yay HTML" t)
+;;(autoload 'html-helper-mode "html-helper-mode" "Yay HTML" t)
 
-(setq html-script-toggle-key [C-M-S-pause])
+;;(setq html-script-toggle-key [C-M-S-pause])
 
 (if (fboundp 'blink-cursor-mode) (blink-cursor-mode -1))
 
@@ -88,9 +91,9 @@
 
 (load "nxml-mode-20041004/rng-auto.el")
 
-(setq auto-mode-alist
-      (cons '("\\.\\(xml\\|xsl\\|rng\\|xhtml\\)\\'" . nxml-mode)
-	    auto-mode-alist))
+;;(setq auto-mode-alist
+;;     (cons '("\\.\\(xml\\|xsl\\|rng\\|xhtml\\)\\'" . nxml-mode)
+;;	    auto-mode-alist))
 
 (autoload 'spanish-minor-mode "my-spanish")
 
