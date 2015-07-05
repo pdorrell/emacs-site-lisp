@@ -620,7 +620,7 @@
   (interactive "sSearch for: ")
   (show-search-buffer (list (java-get-base-src-dir)) '(".java") identifier) )
 
-(load "java-abbrev")
+(try-to-load "java-abbrev")
 
 (defvar *java-main-source-file* "" "Current java main program")
 

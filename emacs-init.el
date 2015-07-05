@@ -1,4 +1,17 @@
 
+(defmacro try-to (command)
+  "Try to run COMMAND, if it fails, skip, or give option of re-running without trapping error"
+  `(condition-case exception
+       ,command
+     (error (if 
+                (y-or-n-p (format "Trapped error running %s, skip? " 
+                                  ',command))
+                (message "Skipped exception %s attempting to run %s" exception ',command)
+              ,command)) ) )
+
+(defmacro try-to-load (file)
+  `(try-to (load ',file)) )
+
 (setq gc-cons-threshold 20000000)
 
 (tool-bar-mode -1)
@@ -14,11 +27,11 @@
 
 (defvar *my-name* "<Put your name here>" "My name")
 
-(defvar copyright-line (concat "Copyright (C) 2010 " *my-name*))
+(defvar copyright-line (concat "Copyright (C) 2015 " *my-name*))
 
 (global-set-key [?\M-\C-S] 'spanish-minor-mode)
 
-(load "my-start.el")
+(try-to-load "my-start.el")
 
 (setq sql-file "~/test.sql")
 

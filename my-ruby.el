@@ -1,7 +1,7 @@
 (autoload 'ruby-mode "ruby-mode")
 (set-extension-mode ".rb" 'ruby-mode)
 
-(defvar *ruby-executable* *ruby-1.9-executable* "Ruby executable for project")
+(defvar *ruby-executable* "ruby" "Ruby executable for project")
 
 (defvar *webrick-process* nil)
 
