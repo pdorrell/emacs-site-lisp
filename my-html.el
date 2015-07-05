@@ -149,5 +149,3 @@
 (add-hook 'web-mode-hook 'web-mode-hook-function)
 
 (load "html-abbrev")
-
-

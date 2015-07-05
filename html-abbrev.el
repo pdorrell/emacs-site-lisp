@@ -76,3 +76,6 @@
 (def-html-pair-abbrev "prop" "<li>\n<div class=\"proposition\">" "</div>\n\n</li>\n")
 
 (def-html-pair-abbrev "aname" "<a name=\"" "\"></a>")
+
+(def-html-pair-abbrev "hd" "<!-- [@header] -->")
+(def-html-pair-abbrev "ft" "<!-- [@footer] -->")
