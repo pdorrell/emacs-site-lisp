@@ -1,6 +1,8 @@
-;; Copyright (C) 2000,2001 Philip Dorrell
+;; Copyright (C) 2000-2015 Philip Dorrell
 
-;; Last changes (to all files) : 27 Sept 2000
+(setq emacs-customisation-dir (file-name-directory load-file-name))
+(setq emacs-util-classpath (concat emacs-customisation-dir "emacs.jar"))
+(setq package-user-dir (concat emacs-customisation-dir "elpa"))
 
 (setq-default indent-tabs-mode nil)
 
@@ -36,9 +38,6 @@
 (global-set-key [S-f6] 'call-last-kbd-macro)
 (global-set-key [?\M-Q] 'indent-sexp)
 ;-----------------------------------------------------------------
-
-(setq emacs-customisation-dir (file-name-directory load-file-name))
-(setq emacs-util-classpath (concat emacs-customisation-dir "emacs.jar"))
 
 (load "executables")
 
