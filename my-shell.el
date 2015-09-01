@@ -68,7 +68,7 @@
 (setq *shell-dirtrack-regexp*
       (if running-windows
 	  (make-regexp '(seq start (paren (set "a-zA-Z") ":" (repeated any)) ">"))
-	 "\\(.+\\)> $") )
+	 "\\(?:\\[[^]]*\\] \\)*\\(.+\\)> $") )
 
 (setq shell-filter-regexp
       (make-regexp '(seq (set "a-zA-Z") ":" (repeated (set "-a-zA-Z0-9_.\\")) ">" )
