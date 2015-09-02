@@ -17,8 +17,7 @@
     (setq *current-output-buffer* "*python*")
     (let ( (python-executable (project-file :python-executable)) )
       (insert (format "%s -u %s [%s]\n\n" python-executable filename (execution-logging-time-string)))
-      (goto-char (point-min))
-      (other-window 1)
+      (goto-char (point-max))
       (message "%s %s ..." python-executable filename)
       (start-process "python" "*python*" python-executable "-u" filename) ) ) )
 
