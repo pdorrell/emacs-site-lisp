@@ -99,3 +99,12 @@
     (set-process-query-on-exit-flag new-process nil)
     (message "%s STARTED" name) ) )
 
+(defun kill-buffer-process()
+  "Kill any process running in the current buffer"
+  (interactive)
+  (kill-process
+   (get-buffer-process
+    (current-buffer) ) ) )
+
+
+(global-set-key [S-C-f9] 'kill-buffer-process)
