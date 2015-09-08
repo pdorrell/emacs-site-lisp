@@ -56,6 +56,7 @@
 (setenv "EMACS_PS1" "\\w> ")
 
 (setq split-height-threshold 40)
+(setq split-width-threshold 1000)
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
