@@ -95,3 +95,16 @@
 (def-python-abbrev "main" '("if __name__ == \"__main__\":" return "main()" indent return))
 
 (set-extension-mode ".egg" 'archive-mode)
+
+(defun expand-to-print()
+  (interactive)
+  (beginning-of-line)
+  (search-forward-regexp "\\S-.+")
+  (let ( (expression (match-string 0)) )
+    (replace-match (concat "print(\"" expression " = %r\" % " expression ")")) ) )
+         
+  (message (match-string 0)) )
+  
+  
+
+(global-set-key "\C-P" 'expand-to-print)
