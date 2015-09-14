@@ -68,6 +68,7 @@
   (local-set-key [?\C-t] 'insert-self-equals)
   (local-set-key [?\C-m] 'return-and-indent)
   (local-set-key [?\M-s] 'python-insert-self-dot)
+  (local-set-key [?\C-P] 'python-expand-to-print)
   (setq word-alpha-table python-word-table)
   (font-lock-mode 1)
   (setq filter-regexp "def\\|class")
@@ -86,8 +87,8 @@
 (def-python-abbrev "r" '("return "))
 (def-python-abbrev "rf" '("return false"))
 (def-python-abbrev "p" '("print(\""))
-(def-python-abbrev "sae" '("self.assertEquals (" mark ")" goto-mark))
-(def-python-abbrev "sane" '("self.assertNotEquals (" mark ")" goto-mark))
+(def-python-abbrev "sae" '("self.assertEquals(" mark ")" goto-mark))
+(def-python-abbrev "sane" '("self.assertNotEquals(" mark ")" goto-mark))
 (def-python-abbrev "f" '("for " mark " in :" goto-mark))
 
 (def-python-abbrev "q" '("\"\"\"" mark "\"\"\"" goto-mark))
@@ -96,15 +97,9 @@
 
 (set-extension-mode ".egg" 'archive-mode)
 
-(defun expand-to-print()
+(defun python-expand-to-print()
   (interactive)
   (beginning-of-line)
   (search-forward-regexp "\\S-.+")
   (let ( (expression (match-string 0)) )
     (replace-match (concat "print(\"" expression " = %r\" % " expression ")")) ) )
-         
-  (message (match-string 0)) )
-  
-  
-
-(global-set-key "\C-P" 'expand-to-print)

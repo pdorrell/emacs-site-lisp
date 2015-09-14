@@ -84,6 +84,8 @@
 (try-to-load "my-maori")
 (try-to-load "my-coffee")
 
+(try-to-load "my-melody-scripter")
+
 (try-to-load "nxml-mode-20041004/rng-auto.el")
 
 ;;(setq auto-mode-alist
