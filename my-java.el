@@ -631,9 +631,9 @@
   (java-run-main)
   (delete-other-windows) )
 
-(global-set-key [C-M-f6] 'run-java-client)
+;;(global-set-key [C-M-f6] 'run-java-client)
 
-(global-set-key [C-S-f8] 'visit-java-source-file-for-fully-qualified-class)
+;;(global-set-key [C-S-f8] 'visit-java-source-file-for-fully-qualified-class)
 
 ;(global-set-key [M-C-S-f8] 'show-java-packages-for-class)
 ;(global-set-key [C-S-f8] 'show-java-type-for-variable)
