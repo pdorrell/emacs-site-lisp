@@ -62,6 +62,7 @@
 
 (defun lisp-eval-defun-and-show ()
   (interactive)
+  (save-this-buffer-and-others)
   (show-inferior-lisp-buffer-at-end)
   (lisp-eval-defun) )
 
