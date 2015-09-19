@@ -21,6 +21,16 @@
       (message "%s %s ..." python-executable filename)
       (start-process "python" "*python*" python-executable "-u" filename) ) ) )
 
+(defun python-run-nosetests ()
+  (interactive)
+  (condition-case nil (kill-buffer "*nosetests*") (error nil))
+  (switch-to-buffer-other-window "*nosetests*")
+  (let ( (nosetests-executable (project-file :nosetests-executable)) )
+      (insert (format "%s [%s]\n\n" nosetests-executable (execution-logging-time-string)))
+      (goto-char (point-max))
+      (message "%s ... " nosetests-executable)
+      (start-process "nosetests" "*nosetests*" nosetests-executable ) ) )
+
 (defun show-python-output()
   (interactive)
   (switch-to-buffer "*python*")

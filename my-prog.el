@@ -77,10 +77,10 @@
   (interactive)
   (set-process-query-on-exit-flag (start-process "gitk" nil *gitk-executable*) nil) )
 
-(defun compile-this-file()
+(defun run-alternate-command()
   "Compile this file"
   (interactive)
-  (apply (project-value :compile-file-command) '()) )
+  (eval (project-required-value :alternate-run-command)) )
 
 (defun insert-tranformed-word (word-table transformer description)
   "Replace preceding word in buffer (according to WORD-TABLE) by applying TRANSFORMER to it.
@@ -95,7 +95,7 @@
 (defvar *database-process* nil "Process running development database")
 
 ;;========================================================================
-(global-set-key [M-C-f8] 'compile-this-file)
+(global-set-key [M-C-f8] 'run-alternate-command)
 (global-set-key [?\M-k] 'visit-output-buffer)
 (global-set-key [?\M-N] 'compile-ant)
 (global-set-key [?\C-\M-N] 'compile-ant-target)
