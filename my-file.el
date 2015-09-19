@@ -43,6 +43,11 @@ and not unsaved file"
 	(message "Buffer has not been saved")
       (kill-buffer nil) ) ) )
 
+(defun buffer-full-file-or-directory-name()
+  (if (eq major-mode 'dired-mode)
+      (expand-file-name default-directory)
+    (windowize-filename (expand-file-name (buffer-file-name))) ) )
+
 (setq filename-word-table
       (make-alpha-table letters-digits-string
 			"~@#$%^&-_=+\\/.*:") )
