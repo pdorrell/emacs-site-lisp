@@ -34,6 +34,7 @@
 
 (defun project-search-for-identifier-at-point ()
   (interactive)
+  (save-this-buffer-and-others)
   (let ( (identifier (project-identifier-at-point)) )
     (if identifier
 	(project-search-for-identifier identifier)
