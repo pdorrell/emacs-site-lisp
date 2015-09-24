@@ -99,12 +99,21 @@
     (set-process-query-on-exit-flag new-process nil)
     (message "%s STARTED" name) ) )
 
+(defvar *related-output-process* nil 
+  "A process associated with a buffer that will be killed by kill-buffer-process if the current buffer has no process"))
+(make-variable-buffer-local '*related-output-process*)
+
 (defun kill-buffer-process()
-  "Kill any process running in the current buffer"
+  "Kill any process running in the current buffer, or, if there isn't any, the buffer local value of *related-output-process*"
   (interactive)
-  (kill-process
-   (get-buffer-process
-    (current-buffer) ) ) )
+  (let ( (process-to-kill (get-buffer-process (current-buffer))) )
+    (if (null process-to-kill)
+        (if *related-output-process*
+            (setq process-to-kill *related-output-process*)))
+    (if (null process-to-kill)
+        (message "No buffer process (and no value for *related-output-process*)")
+      (kill-process process-to-kill) ) ) )
+
 
 
 (global-set-key [S-C-f9] 'kill-buffer-process)
