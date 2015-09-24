@@ -100,7 +100,7 @@
     (message "%s STARTED" name) ) )
 
 (defvar *related-output-process* nil 
-  "A process associated with a buffer that will be killed by kill-buffer-process if the current buffer has no process"))
+  "A process associated with a buffer that will be killed by kill-buffer-process if the current buffer has no process")
 (make-variable-buffer-local '*related-output-process*)
 
 (defun kill-buffer-process()
