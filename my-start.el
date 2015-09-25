@@ -83,6 +83,7 @@
 (try-to-load "my-sass")
 (try-to-load "my-maori")
 (try-to-load "my-coffee")
+(try-to-load "my-rst")
 
 (try-to-load "my-melody-scripter")
 
