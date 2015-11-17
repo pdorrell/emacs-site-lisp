@@ -176,7 +176,8 @@ other wise the current directory for the buffer)."
     (if run-project-command
 	(progn
 	  (message "Running project command %s ..." run-project-command)
-	  (eval run-project-command) )
+          (let ((default-directory (project-base-directory)))
+            (eval run-project-command) ) )
       (message "No run-project-command defined in this buffer") ) ) )
 
 (defun show-project-log-buffer()
