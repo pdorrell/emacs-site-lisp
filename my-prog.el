@@ -94,6 +94,17 @@
 
 (defvar *database-process* nil "Process running development database")
 
+(defun run-script (script-file output-buffer-name)
+  (interactive)
+  (message "Running %s ..." script-file)
+    (condition-case nil (kill-buffer output-buffer-name) (error nil))
+    (switch-to-buffer-other-window output-buffer-name)
+    (setq *current-output-buffer* output-buffer-name)
+    (start-process "script" output-buffer-name script-file) )
+
+    
+  
+
 ;;========================================================================
 (global-set-key [M-C-f8] 'run-alternate-command)
 (global-set-key [?\M-k] 'visit-output-buffer)
