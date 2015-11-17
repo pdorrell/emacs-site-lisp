@@ -155,7 +155,7 @@ public class ListMembers implements JavaHelperCommand {
   }
   
   public void listClassMembers (String memberSpec) {
-    String args[] = new SeparatedValues (memberSpec, ':').getValues();
+    String args[] = new SeparatedValues (memberSpec, ":").getValues();
     if (args.length != 3 && args.length != 2) {
       throw new RuntimeException ("Expect 2 or 3 colon separated arguments: " + memberSpec);
     }
@@ -173,7 +173,7 @@ public class ListMembers implements JavaHelperCommand {
       }
     }
     else {
-      String packageNames[] = new SeparatedValues (args[2], ',').getValues();
+      String packageNames[] = new SeparatedValues (args[2], ",").getValues();
       boolean classFound = false;
       for (int i=0; i<packageNames.length && !classFound; i++) {
         String fullClassName = packageNames[i] + "." + className;

@@ -17,17 +17,18 @@ public class SeparatedValues {
     return values;
   }
   
-  public SeparatedValues (String valuesString, char ch) {
+  public SeparatedValues (String valuesString, String separator) {
     int pos = 0;
     List list = new ArrayList();
     int len = valuesString.length();
     while (pos < len+1) {
-      int separatorPos = valuesString.indexOf (ch, pos);
+      int separatorPos = valuesString.indexOf (separator, pos);
       if (separatorPos == -1) {
         separatorPos = len;
       }
-      list.add (valuesString.substring (pos, separatorPos));
-      pos = separatorPos+1;
+      String separatedValue = valuesString.substring (pos, separatorPos);
+      list.add (separatedValue);
+      pos = separatorPos+separator.length();
     }
     values = (String[])list.toArray (new String[0]);
     if (values.length == 1 && values[0].length() == 0)
@@ -35,7 +36,7 @@ public class SeparatedValues {
   }
   
   public static void main (String args[]) {
-    String values[] = new SeparatedValues (args[0], args[1].charAt (0)).getValues();
+    String values[] = new SeparatedValues (args[0], args[1]).getValues();
     for (int i=0; i<values.length; i++) {
       System.out.println ("value #" + values[i] + "#");
     }

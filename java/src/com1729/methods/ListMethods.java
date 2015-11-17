@@ -112,7 +112,7 @@ public class ListMethods implements JavaHelperCommand {
   }
   
   public void listClassMethods (String methodSpec) {
-    String args[] = new SeparatedValues (methodSpec, ':').getValues();
+    String args[] = new SeparatedValues (methodSpec, ":").getValues();
     if (args.length != 3 && args.length != 2) {
       throw new RuntimeException ("Expect 2 or 3 colon separated arguments: " + methodSpec);
     }
@@ -130,7 +130,7 @@ public class ListMethods implements JavaHelperCommand {
       }
     }
     else {
-      String packageNames[] = new SeparatedValues (args[2], ',').getValues();
+      String packageNames[] = new SeparatedValues (args[2], ",").getValues();
       boolean classFound = false;
       for (int i=0; i<packageNames.length && !classFound; i++) {
         String fullClassName = packageNames[i] + "." + className;

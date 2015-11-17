@@ -19,13 +19,22 @@ public class StringFileFilterSearcher {
     this.filenameFilter = filenameFilter;
   }
   
-  public void searchInDir (File dir) throws IOException {
+  public void searchInDir (File dir, String[] excludeDirs) throws IOException {
     File files[] = dir.listFiles();
     if (files != null) {
       for (int i=0; i<files.length; i++) {
         File file = files[i];
-        if (file.isDirectory() && !file.getName().equals ("CVS")) {
-          searchInDir (file);
+        if (file.isDirectory() && !file.getName().equals (".git")) {
+          String dirName = file.toString();
+          boolean excluded = false;
+          for (int j=0; j<excludeDirs.length; j++) {
+            if (dirName.startsWith(excludeDirs[j])) {
+              excluded = true;
+            }
+          }
+          if (!excluded) {
+            searchInDir (file, excludeDirs);
+          }
         }
         else if (filenameFilter.accept (file.getParentFile(), file.getName())) {
           searchInFile (file);

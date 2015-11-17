@@ -1,7 +1,12 @@
 ;; Copyright (C) 2001 Philip Dorrell
 
+(defun make-search-dir-with-excludes (dir-spec)
+  (if (stringp dir-spec)
+      dir-spec
+    (separated-values dir-spec "::") ) )
+
 (defun make-show-search-command  (dirs extensions search-string)
-  (list "4" "search" (separated-values dirs ";")
+  (list "4" "search" (separated-values (mapcar #'make-search-dir-with-excludes dirs) ";")
 	 (separated-values extensions ";")
 	 search-string) )
 
@@ -42,7 +47,12 @@
 
 (defun project-search-for-identifier (identifier)
   (interactive "sSearch for: ")
-  (show-search-buffer (cons (project-base-directory-value) (project-value :extra-search-directories))
-		      (project-value :search-extensions) identifier) )
+  (let ((main-search-dir (project-base-directory-value))
+        (exclude-subdirs (project-value :search-exclude-subdirs)) )
+    (if exclude-subdirs
+        (setq main-search-dir (cons main-search-dir exclude-subdirs)) )
+    (message "exclude-subdirs = %s" exclude-subdirs)
+    (show-search-buffer (cons main-search-dir (project-value :extra-search-directories))
+                        (project-value :search-extensions) identifier) ) )
 
 (global-set-key [M-f12] 'project-search-for-identifier-at-point)
