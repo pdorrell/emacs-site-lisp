@@ -94,13 +94,15 @@
 
 (defvar *database-process* nil "Process running development database")
 
-(defun run-script (script-file output-buffer-name)
+(defun run-script (command output-buffer-name)
   (interactive)
-  (message "Running %s ..." script-file)
-    (condition-case nil (kill-buffer output-buffer-name) (error nil))
-    (switch-to-buffer-other-window output-buffer-name)
-    (setq *current-output-buffer* output-buffer-name)
-    (start-process "script" output-buffer-name script-file) )
+  (message "Running %s ..." command)
+  (condition-case nil (kill-buffer output-buffer-name) (error nil))
+  (switch-to-buffer-other-window output-buffer-name)
+  (insert (format "Running %s in %s ...\n" command default-directory))
+  (setq *current-output-buffer* output-buffer-name)
+  (apply #'start-process (append (list "script" output-buffer-name) command )) )
+
 
     
   
