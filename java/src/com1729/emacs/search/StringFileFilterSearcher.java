@@ -54,6 +54,10 @@ public class StringFileFilterSearcher {
   }
   
   public void searchInFile (File file) throws IOException {
+    String fileName = file.getName();
+    if (fileName.startsWith(string) || fileName.startsWith(string + ".")) {
+        System.out.println (file + ":1:<file name>");
+    }
     if (fileHasString (file)) {
       FileReader fr = new FileReader (file);
       BufferedReader br = new BufferedReader (fr);
