@@ -101,7 +101,10 @@
   (switch-to-buffer-other-window output-buffer-name)
   (insert (format "Running %s in %s ...\n" command default-directory))
   (setq *current-output-buffer* output-buffer-name)
-  (apply #'start-process (append (list "script" output-buffer-name) command )) )
+  (let ( (process (apply #'start-process 
+                        (append (list "script" output-buffer-name) command ))) )
+    (process-kill-without-query process) ) )
+
 
 
     
