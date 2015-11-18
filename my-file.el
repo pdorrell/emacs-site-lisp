@@ -277,6 +277,9 @@ processed."
 (setq unprefixed-grep-n-matcher (list "^\\([a-zA-Z]?[:]?[^: ]+\\):\\([0-9]+\\):?"
 				      1 2) )
 
+(setq electron-exception-line-matcher
+      (list "\\(?:file:\\|    at file://\\|    at [^(]*(file://\\)\\([^:]+\\):\\([0-9]+\\)" 1 2) )
+
 (setq rspec-line-matcher
       (list "[ \t]*# \\([^:]*\\):\\([0-9]+\\)" 1 2) )
 
@@ -308,7 +311,8 @@ processed."
       "") ) )
 
 (defvar file-line-matchers
-  '((visit-grep-n-line rspec-line-matcher)
+  '((visit-grep-n-line electron-exception-line-matcher)
+    (visit-grep-n-line rspec-line-matcher)
     (visit-grep-n-line grep-n-matcher)
     (visit-grep-n-line python-line-matcher)
     (visit-java-exception-line java-exception-line-matcher)) )
