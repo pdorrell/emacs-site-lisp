@@ -1,5 +1,11 @@
 ;; Copyright (C) 2000-2015 Philip Dorrell
 
+(setq running-windows-9x (and (fboundp 'w32-using-nt) (not (w32-using-nt))))
+
+(if (boundp 'w32-fixed-font-alist)	
+	(set-default-font "Consolas-11")
+  (set-default-font "Liberation Mono-13") )
+
 (setq emacs-customisation-dir (file-name-directory load-file-name))
 (setq emacs-util-classpath (concat emacs-customisation-dir "emacs.jar"))
 (setq package-user-dir (concat emacs-customisation-dir "elpa"))
@@ -88,12 +94,6 @@
 (try-to-load "my-melody-scripter")
 
 (autoload 'spanish-minor-mode "my-spanish")
-
-(setq running-windows-9x (and (fboundp 'w32-using-nt) (not (w32-using-nt))))
-
-(if (boundp 'w32-fixed-font-alist)	
-	(set-default-font "Consolas-11")
-  (set-default-font "Liberation Mono-13") )
 
 (setq transient-mark-mode nil)
 
