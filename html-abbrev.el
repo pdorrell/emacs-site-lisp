@@ -14,7 +14,7 @@
 (def-html-pair-abbrev "dl" "<dl>\n<dt>" "</dt>\n <dd></dd>\n</dl>\n")
 (def-html-pair-abbrev "dt" "<dt>" "\n <dd></dd>\n")
 (def-html-pair-abbrev "dts" "<dt><strong>" "</strong></dt>\n <dd></dd>\n")
-(def-html-pair-abbrev "img" "<img src=\"" "\" alt=\"\" width=\"\" height=\"\"/>")
+(def-html-pair-abbrev "img" "<img src=\"" "\"/>")
 (def-html-pair-abbrev "ul" "<ul>\n <li>" "</li>\n</ul>")
 (def-html-pair-abbrev "ol" "<ol>\n <li>" "</li>\n</ol>")
 (def-html-pair-abbrev "li" " <li>" "</li>")
