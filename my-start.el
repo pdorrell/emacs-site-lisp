@@ -87,12 +87,6 @@
 
 (try-to-load "my-melody-scripter")
 
-(try-to-load "nxml-mode-20041004/rng-auto.el")
-
-;;(setq auto-mode-alist
-;;     (cons '("\\.\\(xml\\|xsl\\|rng\\|xhtml\\)\\'" . nxml-mode)
-;;	    auto-mode-alist))
-
 (autoload 'spanish-minor-mode "my-spanish")
 
 (setq running-windows-9x (and (fboundp 'w32-using-nt) (not (w32-using-nt))))
