@@ -241,3 +241,9 @@
 (filter-set-window-start)
 
 (global-set-key [?\C-t] 'toggle-truncate-lines)
+
+;; For emacs 24, re-instate auto-copy when selecting region with mouse
+(setq mouse-drag-copy-region t)
+
+(set-face-attribute 'region nil :background "#ffff00" :foreground "#000")
+
