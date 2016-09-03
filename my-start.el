@@ -1,4 +1,4 @@
-;; Copyright (C) 2000-2015 Philip Dorrell
+;; Copyright (C) 2000-2016 Philip Dorrell
 
 (setq running-windows-9x (and (fboundp 'w32-using-nt) (not (w32-using-nt))))
 
