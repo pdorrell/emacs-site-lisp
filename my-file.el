@@ -4,7 +4,7 @@
 
 (defvar file-menu-file-name "_" "Name used for file menus")
 
-(defvar run-file-program "/usr/bin/gnome-open")
+(defvar run-file-program "/usr/bin/xdg-open")
 
 (defvar emacs-customisation-dir nil
   "File to visit in order to alter your own emacs customisations")
