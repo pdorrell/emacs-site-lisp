@@ -88,8 +88,9 @@
 ;;(try-to-load "my-treetop")
 (try-to-load "my-sass")
 (try-to-load "my-maori")
-(try-to-load "my-coffee")
+;;(try-to-load "my-coffee")
 (try-to-load "my-rst")
+(try-to-load "my-idris")
 
 (try-to-load "my-melody-scripter")
 
@@ -107,3 +108,8 @@
 
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+
+;; Mouse-3 fix-ups
+
+(global-set-key [S-mouse-3] 'replace-word)
+
