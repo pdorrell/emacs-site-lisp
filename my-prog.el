@@ -75,7 +75,7 @@
 (defun gitk-this-directory()
   "Start gitk in this directory"
   (interactive)
-  (set-process-query-on-exit-flag (start-process "gitk" nil *gitk-executable*) nil) )
+  (set-process-query-on-exit-flag (start-process "gitk" nil *gitk-executable* "--all") nil) )
 
 (defun run-alternate-command()
   "Compile this file"
