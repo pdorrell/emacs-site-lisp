@@ -121,3 +121,4 @@
 (global-set-key [C-S-mouse-3] 'paste-line)
 
 (global-set-key [?\M-d] 'delete-word-at-point)
+

@@ -1,5 +1,7 @@
 ;; Copyright (C) 2000-2016 Philip Dorrell
 
+(setq kmacro-call-mouse-event nil) ;; to stop it hijacking S-mouse-3
+
 (setq running-windows-9x (and (fboundp 'w32-using-nt) (not (w32-using-nt))))
 
 (if (boundp 'w32-fixed-font-alist)	

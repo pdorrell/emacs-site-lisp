@@ -4,7 +4,7 @@
 (add-hook 'idris-compiler-notes-mode-hook 'my-idris-compiler-notes-mode-hook)
 
 (setq idris-word-table
-      (make-alpha-table letters-digits-string "_") )
+      (make-alpha-table letters-digits-string "_'") )
 
 (defun add-idris-defn()
   (interactive)
@@ -30,12 +30,20 @@
 (defun wrap-as-idris-parameter()
   (interactive)
   (just-one-space 0)
-  (insert " : )")
-  (backward-char 4)
+  (insert " : ) -> ")
+  (backward-char 8)
   (backward-sexp)
   (insert "(")
   (forward-sexp)
   (forward-char 3) )
+
+(defun replace-identifier (old new)
+  (interactive "sOld: \nsNew: ")
+  (let ( (case-fold-search nil)
+         (case-replace nil)
+         (regex (concat "\\([^a-zA-Z_0-9']\\)" old "\\([^a-zA-Z_0-9']\\)"))
+         (replacement (concat "\\1" new "\\2")) )
+  (query-replace-regexp regex replacement) ) )
 
 (defun my-idris-mode-hook()
   (setq expansion-key 'idris-expansion-key)
@@ -50,6 +58,8 @@
   (local-set-key [?\C-:] 'wrap-as-idris-parameter)
   (local-set-key [M-up] 'idris-next-error)
   (unset-keys-hijacked-by-idris-mode) )
+
+(setq idris-interpreter-flags '("--allow-capitalized-pattern-variables"))
 
 (defun def-idris-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in idris mode"
@@ -69,6 +79,10 @@
 
 (def-idris-abbrev "pe" "public export")
 (def-idris-abbrev "dt" "%default total\n\n")
+(def-idris-abbrev "l" '("\n  let e1 = " mark "\n      \n  in " goto-mark))
+(def-idris-abbrev "ll" '("let lemma = " mark " in" goto-mark))
+(def-idris-abbrev "h" "?hole")
+(def-idris-abbrev "th" '("the (" mark ") $ " goto-mark))
 
 (defun set-dual-frames()
   (interactive)
