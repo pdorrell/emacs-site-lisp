@@ -59,7 +59,7 @@
   (local-set-key [M-up] 'idris-next-error)
   (unset-keys-hijacked-by-idris-mode) )
 
-(setq idris-interpreter-flags '("--allow-capitalized-pattern-variables"))
+;;(setq idris-interpreter-flags '("--allow-capitalized-pattern-variables"))
 
 (defun def-idris-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in idris mode"
