@@ -45,6 +45,12 @@
          (replacement (concat "\\1" new "\\2")) )
   (query-replace-regexp regex replacement) ) )
 
+;; To avoid the set-line-filter function from triggering the hook to clear all Idris overlays ...
+(eval-after-load "idris-highlight-input"
+  '(progn
+     (message "OVERRIDE idris-highlight--overlay-modification-hook to do nothing.")
+     (defun idris-highlight--overlay-modification-hook (&rest args) ) ) )
+
 (defun my-idris-mode-hook()
   (setq expansion-key 'idris-expansion-key)
   (setq word-alpha-table idris-word-table)
