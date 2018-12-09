@@ -3,8 +3,8 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "idris-ipkg-mode" "idris-ipkg-mode.el" (23435
-;;;;;;  34362 156336 881000))
+;;;### (autoloads nil "idris-ipkg-mode" "idris-ipkg-mode.el" (23564
+;;;;;;  52880 805881 29000))
 ;;; Generated autoloads from idris-ipkg-mode.el
 
 (autoload 'idris-ipkg-mode "idris-ipkg-mode" "\
@@ -16,8 +16,8 @@ Invokes `idris-ipkg-mode-hook'.
 
 ;;;***
 
-;;;### (autoloads nil "idris-mode" "idris-mode.el" (23435 34362 236336
-;;;;;;  543000))
+;;;### (autoloads nil "idris-mode" "idris-mode.el" (23564 52880 889881
+;;;;;;  190000))
 ;;; Generated autoloads from idris-mode.el
 
 (autoload 'idris-mode "idris-mode" "\
@@ -33,8 +33,8 @@ Invokes `idris-mode-hook'.
 
 ;;;***
 
-;;;### (autoloads nil "idris-repl" "idris-repl.el" (23435 34362 184336
-;;;;;;  763000))
+;;;### (autoloads nil "idris-repl" "idris-repl.el" (23564 52880 833881
+;;;;;;  83000))
 ;;; Generated autoloads from idris-repl.el
 
 (autoload 'idris-repl "idris-repl" "\
@@ -45,7 +45,7 @@ Invokes `idris-mode-hook'.
 ;;;***
 
 ;;;### (autoloads nil "idris-simple-indent" "idris-simple-indent.el"
-;;;;;;  (23435 34362 232336 559000))
+;;;;;;  (23564 52880 885881 182000))
 ;;; Generated autoloads from idris-simple-indent.el
 
 (autoload 'idris-simple-indent-mode "idris-simple-indent" "\
@@ -73,8 +73,8 @@ Turn on function `idris-simple-indent-mode'.
 ;;;;;;  "idris-hole-list.el" "idris-info.el" "idris-keys.el" "idris-log.el"
 ;;;;;;  "idris-mode-pkg.el" "idris-prover.el" "idris-settings.el"
 ;;;;;;  "idris-syntax.el" "idris-tree-info.el" "idris-warnings-tree.el"
-;;;;;;  "idris-warnings.el" "inferior-idris.el") (23435 34362 264734
-;;;;;;  289000))
+;;;;;;  "idris-warnings.el" "inferior-idris.el") (23564 52880 916692
+;;;;;;  626000))
 
 ;;;***
 

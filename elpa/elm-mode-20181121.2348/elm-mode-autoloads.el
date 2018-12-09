@@ -3,8 +3,8 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "elm-format" "elm-format.el" (23435 34364 636326
-;;;;;;  394000))
+;;;### (autoloads nil "elm-format" "elm-format.el" (23564 52882 413884
+;;;;;;  87000))
 ;;; Generated autoloads from elm-format.el
 
 (autoload 'elm-mode-format-buffer "elm-format" "\
@@ -16,8 +16,8 @@ IS-INTERACTIVE, show a buffer if the formatting fails.
 
 ;;;***
 
-;;;### (autoloads nil "elm-indent" "elm-indent.el" (23435 34364 652326
-;;;;;;  326000))
+;;;### (autoloads nil "elm-indent" "elm-indent.el" (23564 52882 425884
+;;;;;;  110000))
 ;;; Generated autoloads from elm-indent.el
 
 (autoload 'elm-indent-mode "elm-indent" "\
@@ -43,8 +43,8 @@ Invokes `elm-indent-hook' if not nil.
 
 ;;;***
 
-;;;### (autoloads nil "elm-interactive" "elm-interactive.el" (23435
-;;;;;;  34364 644326 360000))
+;;;### (autoloads nil "elm-interactive" "elm-interactive.el" (23564
+;;;;;;  52882 417884 95000))
 ;;; Generated autoloads from elm-interactive.el
 
 (autoload 'elm-interactive-mode "elm-interactive" "\
@@ -194,8 +194,8 @@ Run the elm-test command on the current project.
 
 ;;;***
 
-;;;### (autoloads nil "elm-mode" "elm-mode.el" (23435 34364 660326
-;;;;;;  294000))
+;;;### (autoloads nil "elm-mode" "elm-mode.el" (23564 52882 433884
+;;;;;;  125000))
 ;;; Generated autoloads from elm-mode.el
 
 (autoload 'elm-mode "elm-mode" "\
@@ -207,8 +207,8 @@ Major mode for editing Elm source code.
 
 ;;;***
 
-;;;### (autoloads nil "elm-tags" "elm-tags.el" (23435 34364 668326
-;;;;;;  260000))
+;;;### (autoloads nil "elm-tags" "elm-tags.el" (23564 52882 445884
+;;;;;;  147000))
 ;;; Generated autoloads from elm-tags.el
 
 (autoload 'elm-mode-goto-tag-at-point "elm-tags" "\
@@ -224,7 +224,7 @@ Generate a TAGS file for the current project.
 ;;;***
 
 ;;;### (autoloads nil nil ("elm-font-lock.el" "elm-imenu.el" "elm-mode-pkg.el"
-;;;;;;  "elm-util.el") (23435 34364 683783 783000))
+;;;;;;  "elm-util.el") (23564 52882 458699 859000))
 
 ;;;***
 

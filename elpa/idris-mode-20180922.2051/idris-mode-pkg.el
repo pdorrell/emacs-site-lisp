@@ -1,4 +1,4 @@
-(define-package "idris-mode" "20180417.545" "Major mode for editing Idris code"
+(define-package "idris-mode" "20180922.2051" "Major mode for editing Idris code"
   '((emacs "24")
     (prop-menu "0.1")
     (cl-lib "0.5"))
