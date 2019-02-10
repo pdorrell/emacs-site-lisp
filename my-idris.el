@@ -55,6 +55,7 @@
   (setq expansion-key 'idris-expansion-key)
   (setq word-alpha-table idris-word-table)
   (local-set-key [C-M-f9] 'idris-load-file)
+  (local-set-key [M-f9] 'idris-compile-and-execute)
   (local-set-key [C-f8] 'idris-proof-search)
   (local-set-key [S-f8] 'add-idris-defn)  
   (local-set-key [f8] 'idris-case-dwim)
