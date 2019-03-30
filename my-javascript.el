@@ -9,6 +9,11 @@
 
 (set-extension-mode ".json" 'javascript-mode)
 
+(set-extension-mode ".js" 'rjsx-mode)
+(setq sgml-attribute-offset 0)
+
+(eval-after-load 'js2-mode '(define-key js2-mode-map [down-mouse-3] nil))
+
 (defun java-identifier-at-point ()
   (word-at word-alpha-table (point)) )
 
