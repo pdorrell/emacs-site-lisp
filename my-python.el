@@ -15,8 +15,10 @@
     (condition-case nil (kill-buffer "*python*") (error nil))
     (switch-to-buffer-other-window "*python*")
     (setq *current-output-buffer* "*python*")
+    (setq default-directory (project-base-directory))
     (let ( (python-executable (project-file :python-executable)) )
-      (start-process "python" "*python*" python-executable "-u" filename) ) ) )
+      (start-process "python" "*python*"
+                     "/usr/bin/env" "PYTHONPATH=." python-executable "-u" filename) ) ) )
 
 (defun python-run-nosetests (&optional qualifier)
   (interactive)
