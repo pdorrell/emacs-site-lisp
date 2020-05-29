@@ -52,7 +52,7 @@
   "Show the messages buffer"
   (interactive)
   (if (not (buffer-for-name "*Messages*")) (message ""))
-  (show-buffer nil "*Messages*") )
+  (display-buffer "*Messages*") )
 
 ;;-----------------------------------------------------------------
 (defun set-lisp-abbrev (abbrev expansion)

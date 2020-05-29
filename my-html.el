@@ -117,6 +117,10 @@
 	(setq buffer-file-name default-directory) )
     (expand-file-name (buffer-file-name)) ) )
 
+(defun set-total-window-height (window height)
+  (let ( (delta (- height (window-total-height window))) )
+    (window-resize window delta) ) )
+
 (defun compile-this-file-using-ruby-script (&rest ruby-script-args)
   "Compile this file or directory from RUBY-SCRIPT"
   (save-this-buffer-and-others)
@@ -136,7 +140,8 @@
              `(,ruby-executable nil (t t) t ,@ruby-args 
                                 ,@ruby-script-args ,filename))
       (message "Finished regenerating %s" filename)
-      (set-window-point (get-buffer-window ruby-buffer) (point-max)) )
+      (set-window-point (get-buffer-window ruby-buffer) (point-max))
+      (set-total-window-height (get-buffer-window ruby-buffer) 6) )
     (revert-if-saved) ) )
 
 (defun open-file-in-web-browser (file)
