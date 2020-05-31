@@ -223,6 +223,7 @@ other wise the current directory for the buffer)."
 (global-set-key [?\M-p] 'visit-project-file)
 
 (global-set-key [C-M-f9] 'run-this-file)
+(global-set-key [M-f9] 'run-this-file)
 (global-set-key [S-M-f9] 'run-project)
 (global-set-key [C-S-M-f8] 'run-database-for-project)
 (global-set-key [C-M-f7] 'open-project-file-menu)
