@@ -111,7 +111,7 @@
   
 
 ;;========================================================================
-(global-set-key [M-C-f8] 'run-alternate-command)
+(global-set-key [M-f8] 'run-alternate-command)
 (global-set-key [?\M-k] 'visit-output-buffer)
 (global-set-key [?\M-N] 'compile-ant)
 (global-set-key [?\C-\M-N] 'compile-ant-target)
