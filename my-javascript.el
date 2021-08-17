@@ -58,7 +58,7 @@
   (interactive)
   (insert-tranformed-word 
    javascript-dotted-word-table 
-   (lambda (var) (concat "console.log(\"" var " = \" + inspect(" var "));"))
+   (lambda (var) (concat "console.log(\"" var " = \" + " var ");"))
    "dotted name") )
 
 (defun javascript-hook ()
