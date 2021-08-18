@@ -106,10 +106,6 @@
     (process-kill-without-query process) ) )
 
 
-
-    
-  
-
 ;;========================================================================
 (global-set-key [M-f8] 'run-alternate-command)
 (global-set-key [?\M-k] 'visit-output-buffer)

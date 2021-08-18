@@ -12,7 +12,7 @@
 (defun edit-emacs-customisation()
   "Edit emacs-customisation"
   (interactive)
-  (find-file (concat emacs-customisation-dir file-menu-file-name)) )
+  (find-file (concat emacs-customisation-dir "/" file-menu-file-name)) )
 
 (defun kill-buffer-y-or-n ()
   "Kill current buffer"

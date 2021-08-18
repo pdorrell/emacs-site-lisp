@@ -5,7 +5,6 @@
 (defvar *external-text-editor* nil "External text editor")
 (defvar *external-html-editor* nil "External HTML editor")
 
-(defvar *latex-bin-directory* nil "Latex bin directory")
 (defvar *git-executable* "git" "Git executable")
 (defvar *gitk-executable* "gitk" "Git executable")
 (defvar *ruby-1.8-executable* nil "Ruby 1.8 executable")

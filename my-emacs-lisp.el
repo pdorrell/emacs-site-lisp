@@ -32,7 +32,7 @@
 
 (defun lisp-search-for-identifier (identifier)
   (interactive "sSearch for: ")
-  (show-search-buffer (list default-directory) '(".el" ".plisp" ".lisp") identifier) )
+  (show-search-buffer (list default-directory) '(".el" ".lisp") identifier) )
 
 
 (defun buffer-for-name (name)

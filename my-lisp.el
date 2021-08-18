@@ -12,9 +12,7 @@
   (local-set-key [f9] 'lisp-eval-defun-and-show)
   (local-set-key [M-f9] 'quit-lisp-break)
   (local-set-key [?\M-k] 'show-inferior-lisp-buffer)
-  (local-set-key [?\M-N] 'plisp-preview)
   (local-set-key [?\C-\M-n] 'lisp-setup)
-  (local-set-key [?\M-p] 'plisp-setup)
   (local-set-key [f2] 'my-expand-abbrev)
   (local-set-key [?\C-w] 'lisp-search-for-identifier-at-point)
   (local-set-key [?\C-m] 'return-and-indent)
@@ -48,18 +46,6 @@
 (defun inferior-lisp-command (command)
   (comint-send-string (inferior-lisp-proc) (format "%S\n" command)) )
 
-(defun plisp-preview ()
-  (interactive)
-  (save-buffer)
-  (save-some-buffers)
-  (if (not plisp-has-been-setup) 
-      (plisp-setup) )
-  (show-inferior-lisp-buffer-at-end)
-  (let ( (base-name (file-name-minus-extension (buffer-name))) )
-    (inferior-lisp-command (list 'ps-and-show 
-				 (concat default-directory (buffer-name))
-				 (concat default-directory "output/" base-name ".eps") ) ) ) )
-
 (defun lisp-eval-defun-and-show ()
   (interactive)
   (save-this-buffer-and-others)
@@ -84,18 +70,6 @@
   (run-lisp inferior-lisp-program)
   (inferior-lisp-command `(setf (default-directory) ,(project-directory :lisp-default-directory)))
   (local-set-key [?\M-K] 'bury-buffer) )
-
-(defvar plisp-has-been-setup nil)
-
-(defun plisp-setup ()
-  (interactive)
-  (delete-other-windows)
-  (split-window-vertically)
-  (run-lisp inferior-lisp-program)
-  (inferior-lisp-command `(setf (default-directory) ,(project-directory :lisp-default-directory)))
-  (inferior-lisp-command '(load "build"))
-  (local-set-key [?\M-K] 'bury-buffer)
-  (setf plisp-has-been-setup t) )
 
 (setq inferior-lisp-program "clisp -K full")
 
