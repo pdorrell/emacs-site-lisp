@@ -9,7 +9,9 @@
 
 (set-extension-mode ".json" 'javascript-mode)
 
-(set-extension-mode ".js" 'rjsx-mode)
+(set-extension-mode ".js" 'javascript-mode)
+(set-extension-mode ".jsx" 'rjsx-mode)
+(set-extension-mode ".tsx" 'rjsx-mode)
 (setq sgml-attribute-offset 0)
 
 (eval-after-load 'js2-mode '(define-key js2-mode-map [down-mouse-3] nil))
