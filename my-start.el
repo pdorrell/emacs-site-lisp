@@ -8,20 +8,13 @@
 	(set-frame-font "Consolas-11")
   (set-frame-font "Liberation Mono-13") )
 
-(setq emacs-customisation-dir (file-name-directory load-file-name))
-(setq emacs-util-classpath (concat emacs-customisation-dir "emacs.jar"))
-(setq package-user-dir (concat emacs-customisation-dir "elpa"))
-
 (setq-default indent-tabs-mode nil)
 
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
 			 ("melpa" . "http://melpa.org/packages/")))
 
 (require 'package)
-(package-initialize)
-
-(require 'coffee-mode)
-(setq coffee-tab-width 2)
+;;(package-initialize)
 
 (setq running-windows (fboundp 'w32-using-nt))
 
