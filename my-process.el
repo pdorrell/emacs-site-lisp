@@ -2,6 +2,9 @@
 
 (defvar emacs-util-classpath "." "Class path for list methods utility")
 
+(defun process-kill-without-query(process)
+  (set-process-query-on-exit-flag process nil) )
+
 (defun start-process-if-not-going (name startup-command &optional move-to-top)
   (let ( (process (get-buffer-process (current-buffer))) )
     (if process
