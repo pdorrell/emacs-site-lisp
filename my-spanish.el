@@ -34,7 +34,7 @@
 
 ;; This file is encoded in UTF-8.
 
-(require 'cl)
+(require 'cl-lib)
 ;-----------------------------------------------------------------
 ;; These next two are utility routines that help you to see
 ;; which character is which. They are not needed to make the
