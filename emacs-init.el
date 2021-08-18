@@ -27,7 +27,7 @@
 
 (defvar *my-name* "<Put your name here>" "My name")
 
-(defvar copyright-line (concat "Copyright (C) 2015 " *my-name*))
+(defvar copyright-line (concat "Copyright (C) 2021 " *my-name*))
 
 (global-set-key [?\M-\C-S] 'spanish-minor-mode)
 
