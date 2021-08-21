@@ -41,7 +41,6 @@
       (stop-then-start-process "nodejs" '*nodejs-process* "*nodejs*" 
 			     javascript-executable (list filename) ) ) ) )
 
-
 (defvar *phantomjs-process* nil)
 
 (defun phantomjs-run-file (file &rest args)

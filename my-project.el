@@ -215,17 +215,3 @@ other wise the current directory for the buffer)."
     (clear-buffer)
     (stop-then-start-process "mongod" '*mongod-process* "*mongod*"
 			     "mongod" (list "-port" (number-to-string port) "-dbpath" directory) ) )
-  
-
-(global-set-key [?\M-M] 'build-project)
-(global-set-key [?\C-\M-M] 'build-project-with-target)
-
-(global-set-key [?\M-p] 'visit-project-file)
-
-(global-set-key [C-M-f9] 'run-this-file)
-(global-set-key [M-f9] 'run-this-file)
-(global-set-key [S-M-f9] 'run-project)
-(global-set-key [C-S-M-f8] 'run-database-for-project)
-(global-set-key [C-M-f7] 'open-project-file-menu)
-
-(global-set-key [?\C-\M-o] 'show-project-log-buffer)

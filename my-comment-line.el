@@ -61,18 +61,4 @@
     (message "No more comment lines") ) )
 
 ;;========================================================================
-(global-set-key [?\M-L] 'thin-comment-line)
-(global-set-key [?\M-T] 'thick-comment-line)
-
-(global-set-key [M-kp-down] 'find-comment-line-fwd)
-(global-set-key [M-down] 'find-comment-line-fwd)
-
-(global-set-key [M-kp-up] 'find-comment-line-bwd)
-(global-set-key [M-up] 'find-comment-line-bwd)
-
-(global-set-key [M-kp-next] 'find-thick-comment-line-fwd)
-(global-set-key [M-next] 'find-thick-comment-line-fwd)
-
-(global-set-key [M-kp-prior] 'find-thick-comment-line-bwd)
-(global-set-key [M-prior] 'find-thick-comment-line-bwd)
 

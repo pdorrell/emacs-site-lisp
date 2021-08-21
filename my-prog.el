@@ -104,16 +104,3 @@
   (let ( (process (apply #'start-process 
                         (append (list "script" output-buffer-name) command ))) )
     (process-kill-without-query process) ) )
-
-
-;;========================================================================
-(global-set-key [M-f8] 'run-alternate-command)
-(global-set-key [?\M-k] 'visit-output-buffer)
-(global-set-key [?\M-N] 'compile-ant)
-(global-set-key [?\C-\M-N] 'compile-ant-target)
-(global-set-key [f12] 'next-error)
-(global-set-key [pause] 'next-error)
-(global-set-key [S-pause] 'previous-error) 
-(global-set-key [C-M-f10] 'comment-region)
-(global-set-key [?\M-G] 'git-gui-this-directory)
-(global-set-key [S-M-f10] 'gitk-this-directory)

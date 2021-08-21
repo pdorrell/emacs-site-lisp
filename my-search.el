@@ -26,9 +26,6 @@
   (interactive "sSearch for: ")
   (show-search-buffer (list (file-truename default-directory)) *default-search-extensions* string) )
 
-(global-set-key [?\C-w] 'search-this-dir)
-
-
 (defvar *project-search-dirs* nil)
 (defvar *project-search-extensions* nil)
 
@@ -54,5 +51,3 @@
     (message "exclude-subdirs = %s" exclude-subdirs)
     (show-search-buffer (cons main-search-dir (project-value :extra-search-directories))
                         (project-value :search-extensions) identifier) ) )
-
-(global-set-key [M-f12] 'project-search-for-identifier-at-point)

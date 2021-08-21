@@ -190,8 +190,6 @@
         (if (memq major-mode '(shell-mode rlogin-mode))
             (comint-send-input) ) ) ) )
 
-(global-set-key [?\M-C] 'clear-buffer)
-
 ;;-----------------------------------------------------------------
 
 (defun revert-if-saved()
@@ -220,28 +218,6 @@
                 (setq ch (+ ch 32)) ) )
           (aset word letter-pos ch)
           (insert word) ) ) ) )
-
-;-----------------------------------------------------------------
-(global-set-key [delete] 'kill-region)
-(global-set-key [insert] 'yank)
-(global-set-key [?\C-u] 'undo)
-(global-set-key "\M-n" 'revert-if-saved)
-
-(global-set-key [?\M--] 'other-window)
-(global-set-key [?\M-B] 'buffer-menu)
-(global-set-key [?\M-o] 'filter-on-word-at-point)
-(global-set-key [?\M-O] 'toggle-filtering)
-(global-set-key [?\M-I] 'filter-on-indent)
-(global-set-key [C-f6] 'start-or-end-kbd-macro)
-
-(global-set-key [S-C-f11] 'describe-key)
-(global-set-key [S-f11] 'describe-function-at-pos)
-(global-set-key [C-f11] 'describe-variable-at-pos)
-
-(global-set-key [f12] 'repeat-complex-command)
-
-(global-set-key [?\C-t] 'toggle-truncate-lines)
-(global-set-key [?\C-\M-t] 'toggle-truncate-lines)
 
 ;; For emacs 24, re-instate auto-copy when selecting region with mouse
 (setq mouse-drag-copy-region t)

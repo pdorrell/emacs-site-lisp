@@ -135,9 +135,6 @@
   (interactive)
   (find-file sql-file) )
 
-(global-set-key [?\C-e] 'sql-execute-query-at-point)
-(global-set-key [C-S-f7] 'visit-sql-file)
-
 (def-sql-abbrev "s" '("select " mark " from " goto-mark))
 (def-sql-abbrev "sf" "select * from ")
 (def-sql-abbrev "sfw" '("select * from " mark " where " goto-mark))

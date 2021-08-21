@@ -19,8 +19,7 @@
     (process-kill-without-query process)
     (if move-to-top (set-process-filter process 'goto-first-line-process-filter))
     process) )
-  
-
+ 
 (defun run-process-with-line (name startup-command input-line &optional move-to-top)
   (let ( (process (start-process-if-not-going name startup-command move-to-top)) )
     (clear-buffer)
@@ -116,7 +115,3 @@
     (if (null process-to-kill)
         (message "No buffer process (and no value for *related-output-process*)")
       (kill-process process-to-kill) ) ) )
-
-
-
-(global-set-key [S-C-f9] 'kill-buffer-process)

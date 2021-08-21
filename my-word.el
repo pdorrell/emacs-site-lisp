@@ -113,12 +113,3 @@
       (progn (delete-word-at-point)
 	     (insert word) )
       (message "No word at mouse position") ) ) )
-
-
-;;========================================================================
-(global-set-key [mouse-3] 'paste-word)
-(global-set-key [S-mouse-3] 'replace-word)
-(global-set-key [C-S-mouse-3] 'paste-line)
-
-(global-set-key [?\M-d] 'delete-word-at-point)
-

@@ -6,18 +6,11 @@
   (interactive)
   (message "Point= %d, column = %d" (point) (current-column)) )
 
-(global-set-key [?\M-P] 'show-position)
-
-(global-set-key [?\C-\M-g] 'goto-line)
-
 ;-----------------------------------------------------------------
 (defun point-to-top ()
   "Move point to top of window"
   (interactive)
   (recenter 0) )
-
-(global-set-key [M-S-up] 'point-to-top)
-(global-set-key [M-S-kp-up] 'point-to-top)
 
 ;-----------------------------------------------------------------
 (defun point-to-bottom ()
@@ -25,22 +18,7 @@
   (interactive)
   (recenter -1) )
 
-(global-set-key [M-S-down] 'point-to-bottom)
-(global-set-key [M-S-kp-down] 'point-to-bottom)
-
 ;-----------------------------------------------------------------
-(global-set-key [home] 'beginning-of-line)
-(global-set-key [end] 'end-of-line)
-(global-set-key [C-home] 'beginning-of-buffer)
-(global-set-key [C-end] 'end-of-buffer)
-(global-set-key [C-kp-home] 'beginning-of-buffer)
-(global-set-key [C-kp-end] 'end-of-buffer)
-
-(global-set-key [M-left] 'backward-sexp)
-(global-set-key [M-kp-left] 'backward-sexp)
-(global-set-key [M-right] 'forward-sexp)
-(global-set-key [M-kp-right] 'forward-sexp)
-
 (defun scroll-up-one()
   "Scroll up one line"
   (interactive)
@@ -62,9 +40,4 @@
   (interactive)
   (scroll-right scroll-sideways-increment) )
 
-(global-set-key [C-kp-left] 'scroll-left-a-bit)
-(global-set-key [C-kp-right] 'scroll-right-a-bit)
 (setq automatic-hscrolling nil)
-
-(global-set-key [C-kp-up] 'scroll-up-one)
-(global-set-key [C-kp-down] 'scroll-down-one)

@@ -442,8 +442,6 @@
   (interactive)
   (message (format "result=#%S#" (get-var-and-method-before-point))))
 
-(global-set-key [C-M-pause] 'test)
-
 (defun get-var-and-method-before-point ()
   (let ( (here (point)) method-name method-start var-start var-end var-name)
     (save-excursion
@@ -630,14 +628,6 @@
   (find-file *java-main-source-file*)
   (java-run-main)
   (delete-other-windows) )
-
-;;(global-set-key [C-M-f6] 'run-java-client)
-
-;;(global-set-key [C-S-f8] 'visit-java-source-file-for-fully-qualified-class)
-
-;(global-set-key [M-C-S-f8] 'show-java-packages-for-class)
-;(global-set-key [C-S-f8] 'show-java-type-for-variable)
-;(global-set-key [M-f8] 'get-var-and-method-before-point)
 
 (defun prefixed (prefix strings)
   (mapcar #'(lambda (string) (concat prefix string)) strings) )

@@ -46,9 +46,6 @@
   (interactive)
   (error "You shouldn't call this function") )
 
-(global-set-key [?\M-F] 'font-lock-mode)
-(global-set-key [?\M-\C-F] 'show-face-at-point)
-
 (defun unbold-all-faces ()
   "Clear the `bold' flag from all faces."
   (interactive)
@@ -60,4 +57,3 @@
 (add-hook 'font-lock-mode-hook
           (lambda ()
             (unbold-all-faces)))
-

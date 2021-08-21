@@ -20,9 +20,6 @@
 		       (concat (project-base-directory-value) "script/server") "-b" "127.0.0.1") )
   (switch-to-buffer-other-window "*webrick*") )
 
-;;(global-set-key [?\C-\M-k] 'webrick)
-
-
 (defun insert-hash-key ()
   (interactive)
   (insert " => ") )
@@ -181,8 +178,6 @@
 (def-ruby-abbrev "p" '("puts " indent "\"" mark "\"" goto-mark))
 
 (add-hook 'ruby-mode-hook 'ruby-mode-hook-function)
-
-(global-set-key [?\M-r] 'ruby-visit-output-buffer)
 
 (def-ruby-abbrev "describe" '("describe " indent "\"" mark "\" do" return indent return "end" indent goto-mark))
 (def-ruby-abbrev "it" '("it " indent "\"" mark "\" do" return indent return "end" indent goto-mark))

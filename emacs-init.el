@@ -29,8 +29,6 @@
 
 (defvar copyright-line (concat "Copyright (C) 2021 " *my-name*))
 
-(global-set-key [?\M-\C-S] 'spanish-minor-mode)
-
 (try-to-load "my-start.el")
 
 (setq sql-file "~/test.sql")

@@ -8,9 +8,6 @@
       (process-kill-without-query 
        (get-buffer-process (current-buffer)) ) ) )
 
-(global-set-key [?\M-S] 'start-killable-shell)
-(global-set-key [?\M-\C-S] 'show-shell-this-dir)
-
 (defun run-command-in-shell (command)
   "Run command in shell"
   (end-of-buffer)
@@ -100,5 +97,3 @@
   (setq dirtrack-list (list *shell-dirtrack-regexp* 1 nil))
   (shell-dirtrack-mode -1)
   (dirtrack-mode) )
-;;========================================================================
-(global-set-key [C-M-S-f4] 'show-file-and-shell-this-dir)

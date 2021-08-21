@@ -105,6 +105,3 @@ toggle array"
   "Toggle Spanish accent or other special character"
   (interactive)
   (toggle-character spanish-accents-toggler) )
-
-(global-set-key [f8] 'spanish-toggle-accent)
-

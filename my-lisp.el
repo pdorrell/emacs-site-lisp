@@ -27,8 +27,6 @@
   (run-lisp inferior-lisp-program)
   (local-set-key [?\M-K] 'bury-buffer) )
 
-(global-set-key [?\C-\M-l] 'run-inferior-lisp)
-
 (defun show-inferior-lisp-buffer-at-end ()
   (display-buffer "*inferior-lisp*" t)
   (save-current-buffer

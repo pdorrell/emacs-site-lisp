@@ -40,8 +40,9 @@
 (set-face-background 'region "yellow")
 (set-cursor-color "blue")
 (setq search-highlight t)
-(global-set-key [S-f6] 'call-last-kbd-macro)
-(global-set-key [?\M-Q] 'indent-sexp)
+
+(try-to-load "my-global-keyboard-shortcuts")
+
 ;-----------------------------------------------------------------
 
 (try-to-load "executables")
@@ -87,15 +88,10 @@
 (defun yes-or-no-p (string)
   (y-or-n-p string) )
 
-(global-unset-key [f2])
-(global-set-key [f2] 'my-expand-abbrev)
-
 (setq enable-local-variables :safe)
 
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
-;; Mouse-3 fix-ups
-
+;; fix-up
 (global-set-key [S-mouse-3] 'replace-word)
-

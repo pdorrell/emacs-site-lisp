@@ -59,8 +59,5 @@
 ;;========================================================================
 (set-lisp-abbrev "d" "(defun ")
 (set-lisp-abbrev "i" "(interactive)")
-(set-lisp-abbrev "g" "(global-set-key ")
 (set-lisp-abbrev "l" "(local-set-key ")
 (set-lisp-abbrev "copy" (concat ";; " copyright-line))
-
-(global-set-key [?\M-z] 'show-messages-buffer)

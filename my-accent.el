@@ -8,4 +8,3 @@
   (standard-display-european 1)
   (message "Accent typing and display enabled") )
 
-; (global-set-key [?\M-A] 'accent-mode)

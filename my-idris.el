@@ -102,9 +102,3 @@
                   (height . 23)
                   (left . 450)
                   (top . 80) ) ) ) )
-
-(global-set-key [C-f10] 'set-dual-frames)
-
-(frame-parameter nil 'maximized)
-
-(frame-width (selected-frame))

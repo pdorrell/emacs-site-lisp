@@ -19,5 +19,3 @@
 	      (message " browsing %s ..." url)
 	      (browse-url url) ) ) )
       (message "No word at point") ) ) )
-
-(global-set-key [?\C-\M-l] 'maori-lookup-word-in-dictionary)

@@ -132,6 +132,3 @@
       (if (not went-to-next)
 	  (message "No more parameters in file") ) ) ) )
 
-;;-----------------------------------------------------------------
-(global-set-key [f6] 'next-parameter)
-

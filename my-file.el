@@ -373,32 +373,3 @@ processed."
 (defun delete-file-if-exists (file) 
   (if (file-exists-p file)
       (delete-file file) ) )
-
-;-----------------------------------------------------------------
-(global-set-key [M-mouse-3] 'paste-filename)
-
-(global-set-key [f3] 'save-buffer)
-(global-set-key [S-f3] 'save-and-kill-buffer)
-(global-set-key [M-f3] 'save-this-buffer-and-others)
-
-(global-set-key [f4] 'find-file-at-point)
-(global-set-key [C-f4] 'find-file-at-point-full-window)
-(global-set-key [S-f4] 'visit-file-line)
-(global-set-key [M-f4] 'run-file-at-point)
-(global-set-key [S-M-f4] 'execute-this-file)
-
-(global-set-key [f5] 'save-mouse-selection)
-
-(global-set-key [f7] 'open-base-file-menu)
-(global-set-key [M-f7] 'open-file-menu)
-(global-set-key [S-f7] 'open-file-menu-other-window)
-(global-set-key [S-M-f7] 'open-base-file-menu-other-window)
-(global-set-key [C-f7] 'edit-emacs-customisation)
-
-(global-set-key [?\M-\C-d] 'open-this-directory)
-(global-set-key [?\C-N] 'edit-this-file-in-external-text-editor)
-
-(global-set-key [?\M-D] 'dired-default-directory)
-(global-set-key [?\M-K] 'kill-buffer-y-or-n)
-(global-set-key "\C-xK" 'kill-buffer-y-or-n)
-
