@@ -1,12 +1,7 @@
 ;;-----------------------------------------------------------------
-
-(defun global-set-keys (key-and-function-pairs)
-  (dolist (key-and-function-pair
-           key-and-function-pairs)
-    (apply 'global-set-key key-and-function-pair) ) )
-  
-(global-set-keys
- `( ([?\M-B] buffer-menu)
+(apply-to-list-of-arg-lists 
+ 'global-set-key
+ '( ([?\M-B] buffer-menu)
     ([?\M-C] clear-buffer)
 
     ([?\M-d]    delete-word-at-point)
@@ -52,6 +47,11 @@
     ([?\C-w] search-this-dir)
 
     ([?\M-z] show-messages-buffer)
+
+    ([?\M-0] delete-other-windows)
+    ([?\M-7] delete-window)
+    ([?\M-8] window-only-and-split)
+    ([?\M-9] split-window-vertically)
 
     ([?\M--] other-window)
 ;;-----------------------------------------------------------------

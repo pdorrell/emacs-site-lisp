@@ -41,14 +41,14 @@
 (set-cursor-color "blue")
 (setq search-highlight t)
 
-(try-to-load "my-global-keyboard-shortcuts")
-
 ;-----------------------------------------------------------------
 
 (try-to-load "executables")
 
 (try-to-load "my-essential")
 (try-to-load "my-utils")
+(try-to-load "my-global-keyboard-shortcuts")
+
 (try-to-load "my-project")
 (try-to-load "my-movement")
 (try-to-load "my-edit")

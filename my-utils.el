@@ -1,5 +1,10 @@
 ;; Copyright (C) 2000,2001 Philip Dorrell
 
+(defun apply-to-list-of-arg-lists (fun arg-lists)
+  (dolist (arg-list
+           arg-lists)
+    (apply fun arg-list) ) )
+  
 (defun check-count (args n)
   (if (not (eql (length args) 1))
       (error "Expecting %s arguments" n) ) )
