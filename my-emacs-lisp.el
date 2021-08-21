@@ -34,7 +34,6 @@
   (interactive "sSearch for: ")
   (show-search-buffer (list default-directory) '(".el" ".lisp") identifier) )
 
-
 (defun buffer-for-name (name)
   (block nil
     (let ( (buffers (buffer-list)) )
@@ -45,8 +44,6 @@
 (defun messaged (var value)
   (message "%s=%s" var value)
   value)
-
-(buffer-for-name "*Messages*")
 
 (defun show-messages-buffer ()
   "Show the messages buffer"

@@ -28,6 +28,9 @@
 
 (setq text-mode-hook '(text-hook))
 
+;;-----------------------------------------------------------------
+;;Line filtering
+
 (setq filter-regexp (make-regexp '(seq (at-least-once (not-set " \t\n")))))
 (make-variable-buffer-local 'filter-regexp)
 (make-variable-buffer-local 'filtering-minor-mode)
@@ -149,6 +152,7 @@
     (setq minor-mode-map-alist
           (cons (cons 'filtering-minor-mode filtering-minor-mode-map) minor-mode-map-alist)))
 
+;;-----------------------------------------------------------------
 (defun describe-function-at-pos ()
   (interactive)
   (let ( (word (word-at emacs-lisp-word-alpha-table (point))) )
@@ -162,6 +166,10 @@
     (if word
         (describe-variable (intern word))
       (call-interactively 'describe-variable) ) ) )
+
+
+;;-----------------------------------------------------------------
+
 
 (defun start-or-end-kbd-macro ()
   "If defining a keyboard macro, finish it, else start one"
@@ -184,9 +192,7 @@
 
 (global-set-key [?\M-C] 'clear-buffer)
 
-(defun visit-scratch-buffer()
-  (interactive)
-  (show-buffer nil "*scratch*") )
+;;-----------------------------------------------------------------
 
 (defun revert-if-saved()
   (interactive)
@@ -231,14 +237,8 @@
 (global-set-key [S-C-f11] 'describe-key)
 (global-set-key [S-f11] 'describe-function-at-pos)
 (global-set-key [C-f11] 'describe-variable-at-pos)
-(global-set-key [S-C-f11] 'describe-key)
-
-(global-set-key [?\M-\C-b] 'visit-scratch-buffer)
-
 
 (global-set-key [f12] 'repeat-complex-command)
-
-(filter-set-window-start)
 
 (global-set-key [?\C-t] 'toggle-truncate-lines)
 (global-set-key [?\C-\M-t] 'toggle-truncate-lines)
