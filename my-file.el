@@ -23,7 +23,6 @@
 	  (progn (setq buffer-file-name nil) (kill-buffer nil)) )
 	(message "") )
     (kill-buffer-safely) ) )
-    
 
 (defun save-and-kill-buffer ()
   "Save and then kill current buffer"
@@ -150,9 +149,6 @@ processed."
   (interactive)
   (find-file-at-point)
   (delete-other-windows) )
-
-(defun explore-directory (dir)
-  (w32-shell-execute "explore" (windowize-filename (expand-file-name dir))) )
 
 (defun browse-in-dev-browser(url)
   (start-process "chromium-dev" nil "chromium-browser" "--allow-file-access-from-files" "--disable-popup-blocking" url) )
@@ -374,15 +370,9 @@ processed."
 
 (add-hook 'dired-mode-hook 'dired-hook)
 
-(defun insert-old-file-menu ()
-  (interactive)
-  (insert-file-contents "file-menu") )
-
 (defun delete-file-if-exists (file) 
   (if (file-exists-p file)
       (delete-file file) ) )
-
-(global-set-key [?\C-\M-i] 'insert-old-file-menu)
 
 ;-----------------------------------------------------------------
 (global-set-key [M-mouse-3] 'paste-filename)
