@@ -169,15 +169,6 @@ processed."
 	  (start-process expanded-file-name nil
 	   run-file-program expanded-file-name ) ) ) ) ) )
 
-(defun notepad-this-file ()
-  "Edit this file in notepad (useful for printing)"
-  (interactive)
-    (if (buffer-file-name)
-	(if (fboundp 'w32-shell-execute)
-	    (w32-shell-execute "open" "notepad.exe " (windowize-filename (expand-file-name (buffer-file-name))))
-	  (message "No notepad in this OS") )
-      (message "No file to edit") ) )
-
 (defun edit-this-file-in-external-text-editor ()
   "Edit this file in a (preferred) external text editor (useful for printing)"
   (interactive)
@@ -207,14 +198,9 @@ processed."
       (message "This buffer is not visiting a file") ) ) )
 
 (defun open-this-directory ()
-  "Open current directory in Windows explorer"
+  "Open current directory in OS file manager"
   (interactive)
   (run-file default-directory) )
-
-(defun explore-this-directory ()
-  "Explore current directory in Windows explorer"
-  (interactive)
-  (explore-directory default-directory) )
 
 (defun run-file-at-point ()
   "Run the file whose name is at point"
@@ -420,7 +406,6 @@ processed."
 (global-set-key [C-f7] 'edit-emacs-customisation)
 
 (global-set-key [?\M-\C-d] 'open-this-directory)
-(global-set-key [?\M-\C-e] 'explore-this-directory)
 (global-set-key [?\C-N] 'edit-this-file-in-external-text-editor)
 
 (global-set-key [?\M-D] 'dired-default-directory)
