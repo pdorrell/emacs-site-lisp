@@ -10,10 +10,10 @@
 (defmacro def-html-pair-abbrev (abbrev part1 &optional part2)
   (if part2
       `(def-html-abbrev ,abbrev '(,part1 mark ,part2 goto-mark))
-    `(def-html-abbrev ,abbrev ,part1) ) )  
+    `(def-html-abbrev ,abbrev ,part1) ) )
 
 (defun def-html-abbrev (abbrev expansion)
-  (put (intern abbrev) 'html-expansion expansion) )
+  (put 'html-abbreviation-expansion (intern abbrev) expansion) )
 
 (defun get-html-abbrev-before()
    (let ((start (1- (point))) (end (point)) )
@@ -52,7 +52,7 @@
   (let ( (abbrev (get-html-abbrev-before)) expansion)
     (if abbrev
 	(progn
-	  (setq expansion (get (intern abbrev) 'html-expansion))
+	  (setq expansion (get 'html-abbreviation-expansion (intern abbrev)))
 	  (if (not expansion)
 	      (setq expansion 
 		    (list (concat "<" abbrev ">") 'mark (concat "</" abbrev ">") 'goto-mark) ) )
