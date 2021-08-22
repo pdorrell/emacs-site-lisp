@@ -127,6 +127,9 @@ processed."
   (let ( (filename (filename-at-point)) )
     (if (or (not filename) (= (length filename) 0))
 	(error "No file name at point") )
+    (find-file-from-name filename) ) )
+
+(defun find-file-from-name(filename)
     (cond
      ((string-starts-with filename "****")
       (browse-url-in-buffer (substring filename 4)) )
@@ -136,7 +139,7 @@ processed."
       (run-file (substring filename 2)) )
      ((string-match "*" filename)
       (dired filename) )
-     (t (messaged-find-file filename) ) ) ) )
+     (t (messaged-find-file filename) ) ) )
 
 (defvar run-test-url-function 'browse-url-in-buffer "Function to run on a test URL")
 

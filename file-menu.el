@@ -5,12 +5,27 @@
     nil
   (setq file-menu-mode-map (make-sparse-keymap))
   )
+(define-key file-menu-mode-map [f4] 'open-menu-or-file-at-point)
 
+(defun get-file-menu-file-name (file-name)
+  (if (string-ends-with file-name "/")
+      (concat file-name "_")
+    file-name) )
+
+(defun open-menu-or-file-at-point()
+  (interactive)
+  (let* ( (filename-at-point (file-menu-filename-at-point))
+          (file-menu-file-name (get-file-menu-file-name filename-at-point)) )
+    (if (file-exists-p file-menu-file-name)
+        (find-file file-menu-file-name)
+      (find-file-from-name filename-at-point) ) ) )
+                                       
 (defun file-menu-mode ()
   (setq major-mode 'file-menu-mode
 	mode-name "File Menu")
   (setq filename-at-point-function 'file-menu-filename-at-point)
-  (use-local-map file-menu-mode-map) )
+  (use-local-map file-menu-mode-map) 
+  )
 
 (defun word-start-pos-in-line (line pos)
   (if (>= pos (length line))
