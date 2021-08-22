@@ -1,5 +1,8 @@
 ;; Copyright (C) 2000 Philip Dorrell
 
+(def-html-abbrev "style" '("<style type=\"text/css\">" return "<!--" return mark return
+			   "-->" return "</style>" return goto-mark))
+
 (def-html-pair-abbrev "p" "<p>" "</p>")
 (def-html-pair-abbrev "pp" "</p>\n\n<p>" "")
 (def-html-pair-abbrev "html" 
@@ -49,9 +52,6 @@
 (def-html-pair-abbrev "div" "<div class=\"" "\"></div>")
 (def-html-pair-abbrev "blt" "<b>&lt;" "&gt;</b>")
 (def-html-pair-abbrev "span" "<span class=\"" "\"></span>")
-
-(def-html-abbrev "style" '("<style type=\"text/css\">" return "<!--" return mark return
-			   "-->" return "</style>" return goto-mark))
 
 (def-html-pair-abbrev "links" "<link rel=\"stylesheet\" type=\"text/css\" href=\"" "\" />")
 
