@@ -13,15 +13,6 @@
     (if (not (= prev-char 32))
         (insert " ")) ) )
 
-(defun set-extension-mode (extension mode)
-  (setq auto-mode-alist
-        (cons (cons (concat "\\" extension "\\'") mode)
-              auto-mode-alist) ) )
-
-(defun set-file-name-mode (file-name mode)
-  (setq auto-mode-alist
-        (cons (cons (concat "[/]" (regexp-quote file-name) "\\'") mode)
-              auto-mode-alist) ) )
 ;-----------------------------------------------------------------
 (defun text-hook ()
   (local-unset-key [?\M-S]) )

@@ -13,5 +13,3 @@
   (interactive)
   (let ( (src-output-argument (project-required-value :sass-watch-src-output-argument)) )
     (sass-watch src-output-argument) ) )
-			     
-(set-extension-mode ".scss" 'css-mode)

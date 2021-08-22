@@ -1,12 +1,8 @@
 (autoload 'ruby-mode "ruby-mode")
-(set-extension-mode ".rb" 'ruby-mode)
 
 (defvar *ruby-executable* "ruby" "Ruby executable for project")
 
 (defvar *webrick-process* nil)
-
-(set-file-name-mode "rakefile" 'ruby-mode)
-(set-file-name-mode "Rakefile" 'ruby-mode)
 
 (setq ruby-word-table
       (make-alpha-table letters-digits-string "_") )

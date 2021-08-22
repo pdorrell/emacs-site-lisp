@@ -106,8 +106,6 @@
   (interactive)
   (insert "self.") )
 
-(set-extension-mode ".egg" 'archive-mode)
-
 (defun python-expand-to-print()
   (interactive)
   (beginning-of-line)

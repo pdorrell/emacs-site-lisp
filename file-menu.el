@@ -111,6 +111,3 @@
   (let ( (file-name (file-menu-read-treed-name)) )
     (message "filename=\"%s\"" file-name)
     file-name) )
-
-;;-----------------------------------------------------------------
-(set-file-name-mode "_" 'file-menu-mode)

@@ -47,6 +47,7 @@
 
 (try-to-load "my-essential")
 (try-to-load "my-utils")
+(try-to-load "my-modes")
 (try-to-load "my-global-keyboard-shortcuts")
 
 (try-to-load "my-project")
@@ -89,9 +90,6 @@
   (y-or-n-p string) )
 
 (setq enable-local-variables :safe)
-
-(require 'yaml-mode)
-(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
 ;; fix-up
 (global-set-key [S-mouse-3] 'replace-word)

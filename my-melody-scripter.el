@@ -1,8 +1,6 @@
 
 (autoload 'melody-scripter-mode "melody-scripter-mode")
 
-(set-extension-mode ".song" 'melody-scripter-mode)
-
 (add-hook 'melody-scripter-mode-hook 'my-melody-scripter-hook)
 
 (defun play-this-song-file(song_file)

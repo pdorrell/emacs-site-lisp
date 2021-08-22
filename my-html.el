@@ -2,9 +2,6 @@
 
 (require 'web-mode)
 
-(dolist (extension '(".erb" ".html"))
-  (set-extension-mode extension 'web-mode) )
-
 (setq web-mode-markup-indent-offset 2)
 
 (defun def-html-abbrev (abbrev expansion)
