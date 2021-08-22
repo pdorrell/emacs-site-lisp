@@ -10,4 +10,4 @@
 (global-set-key [f9] 'eval-defun)
 (global-set-key [S-f9] 'eval-region)
 
-(global-set-key [C-f12] 'toggle-debug)
+(global-set-key [C-f12] 'toggle-debug-on-error)
