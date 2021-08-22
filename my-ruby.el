@@ -130,7 +130,7 @@
 	     `("rspec" "*rspec*" ,@rspec-command ,filename ) ) ) ) )
 
 (defun ruby-mode-hook-function ()
-  (setq expansion-key 'ruby)
+  (setq abbreviation-language 'ruby)
   (local-set-key [?\C-t] 'ruby-insert-member-equals)
   (local-set-key [?\C-p] 'ruby-insert-print-this)
   (local-set-key [?\C-\S-p] 'ruby-insert-print-this-inspected)

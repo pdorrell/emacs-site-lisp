@@ -1,7 +1,7 @@
 ;; Copyright (C) 2000,2001 Philip Dorrell
 
 ;;========================================================================
-(make-variable-buffer-local 'expansion-key)
+(make-variable-buffer-local 'abbreviation-language)
 
 (defun set-abbrev-language (language)
   (if (not (get 'my-abbrevs-by-language language))
@@ -14,7 +14,7 @@
       (error "Unexpected abbrev language %s" language) ) ) )
 
 (defun get-abbrev (abbrev)
-  (let ( (language-abbrevs (get-abbrevs-for-language expansion-key)) )
+  (let ( (language-abbrevs (get-abbrevs-for-language abbreviation-language)) )
     (gethash abbrev language-abbrevs) ) )
 
 (defun set-abbrev (language abbrev expansion)
@@ -36,7 +36,7 @@
       nil) ) )
 
 (defun my-expand-abbrev ()
-  "Expand abbreviation defined using get-abbrev and expansion-key"
+  "Expand abbreviation defined using get-abbrev and abbreviation-language"
   (interactive)
   (let ( (abbrev (get-abbrev-before)) expansion)
     (if abbrev

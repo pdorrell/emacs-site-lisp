@@ -11,7 +11,7 @@
 			"_-@$%&*=+,<>?") )
 
 (defun emacs-lisp-hook()
-  (setq expansion-key 'lisp)
+  (setq abbreviation-language 'lisp)
   (local-set-key [?\C-m] 'return-and-indent)
   (local-set-key [?\C-w] 'lisp-search-for-identifier-at-point)
   (setq run-file-function #'load)

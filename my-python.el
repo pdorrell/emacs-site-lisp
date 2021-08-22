@@ -84,7 +84,7 @@
       (message "No variable name given") ) ) )
 
 (defun python-mode-hook-function ()
-  (setq expansion-key 'python)
+  (setq abbreviation-language 'python)
   (setq run-file-function #'python-run-file)
   (local-set-key [C-M-f11] 'python-run-this-file-with-localenv)
   (local-set-key "," 'insert-spaced-comma)

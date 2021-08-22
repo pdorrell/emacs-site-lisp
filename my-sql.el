@@ -120,7 +120,7 @@
 (defvar sql-file nil "SQL file visited by visit-sql-file")
 
 (defun sql-hook-function() 
-  (setq expansion-key 'sql)
+  (setq abbreviation-language 'sql)
   (font-lock-mode 1)
   (local-set-key [f2] 'my-expand-abbrev)
   )
