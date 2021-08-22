@@ -54,7 +54,6 @@
             (comint-send-input) ) ) ) )
 
 ;;-----------------------------------------------------------------
-
 (defun revert-if-saved()
   (interactive)
   (if (buffer-modified-p)
