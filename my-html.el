@@ -10,10 +10,8 @@
 (defun def-html-abbrev (abbrev expansion)
   (put 'html-abbreviation-expansion (intern abbrev) expansion) )
 
-(defun def-html-pair-abbrev (abbrev part1 &optional part2)
-  (let ( (expansion (if part2
-                        (list part1 'mark part2 'goto-mark)
-                      part1) ) )
+(defun def-html-pair-abbrev (abbrev part1 part2)
+  (let ( (expansion (list part1 'mark part2 'goto-mark) ) )
     (def-html-abbrev abbrev expansion) ) )
 
 (defun get-html-abbrev-before()

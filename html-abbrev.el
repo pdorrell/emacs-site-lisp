@@ -2,6 +2,17 @@
 
 (def-html-abbrev "style" '("<style type=\"text/css\">" return "<!--" return mark return
 			   "-->" return "</style>" return goto-mark))
+(def-html-abbrev "n" "&ndash; ")
+(def-html-abbrev "br" "<br/>")
+(def-html-abbrev "brn" "<br/>&nbsp;&nbsp;&nbsp;&nbsp;")
+(def-html-abbrev "t" "&times; ")
+(def-html-abbrev "hd" "<!-- [@header] -->")
+(def-html-abbrev "ft" "<!-- [@footer] -->")
+(def-html-abbrev "wiki" '("<html><head><title>" base-name "</title></head>\n"
+			  "<body>\n<h1>" base-name "</h1>\n"
+			  (file "author.template")
+			  "\n<p>" mark "\n\n" (file "bottom.template") "</body>" goto-mark) )
+
 
 (def-html-pair-abbrev "p" "<p>" "</p>")
 (def-html-pair-abbrev "pp" "</p>\n\n<p>" "")
@@ -20,25 +31,14 @@
 (def-html-pair-abbrev "ol" "<ol>\n <li>" "</li>\n</ol>")
 (def-html-pair-abbrev "li" " <li>" "</li>")
 (def-html-pair-abbrev "tr" "<tr><td>" "</td></tr>")
-(def-html-pair-abbrev "n" "&nbsp;")
 (def-html-pair-abbrev "s" "<strong>" "</strong>")
 (def-html-pair-abbrev "bq" "<blockquote>" "</blockquote>")
 (def-html-pair-abbrev "bra" "<br><a href=\"" ".html\"></a>")
 (def-html-pair-abbrev "a" "<a href=\"" "\"></a>")
-(def-html-pair-abbrev "hr" "<hr/>")
-(def-html-pair-abbrev "br" "<br/>")
-(def-html-pair-abbrev "brn" "<br/>&nbsp;&nbsp;&nbsp;&nbsp;")
 (def-html-pair-abbrev "metad" "<meta name=\"description\" content=\"" "\">")
 (def-html-pair-abbrev "metak" "<meta name=\"keywords\" content=\"" "\">")
 
-(def-html-pair-abbrev "wiki" '("<html><head><title>" base-name "</title></head>\n"
-			  "<body>\n<h1>" base-name "</h1>\n"
-			  (file "author.template")
-			  "\n<p>" mark "\n\n" (file "bottom.template") "</body>" goto-mark) )
-
 (def-html-pair-abbrev "k" "<!-- " " -->")
-
-(def-html-pair-abbrev "n" "&ndash; ")
 
 (def-html-pair-abbrev "script" "<script language=\"Javascript\">\n<!--\n" "\n//-->\n</script>\n")
 (def-html-pair-abbrev "scripte" "<script language=\"Javascript\" src=\"" "\"></script>\n")
@@ -54,8 +54,6 @@
 (def-html-pair-abbrev "span" "<span class=\"" "\"></span>")
 
 (def-html-pair-abbrev "links" "<link rel=\"stylesheet\" type=\"text/css\" href=\"" "\" />")
-
-(def-html-pair-abbrev "t" "&times; ")
 
 (def-html-pair-abbrev "dm" "<div class=\"math\">" "</div>")
 (def-html-pair-abbrev "sm" "<span class=\"math\">" "</span>")
@@ -75,5 +73,3 @@
 
 (def-html-pair-abbrev "aname" "<a name=\"" "\"></a>")
 
-(def-html-pair-abbrev "hd" "<!-- [@header] -->")
-(def-html-pair-abbrev "ft" "<!-- [@footer] -->")
