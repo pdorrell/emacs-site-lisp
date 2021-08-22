@@ -1,5 +1,6 @@
 ;; Copyright (C) 2000,2001 Philip Dorrell
 
+;  Possibly not useful ...
 (defun apply-to-list-of-arg-lists (fun arg-lists)
   (dolist (arg-list
            arg-lists)
