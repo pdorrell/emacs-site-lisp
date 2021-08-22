@@ -53,6 +53,7 @@
 (try-to-load "my-project")
 (try-to-load "my-movement")
 (try-to-load "my-edit")
+(try-to-load "my-line-filtering")
 (try-to-load "my-process")
 (try-to-load "my-completion")
 (try-to-load "my-search")
