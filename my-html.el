@@ -19,6 +19,11 @@
   (let ( (expansion (list part1 'mark part2 'goto-mark) ) )
     (def-html-abbrev abbrev expansion) ) )
 
+(defun def-html-pair-abbrevs(abbrev-part1-part2-s)
+  (dolist (abbrev-part1-part2 abbrev-part1-part2-s)
+    (cl-destructuring-bind (abbrev part1 part2) abbrev-part1-part2
+      (def-html-pair-abbrev abbrev part1 part2) ) ) )
+
 (defun get-html-abbrev-before()
    (let ((start (1- (point))) (end (point)) )
     (while (buffer-char-in-table abbrev-word-table start)
