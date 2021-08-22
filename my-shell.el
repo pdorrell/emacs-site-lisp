@@ -85,7 +85,10 @@
 
 (defun show-history-list ()
   (interactive)
-  (show-completion-buffer-with-string "*shell-history*" (concat-lines (shell-history)) 'put-command-in-shell) )
+  (show-completion-buffer-with-string 
+   "*deduped-shell-history*" 
+   (concat-lines (reverse (delete-dups (reverse (shell-history)))))
+   'put-command-in-shell) )
 
 
 (defun shell-hook ()

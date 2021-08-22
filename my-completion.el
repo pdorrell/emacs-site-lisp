@@ -17,8 +17,7 @@
   (switch-to-buffer name)
   (clear-buffer)
   (insert string)
-  (line-completion-mode) 
-  (setq completion-process process) )
+  (line-completion-mode) )
 
 (setq line-completion-first-line-regexp 
       (make-regexp '(seq start (at-least-once (not-set " \t")))) )
