@@ -68,13 +68,13 @@
 	  (call-abbrev-fun (car item) (cdr item)) ) ) ) ) )
 
 (defun call-abbrev-fun (name args)
-  (let ( (fun (get name 'abbrev-fun)) )
+  (let ( (fun (get 'abbrev-fun name)) )
     (if fun
 	(apply fun args)
       (error "Undefined abbreviation function: ~A" name) ) ) )
 
 (defmacro def-abbrev-fun (name args &rest code)
-  `(put ',name 'abbrev-fun #'(lambda ,args ,@code)) )
+  `(put 'abbrev-fun ',name #'(lambda ,args ,@code)) )
 
 (def-abbrev-fun mark ()
   (setq abbrev-mark (point)) )
