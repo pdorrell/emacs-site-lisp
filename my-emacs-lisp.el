@@ -54,7 +54,7 @@
 ;;-----------------------------------------------------------------
 (defun set-lisp-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in emacs-lisp mode"
-  (set-abbrev abbrev expansion 'lisp-expansion-key) )
+  (set-abbrev 'lisp-expansion-key abbrev expansion) )
 
 ;;========================================================================
 (set-lisp-abbrev "d" "(defun ")

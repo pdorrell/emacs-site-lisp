@@ -605,7 +605,7 @@
 ;;-----------------------------------------------------------------
 (defun def-java-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in java mode"
-  (set-abbrev abbrev expansion 'java-expansion-key) )
+  (set-abbrev 'java-expansion-key abbrev expansion) )
 
 (defun java-search-for-identifier-at-point ()
   (interactive)

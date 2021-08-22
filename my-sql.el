@@ -127,7 +127,7 @@
 
 (defun def-sql-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in SQL mode"
-  (set-abbrev abbrev expansion 'sql-expansion-key) )
+  (set-abbrev 'sql-expansion-key abbrev expansion) )
 
 (add-hook 'sql-mode-hook 'sql-hook-function)
 

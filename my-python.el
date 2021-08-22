@@ -108,7 +108,7 @@
 
 (defun def-python-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in python mode"
-  (set-abbrev abbrev expansion 'python-expansion-key) )
+  (set-abbrev 'python-expansion-key abbrev expansion) )
 
 (def-python-abbrev "di" '("def __init__(self):" indent return indent))
 (def-python-abbrev "d" '("def " mark "(self):" goto-mark))

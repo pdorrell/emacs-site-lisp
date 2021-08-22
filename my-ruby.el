@@ -150,7 +150,7 @@
 
 (defun def-ruby-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in ruby mode"
-  (set-abbrev abbrev expansion 'ruby-expansion-key) )
+  (set-abbrev 'ruby-expansion-key abbrev expansion) )
 
 (def-ruby-abbrev "cl" '("class " indent mark return indent return "end" indent goto-mark))
 (def-ruby-abbrev "reqt" '("require 'test/unit'"))

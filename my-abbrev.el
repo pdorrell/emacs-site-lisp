@@ -1,10 +1,13 @@
 ;; Copyright (C) 2000,2001 Philip Dorrell
 
 ;;========================================================================
-(defun set-abbrev (abbrev expansion key)
-  (put (intern abbrev) key expansion) )
-
 (make-variable-buffer-local 'expansion-key)
+
+(defun get-abbrev (abbrev)
+  (get (intern abbrev) expansion-key) )
+
+(defun set-abbrev (key abbrev expansion)
+  (put (intern abbrev) key expansion) )
 
 (make-variable-buffer-local 'abbrev-word-table)
 
@@ -20,11 +23,8 @@
 	(buffer-substring-no-properties start end)
       nil) ) )
 
-(defun get-abbrev (abbrev)
-  (get (intern abbrev) expansion-key) )
-
 (defun my-expand-abbrev ()
-  "Expand abbreviation defined using set-abbrev and expansion-key"
+  "Expand abbreviation defined using get-abbrev and expansion-key"
   (interactive)
   (let ( (abbrev (get-abbrev-before)) expansion)
     (if abbrev

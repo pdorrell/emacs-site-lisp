@@ -88,6 +88,6 @@
 ;;-----------------------------------------------------------------
 (defun def-javascript-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in javascript mode"
-  (set-abbrev abbrev expansion 'javascript-expansion-key) )
+  (set-abbrev 'javascript-expansion-key abbrev expansion) )
 
 (load "javascript-abbrev")

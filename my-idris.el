@@ -70,7 +70,7 @@
 
 (defun def-idris-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in idris mode"
-  (set-abbrev abbrev expansion 'idris-expansion-key) )
+  (set-abbrev 'idris-expansion-key abbrev expansion) )
 
 (defun my-idris-hole-list-mode-hook()
   (unset-keys-hijacked-by-idris-mode) )
