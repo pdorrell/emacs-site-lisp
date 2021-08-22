@@ -603,6 +603,8 @@
   (setq require-final-newline nil) )
 
 ;;-----------------------------------------------------------------
+(set-abbrev-language 'java-expansion-key)
+
 (defun def-java-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in java mode"
   (set-abbrev 'java-expansion-key abbrev expansion) )

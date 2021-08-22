@@ -52,6 +52,8 @@
   (display-buffer "*Messages*") )
 
 ;;-----------------------------------------------------------------
+(set-abbrev-language 'lisp-expansion-key)
+
 (defun set-lisp-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in emacs-lisp mode"
   (set-abbrev 'lisp-expansion-key abbrev expansion) )

@@ -79,8 +79,3 @@
 (put 'glossary-section 'lisp-indent-function 1)
 (put 'do-table-items 'lisp-indent-function 1)
 (put 'do-table-items-in-date-range 'lisp-indent-function 1)
-
-(set-lisp-abbrev "me" "(macroexpand-1 '")
-
-(set-lisp-abbrev "pr" '("(format t \"" mark "~%\")" goto-mark))
-

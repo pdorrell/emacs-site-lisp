@@ -3,11 +3,23 @@
 ;;========================================================================
 (make-variable-buffer-local 'expansion-key)
 
-(defun get-abbrev (abbrev)
-  (get (intern abbrev) expansion-key) )
+(defun set-abbrev-language (language)
+  (if (not (get 'my-abbrevs-by-language language))
+      (put 'my-abbrevs-by-language language (make-hash-table :test 'equal)) ) )
 
-(defun set-abbrev (key abbrev expansion)
-  (put (intern abbrev) key expansion) )
+(defun get-abbrevs-for-language(language)
+  (let ( (language-abbrevs (get 'my-abbrevs-by-language language)) )
+    (if language-abbrevs
+        language-abbrevs
+      (error "Unexpected abbrev language %s" language) ) ) )
+
+(defun get-abbrev (abbrev)
+  (let ( (language-abbrevs (get-abbrevs-for-language expansion-key)) )
+    (gethash abbrev language-abbrevs) ) )
+
+(defun set-abbrev (language abbrev expansion)
+  (let ( (language-abbrevs (get-abbrevs-for-language language)) )
+    (puthash abbrev expansion language-abbrevs) ) )
 
 (make-variable-buffer-local 'abbrev-word-table)
 

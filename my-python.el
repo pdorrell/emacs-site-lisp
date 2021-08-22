@@ -106,6 +106,8 @@
   (interactive)
   (insert "self.") )
 
+(set-abbrev-language 'python-expansion-key)
+
 (defun def-python-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in python mode"
   (set-abbrev 'python-expansion-key abbrev expansion) )

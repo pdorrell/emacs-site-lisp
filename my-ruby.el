@@ -148,6 +148,8 @@
   (font-lock-mode 1)
 )
 
+(set-abbrev-language 'ruby-expansion-key)
+
 (defun def-ruby-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in ruby mode"
   (set-abbrev 'ruby-expansion-key abbrev expansion) )

@@ -68,6 +68,8 @@
 
 ;;(setq idris-interpreter-flags '("--allow-capitalized-pattern-variables"))
 
+(set-abbrev-language 'idris-expansion-key)
+
 (defun def-idris-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in idris mode"
   (set-abbrev 'idris-expansion-key abbrev expansion) )

@@ -125,6 +125,8 @@
   (local-set-key [f2] 'my-expand-abbrev)
   )
 
+(set-abbrev-language 'sql-expansion-key)
+
 (defun def-sql-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in SQL mode"
   (set-abbrev 'sql-expansion-key abbrev expansion) )

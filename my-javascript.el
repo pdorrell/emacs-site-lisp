@@ -86,6 +86,8 @@
   (setq require-final-newline nil) )
 
 ;;-----------------------------------------------------------------
+(set-abbrev-language 'javascript-expansion-key)
+
 (defun def-javascript-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in javascript mode"
   (set-abbrev 'javascript-expansion-key abbrev expansion) )
