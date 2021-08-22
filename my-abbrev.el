@@ -91,15 +91,6 @@
 (def-abbrev-fun space-if-not-there ()
   (insert-space-if-not-there) )
 
-(defun file-name-minus-extension (file-name)
-  (block nil 
-    (let ( (pos (1- (length file-name))) )
-      (while (>= pos 0)
-	(if (= (aref file-name pos) ?.)
-	    (return (substring file-name 0 pos))
-	  (setq pos (1- pos)) ) ) )
-    file-name) )
-
 (def-abbrev-fun base-name ()
   (insert (file-name-minus-extension (buffer-name))) )
 
