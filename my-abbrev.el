@@ -4,6 +4,7 @@
 (make-variable-buffer-local 'abbreviation-language)
 
 (defun set-abbrev-language (language)
+  "Set LANGUAGE as a language for which abbreviations can be defined"
   (if (not (get 'my-abbrevs-by-language language))
       (put 'my-abbrevs-by-language language (make-hash-table :test 'equal)) ) )
 
@@ -14,12 +15,16 @@
       (error "Unexpected abbrev language %s" language) ) ) )
 
 (defun get-abbrev (abbrev)
+  "Expand ABBREV using the language for buffer-local variable abbreviation-language"
   (let ( (language-abbrevs (get-abbrevs-for-language abbreviation-language)) )
     (gethash abbrev language-abbrevs) ) )
 
-(defun set-abbrev (language abbrev expansion)
-  (let ( (language-abbrevs (get-abbrevs-for-language language)) )
-    (puthash abbrev expansion language-abbrevs) ) )
+(defun set-abbrevs (language abbrev-expansion-pairs)
+  "Set abbreviations for LANGUAGE from list of pairs of abbreviations & expansions"
+  (let ( (language-abbrevs (get 'my-abbrevs-by-language language)) )
+    (dolist (abbrev-expansion abbrev-expansion-pairs)
+      (cl-destructuring-bind (abbrev expansion) abbrev-expansion
+        (puthash abbrev expansion language-abbrevs) ) ) ) )
 
 (make-variable-buffer-local 'abbrev-word-table)
 

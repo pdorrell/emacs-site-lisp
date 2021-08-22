@@ -125,26 +125,26 @@
   (local-set-key [f2] 'my-expand-abbrev)
   )
 
-(set-abbrev-language 'sql)
-
-(defun def-sql-abbrev (abbrev expansion)
-  "Define ABBREV to have EXPANSION in SQL mode"
-  (set-abbrev 'sql abbrev expansion) )
-
 (add-hook 'sql-mode-hook 'sql-hook-function)
 
 (defun visit-sql-file()
   (interactive)
   (find-file sql-file) )
 
-(def-sql-abbrev "s" '("select " mark " from " goto-mark))
-(def-sql-abbrev "sf" "select * from ")
-(def-sql-abbrev "sfw" '("select * from " mark " where " goto-mark))
-(def-sql-abbrev "d" '("delete from " mark " where " goto-mark))
-(def-sql-abbrev "i" "insert into ")
-(def-sql-abbrev "v" '("values (" mark ")" goto-mark))
-(def-sql-abbrev "u" "update ")
-(def-sql-abbrev "us" '("update " mark " set " return "  where" goto-mark))
-(def-sql-abbrev "w" "where ")
-(def-sql-abbrev "g" "group by ")
-(def-sql-abbrev "o" "order by ")
+(set-abbrev-language 'sql)
+
+(set-abbrevs 
+ 'sql
+ '( 
+   ("s" ("select " mark " from " goto-mark))
+   ("sf" "select * from ")
+   ("sfw" ("select * from " mark " where " goto-mark))
+   ("d" ("delete from " mark " where " goto-mark))
+   ("i" "insert into ")
+   ("v" ("values (" mark ")" goto-mark))
+   ("u" "update ")
+   ("us" ("update " mark " set " return "  where" goto-mark))
+   ("w" "where ")
+   ("g" "group by ")
+   ("o" "order by ") ) )
+

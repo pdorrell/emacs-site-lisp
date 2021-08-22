@@ -148,40 +148,39 @@
   (font-lock-mode 1)
 )
 
-(set-abbrev-language 'ruby)
-
-(defun def-ruby-abbrev (abbrev expansion)
-  "Define ABBREV to have EXPANSION in ruby mode"
-  (set-abbrev 'ruby abbrev expansion) )
-
-(def-ruby-abbrev "cl" '("class " indent mark return indent return "end" indent goto-mark))
-(def-ruby-abbrev "reqt" '("require 'test/unit'"))
-(def-ruby-abbrev "clt" '("class " indent mark "TestCase < Test::Unit::TestCase" return indent return "end" indent goto-mark))
-(def-ruby-abbrev "di" '("def initialize" indent return indent mark return "end" indent goto-mark))
-(def-ruby-abbrev "d" '("def " indent mark return "end" indent goto-mark))
-(def-ruby-abbrev "if" '("if " indent mark return "end" indent goto-mark))
-(def-ruby-abbrev "dt" '("def test" indent mark return "end" indent goto-mark))
-(def-ruby-abbrev "do" '("do |" indent mark "|" return "end" indent goto-mark))
-(def-ruby-abbrev "e" '("end" indent))
-(def-ruby-abbrev "r" '("return "))
-
-(def-ruby-abbrev "for" '("for " indent mark " in  do" return indent return "end" indent goto-mark))
-
-(def-ruby-abbrev "ar" '("attr_reader :" indent))
-(def-ruby-abbrev "aa" '("attr_accessor :" indent))
-
-(def-ruby-abbrev "ae" '("assert_equal "))
-(def-ruby-abbrev "asr" '("assert_raise (" mark ") {}" goto-mark))
-
-(def-ruby-abbrev "kkk" '(indent "#==============================================================================="))
-
-(def-ruby-abbrev "mod" '("module " indent mark return "end" indent goto-mark))
-
-(def-ruby-abbrev "p" '("puts " indent "\"" mark "\"" goto-mark))
-
 (add-hook 'ruby-mode-hook 'ruby-mode-hook-function)
 
-(def-ruby-abbrev "describe" '("describe " indent "\"" mark "\" do" return indent return "end" indent goto-mark))
-(def-ruby-abbrev "it" '("it " indent "\"" mark "\" do" return indent return "end" indent goto-mark))
+(set-abbrev-language 'ruby)
 
-(def-ruby-abbrev "utf" '("# -*- coding: utf-8 -*-"))
+(set-abbrevs 
+ 'ruby
+ '(
+   ("cl" ("class " indent mark return indent return "end" indent goto-mark))
+   ("reqt" ("require 'test/unit'"))
+   ("clt" ("class " indent mark "TestCase < Test::Unit::TestCase" return indent return "end" indent goto-mark))
+   ("di" ("def initialize" indent return indent mark return "end" indent goto-mark))
+   ("d" ("def " indent mark return "end" indent goto-mark))
+   ("if" ("if " indent mark return "end" indent goto-mark))
+   ("dt" ("def test" indent mark return "end" indent goto-mark))
+   ("do" ("do |" indent mark "|" return "end" indent goto-mark))
+   ("e" ("end" indent))
+   ("r" ("return "))
+
+   ("for" ("for " indent mark " in  do" return indent return "end" indent goto-mark))
+
+   ("ar" ("attr_reader :" indent))
+   ("aa" ("attr_accessor :" indent))
+
+   ("ae" ("assert_equal "))
+   ("asr" ("assert_raise (" mark ") {}" goto-mark))
+
+   ("kkk" (indent "#==============================================================================="))
+
+   ("mod" ("module " indent mark return "end" indent goto-mark))
+
+   ("p" ("puts " indent "\"" mark "\"" goto-mark))
+
+   ("describe" ("describe " indent "\"" mark "\" do" return indent return "end" indent goto-mark))
+   ("it" ("it " indent "\"" mark "\" do" return indent return "end" indent goto-mark))
+
+   ("utf" ("# -*- coding: utf-8 -*-")) ) )

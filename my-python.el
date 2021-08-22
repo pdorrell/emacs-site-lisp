@@ -106,25 +106,6 @@
   (interactive)
   (insert "self.") )
 
-(set-abbrev-language 'python)
-
-(defun def-python-abbrev (abbrev expansion)
-  "Define ABBREV to have EXPANSION in python mode"
-  (set-abbrev 'python abbrev expansion) )
-
-(def-python-abbrev "di" '("def __init__(self):" indent return indent))
-(def-python-abbrev "d" '("def " mark "(self):" goto-mark))
-(def-python-abbrev "r" '("return "))
-(def-python-abbrev "rf" '("return false"))
-(def-python-abbrev "p" '("print(\""))
-(def-python-abbrev "sae" '("self.assertEquals(" mark ")" goto-mark))
-(def-python-abbrev "sane" '("self.assertNotEquals(" mark ")" goto-mark))
-(def-python-abbrev "f" '("for " mark " in :" goto-mark))
-
-(def-python-abbrev "q" '("\"\"\"" mark "\"\"\"" goto-mark))
-
-(def-python-abbrev "main" '("if __name__ == \"__main__\":" return "main()" indent return))
-
 (set-extension-mode ".egg" 'archive-mode)
 
 (defun python-expand-to-print()
@@ -133,3 +114,21 @@
   (search-forward-regexp "\\S-.+")
   (let ( (expression (match-string 0)) )
     (replace-match (concat "print(\"" expression " = %r\" % " expression ")")) ) )
+
+(set-abbrev-language 'python)
+
+(set-abbrevs
+ 'python
+ '(
+   ("di" ("def __init__(self):" indent return indent))
+   ("d" ("def " mark "(self):" goto-mark))
+   ("r" ("return "))
+   ("rf" ("return false"))
+   ("p" ("print(\""))
+   ("sae" ("self.assertEquals(" mark ")" goto-mark))
+   ("sane" ("self.assertNotEquals(" mark ")" goto-mark))
+   ("f" ("for " mark " in :" goto-mark))
+
+   ("q" ("\"\"\"" mark "\"\"\"" goto-mark))
+
+   ("main" ("if __name__ == \"__main__\":" return "main()" indent return)) ) )

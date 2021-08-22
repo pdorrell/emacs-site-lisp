@@ -70,10 +70,6 @@
 
 (set-abbrev-language 'idris)
 
-(defun def-idris-abbrev (abbrev expansion)
-  "Define ABBREV to have EXPANSION in idris mode"
-  (set-abbrev 'idris abbrev expansion) )
-
 (defun my-idris-hole-list-mode-hook()
   (unset-keys-hijacked-by-idris-mode) )
 
@@ -86,13 +82,6 @@
   (local-unset-key [mouse-3])
   )
 
-(def-idris-abbrev "pe" "public export")
-(def-idris-abbrev "dt" "%default total\n\n")
-(def-idris-abbrev "l" '("\n  let e1 = " mark "\n      \n  in " goto-mark))
-(def-idris-abbrev "ll" '("let lemma = " mark " in" goto-mark))
-(def-idris-abbrev "h" "?hole")
-(def-idris-abbrev "th" '("the (" mark ") $ " goto-mark))
-
 (defun set-dual-frames()
   (interactive)
   (let ( (this-frame (selected-frame)) )
@@ -104,3 +93,13 @@
                   (height . 23)
                   (left . 450)
                   (top . 80) ) ) ) )
+
+(set-abbrevs 
+ 'idris
+ '( 
+   ("pe" "public export")
+   ("dt" "%default total\n\n")
+   ("l" ("\n  let e1 = " mark "\n      \n  in " goto-mark))
+   ("ll" ("let lemma = " mark " in" goto-mark))
+   ("h" "?hole")
+   ("th" ("the (" mark ") $ " goto-mark)) ) )

@@ -603,12 +603,6 @@
   (setq require-final-newline nil) )
 
 ;;-----------------------------------------------------------------
-(set-abbrev-language 'java)
-
-(defun def-java-abbrev (abbrev expansion)
-  "Define ABBREV to have EXPANSION in java mode"
-  (set-abbrev 'java abbrev expansion) )
-
 (defun java-search-for-identifier-at-point ()
   (interactive)
   (let ( (word (word-at word-alpha-table (point))) )
@@ -619,6 +613,8 @@
 (defun java-search-for-identifier (identifier)
   (interactive "sSearch for: ")
   (show-search-buffer (list (java-get-base-src-dir)) '(".java") identifier) )
+
+(set-abbrev-language 'java)
 
 (try-to-load "java-abbrev")
 

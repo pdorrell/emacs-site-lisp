@@ -33,12 +33,6 @@
 
 (setq sql-file "~/test.sql")
 
-(def-abbrev-fun java-before-package()
-  (insert "// " copyright-line "\n\n") )
-
-(def-abbrev-fun java-after-package()
-  (insert "\n/**\n" " * \n" " * @author " *my-name* "\n" " */\n") )
-
 (open-base-file-menu)
 
 (setq vc-cvs-stay-local nil)

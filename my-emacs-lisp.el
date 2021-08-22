@@ -54,12 +54,10 @@
 ;;-----------------------------------------------------------------
 (set-abbrev-language 'lisp)
 
-(defun set-lisp-abbrev (abbrev expansion)
-  "Define ABBREV to have EXPANSION in emacs-lisp mode"
-  (set-abbrev 'lisp abbrev expansion) )
-
-;;========================================================================
-(set-lisp-abbrev "d" "(defun ")
-(set-lisp-abbrev "i" "(interactive)")
-(set-lisp-abbrev "l" "(local-set-key ")
-(set-lisp-abbrev "copy" (concat ";; " copyright-line))
+(set-abbrevs
+ 'lisp
+ '(
+   ("d" "(defun ")
+   ("i" "(interactive)")
+   ("l" "(local-set-key ")
+   ("copy" (concat ";; " copyright-line)) ) )
