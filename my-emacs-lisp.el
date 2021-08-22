@@ -60,4 +60,5 @@
    ("d" "(defun ")
    ("i" "(interactive)")
    ("l" "(local-set-key ")
+   ("cldb" "cl-destructuring-bind ")
    ("copy" (concat ";; " copyright-line)) ) )

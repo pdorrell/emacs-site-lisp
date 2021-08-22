@@ -1,18 +1,20 @@
 ;; Copyright (C) 2000 Philip Dorrell
 
-(def-html-abbrev "style" '("<style type=\"text/css\">" return "<!--" return mark return
-			   "-->" return "</style>" return goto-mark))
-(def-html-abbrev "n" "&ndash; ")
-(def-html-abbrev "br" "<br/>")
-(def-html-abbrev "brn" "<br/>&nbsp;&nbsp;&nbsp;&nbsp;")
-(def-html-abbrev "t" "&times; ")
-(def-html-abbrev "hd" "<!-- [@header] -->")
-(def-html-abbrev "ft" "<!-- [@footer] -->")
-(def-html-abbrev "wiki" '("<html><head><title>" base-name "</title></head>\n"
-			  "<body>\n<h1>" base-name "</h1>\n"
-			  (file "author.template")
-			  "\n<p>" mark "\n\n" (file "bottom.template") "</body>" goto-mark) )
-
+(def-html-abbrevs
+  '(
+    ("style" ("<style type=\"text/css\">" return "<!--" return mark return
+	      "-->" return "</style>" return goto-mark))
+    ("n" "&ndash; ")
+    ("br" "<br/>")
+    ("brn" "<br/>&nbsp;&nbsp;&nbsp;&nbsp;")
+    ("t" "&times; ")
+    ("hd" "<!-- [@header] -->")
+    ("ft" "<!-- [@footer] -->")
+    ("wiki" ("<html><head><title>" base-name "</title></head>\n"
+	     "<body>\n<h1>" base-name "</h1>\n"
+	     (file "author.template")
+	     "\n<p>" mark "\n\n" (file "bottom.template") "</body>" goto-mark) )
+    ) )
 
 (def-html-pair-abbrev "p" "<p>" "</p>")
 (def-html-pair-abbrev "pp" "</p>\n\n<p>" "")
