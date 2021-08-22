@@ -84,7 +84,7 @@
       (message "No variable name given") ) ) )
 
 (defun python-mode-hook-function ()
-  (setq expansion-key 'python-expansion-key)
+  (setq expansion-key 'python)
   (setq run-file-function #'python-run-file)
   (local-set-key [C-M-f11] 'python-run-this-file-with-localenv)
   (local-set-key "," 'insert-spaced-comma)
@@ -106,11 +106,11 @@
   (interactive)
   (insert "self.") )
 
-(set-abbrev-language 'python-expansion-key)
+(set-abbrev-language 'python)
 
 (defun def-python-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in python mode"
-  (set-abbrev 'python-expansion-key abbrev expansion) )
+  (set-abbrev 'python abbrev expansion) )
 
 (def-python-abbrev "di" '("def __init__(self):" indent return indent))
 (def-python-abbrev "d" '("def " mark "(self):" goto-mark))

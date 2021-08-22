@@ -130,7 +130,7 @@
 	     `("rspec" "*rspec*" ,@rspec-command ,filename ) ) ) ) )
 
 (defun ruby-mode-hook-function ()
-  (setq expansion-key 'ruby-expansion-key)
+  (setq expansion-key 'ruby)
   (local-set-key [?\C-t] 'ruby-insert-member-equals)
   (local-set-key [?\C-p] 'ruby-insert-print-this)
   (local-set-key [?\C-\S-p] 'ruby-insert-print-this-inspected)
@@ -148,11 +148,11 @@
   (font-lock-mode 1)
 )
 
-(set-abbrev-language 'ruby-expansion-key)
+(set-abbrev-language 'ruby)
 
 (defun def-ruby-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in ruby mode"
-  (set-abbrev 'ruby-expansion-key abbrev expansion) )
+  (set-abbrev 'ruby abbrev expansion) )
 
 (def-ruby-abbrev "cl" '("class " indent mark return indent return "end" indent goto-mark))
 (def-ruby-abbrev "reqt" '("require 'test/unit'"))

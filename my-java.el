@@ -570,7 +570,7 @@
 (add-hook 'java-mode-hook 'java-hook)
 
 (defun java-hook ()
-  (setq expansion-key 'java-expansion-key)
+  (setq expansion-key 'java)
   (local-set-key [?\C-m] 'java-return)
   (setq run-file-function #'java-run-file)
   (setq filter-regexp java-filter-regexp)
@@ -603,11 +603,11 @@
   (setq require-final-newline nil) )
 
 ;;-----------------------------------------------------------------
-(set-abbrev-language 'java-expansion-key)
+(set-abbrev-language 'java)
 
 (defun def-java-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in java mode"
-  (set-abbrev 'java-expansion-key abbrev expansion) )
+  (set-abbrev 'java abbrev expansion) )
 
 (defun java-search-for-identifier-at-point ()
   (interactive)

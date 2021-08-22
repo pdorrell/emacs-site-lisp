@@ -7,7 +7,6 @@
 (defun my-lisp-hook-function()
   (font-lock-mode 1)
   (setq word-alpha-table emacs-lisp-word-alpha-table)
-  (setq expansion-key 'lisp-expansion-key)
   (setq run-file-function #'lisp-eval-file-and-show)
   (local-set-key [f9] 'lisp-eval-defun-and-show)
   (local-set-key [M-f9] 'quit-lisp-break)

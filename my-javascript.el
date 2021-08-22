@@ -64,7 +64,7 @@
 
 (defun javascript-hook ()
   (message "javascript-hook")
-  (setq expansion-key 'javascript-expansion-key)
+  (setq expansion-key 'javascript)
   (setq js-indent-level 2)
   (local-set-key [?\C-m] 'return-and-indent)
   (setq c-basic-offset 2)
@@ -86,10 +86,10 @@
   (setq require-final-newline nil) )
 
 ;;-----------------------------------------------------------------
-(set-abbrev-language 'javascript-expansion-key)
+(set-abbrev-language 'javascript)
 
 (defun def-javascript-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in javascript mode"
-  (set-abbrev 'javascript-expansion-key abbrev expansion) )
+  (set-abbrev 'javascript abbrev expansion) )
 
 (load "javascript-abbrev")

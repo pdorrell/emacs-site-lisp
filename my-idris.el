@@ -52,7 +52,7 @@
      (defun idris-highlight--overlay-modification-hook (&rest args) ) ) )
 
 (defun my-idris-mode-hook()
-  (setq expansion-key 'idris-expansion-key)
+  (setq expansion-key 'idris)
   (setq word-alpha-table idris-word-table)
   (local-set-key [C-M-f9] 'idris-load-file)
   (local-set-key [M-f9] 'idris-compile-and-execute)
@@ -68,11 +68,11 @@
 
 ;;(setq idris-interpreter-flags '("--allow-capitalized-pattern-variables"))
 
-(set-abbrev-language 'idris-expansion-key)
+(set-abbrev-language 'idris)
 
 (defun def-idris-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in idris mode"
-  (set-abbrev 'idris-expansion-key abbrev expansion) )
+  (set-abbrev 'idris abbrev expansion) )
 
 (defun my-idris-hole-list-mode-hook()
   (unset-keys-hijacked-by-idris-mode) )

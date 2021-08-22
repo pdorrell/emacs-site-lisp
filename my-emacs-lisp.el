@@ -11,7 +11,7 @@
 			"_-@$%&*=+,<>?") )
 
 (defun emacs-lisp-hook()
-  (setq expansion-key 'lisp-expansion-key)
+  (setq expansion-key 'lisp)
   (local-set-key [?\C-m] 'return-and-indent)
   (local-set-key [?\C-w] 'lisp-search-for-identifier-at-point)
   (setq run-file-function #'load)
@@ -52,11 +52,11 @@
   (display-buffer "*Messages*") )
 
 ;;-----------------------------------------------------------------
-(set-abbrev-language 'lisp-expansion-key)
+(set-abbrev-language 'lisp)
 
 (defun set-lisp-abbrev (abbrev expansion)
   "Define ABBREV to have EXPANSION in emacs-lisp mode"
-  (set-abbrev 'lisp-expansion-key abbrev expansion) )
+  (set-abbrev 'lisp abbrev expansion) )
 
 ;;========================================================================
 (set-lisp-abbrev "d" "(defun ")
