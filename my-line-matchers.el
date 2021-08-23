@@ -58,11 +58,13 @@
       "") ) )
 
 (defvar file-line-matchers
-  '((visit-grep-n-line electron-exception-line-matcher)
-    (visit-grep-n-line rspec-line-matcher)
+  '(
+;;    (visit-grep-n-line electron-exception-line-matcher)
+;;    (visit-grep-n-line rspec-line-matcher)
     (visit-grep-n-line grep-n-matcher)
     (visit-grep-n-line python-line-matcher)
-    (visit-java-exception-line java-exception-line-matcher)) )
+    (visit-java-exception-line java-exception-line-matcher)
+    ) )
 
 (make-variable-buffer-local 'file-line-matchers)
 
