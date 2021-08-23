@@ -60,6 +60,7 @@
 (try-to-load "my-word")
 (try-to-load "my-faces")
 (try-to-load "my-abbrev")
+(try-to-load "my-file-menu")
 (try-to-load "my-emacs-lisp")
 (try-to-load "my-comment-line")
 (try-to-load "my-file")

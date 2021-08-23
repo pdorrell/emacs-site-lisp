@@ -2,17 +2,7 @@
 
 ;;========================================================================
 
-(defvar file-menu-file-name "_" "Name used for file menus")
-
 (defvar run-file-program "/usr/bin/xdg-open")
-
-(defvar emacs-customisation-dir nil
-  "File to visit in order to alter your own emacs customisations")
-
-(defun edit-emacs-customisation()
-  "Edit emacs-customisation"
-  (interactive)
-  (find-file (concat emacs-customisation-dir "/" file-menu-file-name)) )
 
 (defun kill-buffer-y-or-n ()
   "Kill current buffer"
@@ -320,37 +310,6 @@ processed."
 	(let ( (fun (car fun-and-args))
 	       (args (cdr fun-and-args)) )
 	  (apply fun args) ) ) ) )
-
-;-----------------------------------------------------------------
-
-(defvar *base-file-menu*
-  "~/_" "The base file menu")
-
-(defun messaged-find-file (filename)
-  (find-file filename)
-  (message "%s" (buffer-file-name)) )
-
-(defun open-base-file-menu ()
-  "Open base file menu"
-  (interactive)
-  (messaged-find-file *base-file-menu*) )
-
-(defun open-file-menu ()
-  "Open file menu"
-  (interactive)
-  (messaged-find-file file-menu-file-name) )
-
-(defun open-file-menu-other-window ()
-  "Open file file menu in other window"
-  (interactive)
-  (find-file-other-window file-menu-file-name) 
-  (message "%s" (buffer-file-name)) )
-
-(defun open-base-file-menu-other-window ()
-  "Open file file-menu in other window"
-  (interactive)
-  (find-file-other-window *base-file-menu*) 
-  (message "%s" (buffer-file-name)) )
 
 (defun save-this-buffer-and-others ()
   "Save visited file and any others with prompting"
