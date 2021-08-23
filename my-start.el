@@ -64,6 +64,7 @@
 (try-to-load "my-emacs-lisp")
 (try-to-load "my-comment-line")
 (try-to-load "my-file")
+(try-to-load "my-line-matchers")
 (try-to-load "my-shell")
 (try-to-load "my-prog")
 (try-to-load "my-java")
