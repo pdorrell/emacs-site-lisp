@@ -11,7 +11,7 @@
 
 (eval-after-load 'js2-mode '(define-key js2-mode-map [down-mouse-3] nil))
 
-(defun java-identifier-at-point ()
+(defun javascript-identifier-at-point ()
   (word-at word-alpha-table (point)) )
 
 ;;-----------------------------------------------------------------
