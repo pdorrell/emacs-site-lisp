@@ -85,7 +85,7 @@
         ([C-M-f7] open-project-file-menu)
         ([C-S-f7] visit-sql-file)
         ([M-f7]   open-file-menu)
-        ([S-f7]   open-file-menu-other-window)
+        ([S-f7]   visit-project-file-menu-other-window)
         ([S-M-f7] open-base-file-menu-other-window)
 
         ([M-f8] run-alternate-command)

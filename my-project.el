@@ -47,6 +47,9 @@ other wise the current directory for the buffer)."
 	(setq project-lisp-file (concat directory "__project.el"))
 	(if (file-exists-p project-lisp-file)
 	    (return (cons directory project-lisp-file)) )
+        (setq dot-git-dir (concat directory ".git"))
+        (if (file-exists-p dot-git-dir)
+            (return (cons directory nil) ) )
 	(let ( (parent-directory (file-name-directory (directory-file-name directory))) )
 	  (if (equal parent-directory directory)
 	      (setq project-file-not-found t)
@@ -150,8 +153,24 @@ other wise the current directory for the buffer)."
   (interactive)
   (let ( (project-dir-and-file (get-current-project-dir-and-file)) )
     (if project-dir-and-file
-	(find-file (cdr project-dir-and-file))
+        (let ( (project-file (cdr project-dir-and-file)) )
+          (if project-file
+	      (find-file project-file)
+            (message "No project file exists at %s" (car project-dir-and-file)) ) )
       (maybe-create-new-project-file) ) ) )
+
+(defun visit-project-file-menu-other-window ()
+  "Visit file-menu file for project"
+  (interactive)
+  (let* ( (project-dir (project-base-directory))
+          (file-menu-file (concat project-dir "_")) )
+    (if (file-exists-p file-menu-file)
+        (progn
+          (find-file-other-window file-menu-file)
+          (message file-menu-file) )
+      (progn
+        (find-file-other-window project-dir)
+        (message "File menu %s does not exist" file-menu-file) ) ) ) )
 
 (defun maybe-create-new-project-file()
   "Offer to create a project file in the current directory (which the user can edit before accepting)"
