@@ -85,3 +85,31 @@
 (setq mouse-drag-copy-region t)
 
 (set-face-attribute 'region nil :background "#ffff00" :foreground "#000")
+
+;;-----------------------------------------------------------------
+(defun insert-spaced-equals ()
+  "Insert = with spaced around, unless part of another operator"
+  (interactive)
+  (let* ( (point (point))
+	  (prev-char (char-after (- point 1)))
+	  (prev-prev-char (char-after (- point 2))) )
+    (if (and prev-char (aref equals-op-table prev-char))
+	(progn
+	  (forward-char -1)
+	  (insert-space-if-not-there)
+	  (forward-char 1)
+	  (insert "= ") )
+      (if (and (= prev-prev-char 61) (= prev-char 32))
+	  (progn (delete-backward-char 1) (insert "= "))
+	(progn (insert-space-if-not-there) (insert "= ") ) ) ) ) )
+
+(defun insert-equals ()
+  (interactive)
+  (insert "=") )
+    
+(defun insert-spaced-comma ()
+  "Insert , with space after"
+  (interactive)
+  (if (looking-at " ")
+      (insert ",")
+    (insert ", ") ) )
