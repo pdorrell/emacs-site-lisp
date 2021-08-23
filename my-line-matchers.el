@@ -1,26 +1,4 @@
 ;-----------------------------------------------------------------
-(defun char-not-eoln (ch)
-  (and ch (/= ch 10)) )
-
-(defun line-start (pos)
-  "Start of line that pos is in"
-  (let ( (start (1- pos)) )
-    (while (char-not-eoln (char-after start))
-      (setq start (1- start)) )
-    (setq start (1+ start)) 
-    start) )
-
-(defun line-end (pos)
-  "End of line that pos is in"
-  (let ( (end pos) )
-    (while (char-not-eoln (char-after end))
-      (setq end (1+ end)) )
-    end) )
-
-(defun buffer-line (pos)
-  (buffer-substring-no-properties 
-   (line-start pos) (line-end pos) ) )
-
 (setq python-line-matcher 
       (list "[ ]*File[ ]*\"\\([^\"]*\\)\",[ ]*line[ ]*\\([0-9]+\\)"
 	    1 2) )

@@ -155,3 +155,26 @@
 	    (return (substring file-name 0 pos))
 	  (setq pos (1- pos)) ) ) )
     file-name) )
+
+(defun char-not-eoln (ch)
+  (and ch (/= ch 10)) )
+
+(defun line-start (pos)
+  "Start of line that pos is in"
+  (let ( (start (1- pos)) )
+    (while (char-not-eoln (char-after start))
+      (setq start (1- start)) )
+    (setq start (1+ start)) 
+    start) )
+
+(defun line-end (pos)
+  "End of line that pos is in"
+  (let ( (end pos) )
+    (while (char-not-eoln (char-after end))
+      (setq end (1+ end)) )
+    end) )
+
+(defun buffer-line (pos)
+  "Get contents of line in current buffer at specified position POS"
+  (buffer-substring-no-properties 
+   (line-start pos) (line-end pos) ) )
