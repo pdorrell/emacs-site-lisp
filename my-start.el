@@ -70,6 +70,7 @@
 (try-to-load "my-java")
 (try-to-load "my-javascript")
 (try-to-load "my-html")
+(try-to-load "my-regenerate")
 (try-to-load "my-window")
 (try-to-load "my-browser")
 (try-to-load "my-sql")
