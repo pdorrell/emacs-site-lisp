@@ -90,7 +90,6 @@
 
         ([M-f8] run-alternate-command)
 
-        ([M-f9]   run-this-file)
         ([C-M-f9] run-this-file)
         ([S-C-f9] kill-buffer-process)
         ([S-M-f9] run-project)

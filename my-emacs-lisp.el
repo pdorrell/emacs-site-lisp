@@ -10,10 +10,18 @@
       (make-alpha-table letters-digits-string
 			"_-@$%&*=+,<>?") )
 
+(defun emacs-lisp-insert-message-this ()
+  (interactive)
+  (insert-tranformed-word 
+   emacs-lisp-word-alpha-table 
+  (lambda (var) (concat "(message \"" var " = %S\" " var ")"))
+  "variable name") )
+
 (defun emacs-lisp-hook()
   (setq abbreviation-language 'lisp)
   (local-set-key [?\C-m] 'return-and-indent)
   (local-set-key [?\C-w] 'lisp-search-for-identifier-at-point)
+  (local-set-key [?\C-\S-p] 'emacs-lisp-insert-message-this)
   (setq run-file-function #'load)
   (setq filter-regexp emacs-lisp-filter-regexp)
   (local-set-key [f2] 'my-expand-abbrev)

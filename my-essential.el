@@ -1,5 +1,8 @@
 ;; Copyright (C) 2000,2001 Philip Dorrell
 
+(require 'debug)
+(require 'cl-print)
+
 ;;========================================================================
 (defun toggle-debug ()
   (interactive)
