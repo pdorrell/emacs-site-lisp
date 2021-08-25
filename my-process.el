@@ -95,11 +95,8 @@
       (progn
 	(switch-to-buffer-other-window process-buffer-name) ) )
   (clear-buffer)
-  (insert (format "%s %s\n" executable args))
-  (message "Starting process %s %s" executable args)
   (let ( (new-process (apply #'start-process name process-buffer-name executable args)) )
-    (set-process-query-on-exit-flag new-process nil)
-    (message "%s STARTED" name) ) )
+    (set-process-query-on-exit-flag new-process nil) ) )
 
 (defvar *related-output-process* nil 
   "A process associated with a buffer that will be killed by kill-buffer-process if the current buffer has no process")

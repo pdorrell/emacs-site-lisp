@@ -31,6 +31,9 @@
 
 (setq *default-executable-load-path* (concat emacs-customisation-dir "/bin/"))
 
+(setq *run-command-in-directory-script* 
+      (concat *default-executable-load-path* "run-command-in-directory"))
+
 (defun get-project-executable-load-path()
     (list (concat (project-base-directory-value) "_project/bin/")
           *default-executable-load-path*) )
@@ -51,8 +54,10 @@
 ;; test/test-project/src/subdir/hello_world.py
 
 (defun script-to-other-window (script-path working-dir output-buffer-name command-args)
-  (error "doesn't work yet")
-  )
+  (apply 'start-process-showing-console 
+         output-buffer-name output-buffer-name 
+         *run-command-in-directory-script* working-dir
+         script-path command-args) )
 
 (defun run-project-command (run-script-fun working-dir-getter script command-args-getter)
   (let* ( (output-buffer-name (concat "*" (get-project-name) "-" script "*"))
@@ -60,10 +65,6 @@
           (working-dir (funcall working-dir-getter))
           (command-arg-or-args (funcall command-args-getter))
           (command-args (if (listp command-arg-or-args) command-arg-or-args (list command-arg-or-args))) )
-    (message "output-buffer-name = %S" output-buffer-name)
-    (message "resolved-script-path = %S" resolved-script-path)
-    (message "working-dir = %S" working-dir)
-    (message "command-args = %S" command-args)
     (funcall run-script-fun resolved-script-path working-dir output-buffer-name command-args) ) )
 
 (defun project-run-this-file()
@@ -71,9 +72,7 @@
   (let* ( (current-language (get-current-language))
           (run-this-file-command (get-language-value-for-project current-language :run-this-file)) )
     (if run-this-file-command
-        (progn 
-          (message "run-this-file-command = %S" run-this-file-command)
-          (apply 'run-project-command run-this-file-command) )
+        (apply 'run-project-command run-this-file-command)
       (run-this-file) ) ) )
 
 (global-set-key [M-f9] 'project-run-this-file)
