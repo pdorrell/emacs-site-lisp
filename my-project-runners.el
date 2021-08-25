@@ -57,8 +57,30 @@
          *run-command-in-directory-script* working-dir
          script-path command-args) )
 
-(defun run-project-command (run-script-fun working-dir-getter script command-args-getter)
-  (let* ( (output-buffer-name (concat "*" (get-project-name) "-" script "*"))
+(dolist (fun-type '(run-script-fun working-dir-getter command-args-getter))
+  (put '*run-project-funs* fun-type (make-hash-table :test 'eq)) )
+
+(defun def-run-project-fun (fun-type key fun)
+  (puthash key fun (get '*run-project-funs* fun-type)) )
+
+(defun get-run-project-fun (fun-type key)
+  (let ( (fun (gethash key (get '*run-project-funs* fun-type))) )
+    (if (not fun)
+        (error "Cannot get run-project function of type %s and key %s" fun-type key) )
+    fun ) )
+
+(def-run-project-fun 'run-script-fun 'other-window 'script-to-other-window)
+
+(def-run-project-fun 'working-dir-getter 'base-dir 'project-base-directory-value)
+
+(def-run-project-fun 'command-args-getter 'this-file 'buffer-file-name)
+(def-run-project-fun 'command-args-getter 'main-file 'get-project-main-file)
+
+(defun run-project-command (run-script-fun-key working-dir-getter-key script command-args-getter-key)
+  (let* ( (run-script-fun (get-run-project-fun 'run-script-fun run-script-fun-key))
+          (working-dir-getter (get-run-project-fun 'working-dir-getter working-dir-getter-key))
+          (command-args-getter (get-run-project-fun 'command-args-getter command-args-getter-key))
+          (output-buffer-name (concat "*" (get-project-name) "-" script "*"))
           (resolved-script-path (get-project-executable script))
           (working-dir (funcall working-dir-getter))
           (command-arg-or-args (funcall command-args-getter))
