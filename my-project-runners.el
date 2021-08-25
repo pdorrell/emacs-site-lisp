@@ -51,8 +51,6 @@
         (error "Executable %S not found on load path %S" executable-name load-path) )
     executable-path) )
 
-;; test/test-project/src/subdir/hello_world.py
-
 (defun script-to-other-window (script-path working-dir output-buffer-name command-args)
   (apply 'start-process-showing-console 
          output-buffer-name output-buffer-name 
@@ -68,6 +66,7 @@
     (funcall run-script-fun resolved-script-path working-dir output-buffer-name command-args) ) )
 
 (defun project-run-this-file()
+  "Run the current file"
   (interactive)
   (let* ( (current-language (get-current-language))
           (run-this-file-command (get-language-value-for-project current-language :run-this-file)) )
@@ -75,4 +74,18 @@
         (apply 'run-project-command run-this-file-command)
       (run-this-file) ) ) )
 
+;; test/test-project/src/subdir/hello_world.py
+
+(defun get-project-main-file()
+  (project-file :main-file) )
+
+(defun project-run-project()
+  "Run the project's main file"
+  (interactive)
+  (let* ( (run-main-file-command (project-value :run-main-file)) )
+    (if run-main-file-command
+        (apply 'run-project-command run-main-file-command)
+      (run-project) ) ) )
+
 (global-set-key [M-f9] 'project-run-this-file)
+(global-set-key [M-S-f9] 'project-run-project)
