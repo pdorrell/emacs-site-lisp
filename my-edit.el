@@ -60,7 +60,7 @@
       (message "Buffer has been modified, save it first")
     (progn
       (revert-buffer t t)
-      (message "Buffer reverted") ) ) )
+      (message "Buffer reloaded from current file contents.") ) ) )
 
 (defun shift-initial-case ()
   (interactive)

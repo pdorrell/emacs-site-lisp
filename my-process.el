@@ -81,7 +81,6 @@
 	  (message "%s STOPPED" name) ) )
     (clear-buffer)
     (insert (format "%s %s\n" executable args))
-    (message "Starting new process %s %s" executable args)
     (let ( (new-process (apply #'start-process name process-buffer-name executable args)) )
       (set process-variable new-process)
       (set-process-query-on-exit-flag new-process nil)

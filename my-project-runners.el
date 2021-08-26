@@ -52,10 +52,14 @@
     executable-path) )
 
 (defun script-to-other-window (script-path working-dir output-buffer-name command-args)
-  (apply 'start-process-showing-console 
-         output-buffer-name output-buffer-name 
-         *run-command-in-directory-script* working-dir
-         script-path command-args) )
+  (let ( (process-variable-symbol (intern (concat "process-runner-process-" output-buffer-name))) )
+    (if (not (boundp process-variable-symbol))
+        (set process-variable-symbol nil) )
+    (funcall 'stop-then-start-process 
+             output-buffer-name process-variable-symbol output-buffer-name
+             *run-command-in-directory-script*
+             (append (list working-dir script-path)
+                     command-args) ) ) )
 
 (dolist (fun-type '(run-script-fun working-dir-getter command-args-getter))
   (put '*run-project-funs* fun-type (make-hash-table :test 'eq)) )
