@@ -16,10 +16,11 @@
         (error "No language found for extension %s" extension) )
     current-language) )
 
-(defun get-language-value-for-project (language value-key)
-  (let* ( (value-key-values (project-value value-key))
-          (language-value (if value-key-values (cdr (assoc language value-key-values))) ))
-    language-value) )
+(defun get-project-command (value-key &optional language)
+  (let* ( (value-for-value-key (project-value value-key)) )
+    (if language
+        (if value-for-value-key (cdr (assoc language value-for-value-key)))
+      value-for-value-key) ) )
 
 (defun get-project-name-from-base-dir()
   (let ( (base-dir (project-base-directory-value)) )
@@ -117,7 +118,7 @@
   "Run the current file"
   (interactive)
   (let* ( (current-language (get-current-language))
-          (run-this-file-command (get-language-value-for-project current-language :run-this-file)) )
+          (run-this-file-command (get-project-command :run-this-file current-language)) )
     (if run-this-file-command
         (apply 'run-project-command run-this-file-command)
       (run-this-file) ) ) )
