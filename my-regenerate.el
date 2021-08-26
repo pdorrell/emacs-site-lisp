@@ -1,42 +1,3 @@
-(defun regenerate-this-file ()
-  "Self-generate this file from regenerate.rb" 
-  (interactive)
-  (compile-this-file-using-ruby-script "-S" "regenerate") )
-
-(defun dev-regenerate ()
-  "Self-generate this file or directory from dev version of regenerate.rb" 
-  (interactive)
-  (compile-this-file-using-ruby-script (concat "-I" *regenerate-dir* "/lib") 
-                                       (concat *regenerate-dir* "/bin/regenerate") ) )
-
-(defun set-total-window-height (window height)
-  (let ( (delta (- height (window-total-height window))) )
-    (window-resize window delta) ) )
-
-(defun compile-this-file-using-ruby-script (&rest ruby-script-args)
-  "Compile this file or directory from RUBY-SCRIPT"
-  (save-this-buffer-and-others)
-  (let ( (filename (get-this-file-or-directory-name))
-	 (file-buffer (current-buffer))
-	 (ruby-executable (project-file :ruby-executable))
-	 (ruby-args (project-value :ruby-args))
-	 (base-directory (project-base-directory-value))
-         (ruby-buffer (get-buffer-create "*ruby*")) )
-    (message "Regenerating %s with ruby command %s ..." filename ruby-script-args)
-    (display-buffer ruby-buffer)
-    (save-selected-window
-      (set-buffer ruby-buffer)
-      (clear-buffer)
-      (message "ruby-executable = %s ruby-args = %s, ruby-script-args = %s, filename = %s" ruby-executable ruby-args ruby-script-args filename)
-      (apply #'call-process 
-             `(,ruby-executable nil (t t) t ,@ruby-args 
-                                ,@ruby-script-args ,filename))
-      (message "Finished regenerating %s" filename)
-      (set-window-point (get-buffer-window ruby-buffer) (point-max))
-      (set-total-window-height (get-buffer-window ruby-buffer) 6) )
-    (revert-if-saved) ) )
-
-;;-----------------------------------------------------------------
 (defun create-display-date()
   (format-time-string "%-e %B, %Y") )
 
@@ -72,4 +33,3 @@
   (replace-in-buffer "{TITLE}" 
                      (create-title-from-file-name (buffer-file-name)) )
   (save-buffer) )
-  

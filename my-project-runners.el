@@ -62,6 +62,10 @@
              (append (list working-dir script-path)
                      command-args) ) ) )
 
+(defun set-total-window-height (window height)
+  (let ( (delta (- height (window-total-height window))) )
+    (window-resize window delta) ) )
+
 (defun sync-script-to-other-short-window (script-path working-dir output-buffer-name command-args)
   (let ( (output-buffer (get-buffer-create output-buffer-name)) )
     (message "Running %s on %S" script-path command-args)
