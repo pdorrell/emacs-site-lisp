@@ -17,6 +17,15 @@
 		    (make-hash-table :test 'eq))) )
     (dolist (key-value-pair key-value-pairs)
       (puthash (first key-value-pair) (second key-value-pair) project) )
+    (let ( (project-type (gethash :project-type project)) )
+      (if project-type
+          (let ( (project-defaults (assoc project-type *project-type-default-values*)) )
+            (if project-defaults
+                (dolist (key-value-pair (cdr project-defaults))
+                  (cl-destructuring-bind (key value) key-value-pair
+                    (if (not (gethash key project))
+                        (puthash key value project) ) ) )
+              (error "No default project of type %S" project-type) ) ) ) )
     project) )
 
 (defvar *default-project* (create-project `((:python-executable ,*python-executable*)))

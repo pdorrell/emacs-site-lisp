@@ -50,6 +50,7 @@
 (try-to-load "my-modes")
 (try-to-load "my-global-keyboard-shortcuts")
 
+(try-to-load "my-project-defaults")
 (try-to-load "my-project")
 (try-to-load "my-project-runners")
 (try-to-load "my-movement")
