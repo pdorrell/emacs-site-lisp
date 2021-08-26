@@ -69,7 +69,7 @@
     (save-selected-window
       (set-buffer output-buffer)
       (clear-buffer)
-      (apply 'call-process script-path nil (t t) t command-args)
+      (apply 'call-process script-path nil '(t t) 't command-args)
       (message "   finished running %s on %S" script-path command-args)
       (set-window-point (get-buffer-window output-buffer) (point-max))
       (set-total-window-height (get-buffer-window output-buffer) 6) )
@@ -138,8 +138,10 @@
 
 (defun run-alternate-command-on-file-or-dir()
   (interactive)
-  (message "run-alternate-command-on-file-or-dir")
-  (run-alternate-command) )
+  (let ( (alternate-command (get-project-command :alternate-file-or-dir-command)) )
+    (if alternate-command
+        (apply 'run-project-command alternate-command)
+      (run-alternate-command) ) ) )
 
 (global-set-key [M-f9] 'project-run-this-file)
 (global-set-key [M-S-f9] 'project-run-project)
