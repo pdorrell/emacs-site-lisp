@@ -88,7 +88,7 @@
         ([S-f7]   visit-project-file-menu-other-window)
         ([S-M-f7] open-base-file-menu-other-window)
 
-        ([M-f8] run-alternate-command)
+        ([M-f8] run-alternate-command-on-file-or-dir)
 
         ([C-M-f9] run-this-file)
         ([S-C-f9] kill-buffer-process)

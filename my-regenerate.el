@@ -27,7 +27,7 @@
     (save-selected-window
       (set-buffer ruby-buffer)
       (clear-buffer)
-      (message "ruby-args = %s, ruby-script-args = %s, filename = %s" ruby-args ruby-script-args filename)
+      (message "ruby-executable = %s ruby-args = %s, ruby-script-args = %s, filename = %s" ruby-executable ruby-args ruby-script-args filename)
       (apply #'call-process 
              `(,ruby-executable nil (t t) t ,@ruby-args 
                                 ,@ruby-script-args ,filename))

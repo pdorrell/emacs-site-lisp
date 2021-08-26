@@ -61,6 +61,19 @@
              (append (list working-dir script-path)
                      command-args) ) ) )
 
+(defun sync-script-to-other-short-window (script-path working-dir output-buffer-name command-args)
+  (let ( (output-buffer (get-buffer-create output-buffer-name)) )
+    (message "Running %s on %S" script-path command-args)
+    (display-buffer output-buffer)
+    (save-selected-window
+      (set-buffer output-buffer)
+      (clear-buffer)
+      (apply 'call-process script-path nil (t t) t command-args)
+      (message "   finished running %s on %S" script-path command-args)
+      (set-window-point (get-buffer-window output-buffer) (point-max))
+      (set-total-window-height (get-buffer-window output-buffer) 6) )
+    (revert-if-saved) ) )
+
 (dolist (fun-type '(run-script-fun working-dir-getter command-args-getter))
   (put '*run-project-funs* fun-type (make-hash-table :test 'eq)) )
 
@@ -80,6 +93,7 @@
     (expand-file-name (buffer-file-name)) ) )
 
 (def-run-project-fun 'run-script-fun 'other-window 'script-to-other-window)
+(def-run-project-fun 'run-script-fun 'other-short-window-sync 'sync-script-to-other-short-window)
 
 (def-run-project-fun 'working-dir-getter 'base-dir 'project-base-directory-value)
 
@@ -88,6 +102,7 @@
 (def-run-project-fun 'command-args-getter 'main-file 'get-project-main-file)
 
 (defun run-project-command (run-script-fun-key working-dir-getter-key script command-args-getter-key)
+  (save-this-buffer-and-others)
   (let* ( (run-script-fun (get-run-project-fun 'run-script-fun run-script-fun-key))
           (working-dir-getter (get-run-project-fun 'working-dir-getter working-dir-getter-key))
           (command-args-getter (get-run-project-fun 'command-args-getter command-args-getter-key))
@@ -119,6 +134,11 @@
     (if run-main-file-command
         (apply 'run-project-command run-main-file-command)
       (run-project) ) ) )
+
+(defun run-alternate-command-on-file-or-dir()
+  (interactive)
+  (message "run-alternate-command-on-file-or-dir")
+  (run-alternate-command) )
 
 (global-set-key [M-f9] 'project-run-this-file)
 (global-set-key [M-S-f9] 'project-run-project)
