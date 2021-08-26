@@ -10,8 +10,8 @@
 
 (setq-default indent-tabs-mode nil)
 
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-			 ("melpa" . "http://melpa.org/packages/")))
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+			 ("melpa" . "https://melpa.org/packages/")))
 
 (setq emacs-customisation-dir "/home/philip/dev/emacs/emacs-site-lisp")
 (setq emacs-util-classpath (concat emacs-customisation-dir "/emacs.jar"))
