@@ -73,11 +73,18 @@
         (error "Cannot get run-project function of type %s and key %s" fun-type key) )
     fun ) )
 
+(defun get-this-file-or-directory-name()
+  (let ( (buffer-file-name (buffer-file-name)) )
+    (if (not buffer-file-name)
+	(setq buffer-file-name default-directory) )
+    (expand-file-name (buffer-file-name)) ) )
+
 (def-run-project-fun 'run-script-fun 'other-window 'script-to-other-window)
 
 (def-run-project-fun 'working-dir-getter 'base-dir 'project-base-directory-value)
 
 (def-run-project-fun 'command-args-getter 'this-file 'buffer-file-name)
+(def-run-project-fun 'command-args-getter 'this-file-or-dir 'get-this-file-or-directory-name)
 (def-run-project-fun 'command-args-getter 'main-file 'get-project-main-file)
 
 (defun run-project-command (run-script-fun-key working-dir-getter-key script command-args-getter-key)

@@ -9,12 +9,6 @@
   (compile-this-file-using-ruby-script (concat "-I" *regenerate-dir* "/lib") 
                                        (concat *regenerate-dir* "/bin/regenerate") ) )
 
-(defun get-this-file-or-directory-name()
-  (let ( (buffer-file-name (buffer-file-name)) )
-    (if (not buffer-file-name)
-	(setq buffer-file-name default-directory) )
-    (expand-file-name (buffer-file-name)) ) )
-
 (defun set-total-window-height (window height)
   (let ( (delta (- height (window-total-height window))) )
     (window-resize window delta) ) )
