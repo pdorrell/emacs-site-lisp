@@ -1,61 +1,11 @@
 (autoload 'ruby-mode "ruby-mode")
 
-(defvar *ruby-executable* "ruby" "Ruby executable for project")
-
-(defvar *webrick-process* nil)
-
 (setq ruby-word-table
       (make-alpha-table letters-digits-string "_") )
-
-(defun webrick ()
-  (interactive)
-  (if (buffer-for-name "*webrick*")
-      (kill-buffer "*webrick*") )
-  (setf *webrick-process*
-	(start-process "webrick-process" "*webrick*"  (project-file :ruby-executable *ruby-executable*)
-		       (concat (project-base-directory-value) "script/server") "-b" "127.0.0.1") )
-  (switch-to-buffer-other-window "*webrick*") )
 
 (defun insert-hash-key ()
   (interactive)
   (insert " => ") )
-
-(defun ruby-run-file2 (file &rest args)
-  (let ( (filename (windowize-filename (expand-file-name file))) )
-    (switch-to-buffer-other-window "*ruby*")
-    (clear-buffer)
-    (let ( (ruby-executable (project-file :ruby-executable *ruby-executable*)) 
-	   (ruby-args (project-value :ruby-args nil)) )
-      (message "%s %s %s ..." ruby-executable ruby-args filename)
-      (apply #'start-process 
-	     `("ruby" "*ruby*" ,ruby-executable ,@ruby-args ,filename ,@args) ) ) ) )
-
-(defvar *ruby-process* nil "Running ruby program")
-
-(defun ruby-run-file (file &rest args)
-  (let ( (filename (windowize-filename (expand-file-name file))) 
-	 (current-directory default-directory) )
-    (let ( (ruby-executable (project-file :ruby-executable *ruby-executable*)) 
-	   (ruby-args (project-value :ruby-args nil)) )
-    (switch-to-buffer-other-window "*ruby*")
-    (setq default-directory current-directory)
-    (clear-buffer)
-    (stop-then-start-process "ruby" '*ruby-process* "*ruby*" 
-			     ruby-executable (append ruby-args (list filename) args) ) ) ) )
-
-(defun execute-ruby (&rest args)
-  (let ( (current-directory default-directory) )
-    (let ( (ruby-executable (project-file :ruby-executable *ruby-executable*)) 
-	   (ruby-args (project-value :ruby-args nil)) )
-    (switch-to-buffer-other-window "*ruby*")
-    (setq default-directory current-directory)
-    (clear-buffer)
-    (stop-then-start-process "ruby" '*ruby-process* "*ruby*" 
-			     ruby-executable (append ruby-args args) ) ) ) )
-
-(defun ruby-visit-output-buffer()
-  (interactive)
-  (switch-to-buffer "*ruby*") )
 
 (defun ruby-insert-member-equals ()
   "Do @x=x on preceding x"
@@ -101,30 +51,6 @@
   (interactive "sSearch for: ")
   (show-search-buffer (list default-directory) '(".yaml" ".rb" ".haml") identifier) )
 
-(defvar *rails-process* nil "Development Ruby on Rails process")
-
-(defun run-rails-server (run-server-script base-dir)
-  (interactive)
-  (let ( (ruby-executable (project-value :ruby-executable "ruby")) )
-    (switch-to-buffer-other-window "*rails*")
-    (clear-buffer)
-    (stop-then-start-process "rails" '*rails-process* "*rails*" 
-			      run-server-script (list ruby-executable base-dir) ) ) )
-
-(defun rspec-file (file)
-  (interactive)
-  (let ( (filename (windowize-filename file)) )
-    (condition-case nil (kill-buffer "*rspec*") (error nil))
-    (switch-to-buffer-other-window "*rspec*")
-    (setq *current-output-buffer* "*rspec*")
-    (let ( (rspec-command (project-value :rspec-command '("ruby" "-S" "rspec"))) )
-      (insert (format "%s -u %s [%s]\n\n" rspec-command filename (execution-logging-time-string)))
-      (goto-char (point-min))
-      (other-window 1)
-      (message "%s %s ..." rspec-command filename)
-      (apply #'start-process 
-	     `("rspec" "*rspec*" ,@rspec-command ,filename ) ) ) ) )
-
 (defun ruby-mode-hook-function ()
   (setq abbreviation-language 'ruby)
   (local-set-key [?\C-t] 'ruby-insert-member-equals)
@@ -132,9 +58,6 @@
   (local-set-key [?\C-\S-p] 'ruby-insert-print-this-inspected)
   (local-set-key [?\C-m] 'return-and-indent)
   (local-set-key [?\C-w] 'ruby-search-for-identifier-at-point)
-  (setq run-file-function #'ruby-run-file)
-  (if (string-ends-with (buffer-file-name) "_spec.rb")
-      (setq run-file-function #'rspec-file) )
   (local-set-key "," 'insert-spaced-comma)
   (local-set-key [f2] 'my-expand-abbrev)
   (local-set-key "=" 'insert-spaced-equals)

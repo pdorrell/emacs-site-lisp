@@ -82,7 +82,6 @@
 (try-to-load "my-lisp")
 (try-to-load "my-ruby")
 (try-to-load "my-linux")
-(try-to-load "my-sass")
 (try-to-load "my-maori")
 (try-to-load "my-idris")
 

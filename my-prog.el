@@ -91,16 +91,3 @@
 	  (delete-backward-char (length word))
 	  (insert (funcall transformer word)) )
       (message "No %s given" descriptipon) ) ) )
-
-(defvar *database-process* nil "Process running development database")
-
-(defun run-script (command output-buffer-name)
-  (interactive)
-  (message "Running %s ..." command)
-  (condition-case nil (kill-buffer output-buffer-name) (error nil))
-  (switch-to-buffer-other-window output-buffer-name)
-  (insert (format "Running %s in %s ...\n" command default-directory))
-  (setq *current-output-buffer* output-buffer-name)
-  (let ( (process (apply #'start-process 
-                        (append (list "script" output-buffer-name) command ))) )
-    (process-kill-without-query process) ) )

@@ -228,18 +228,3 @@ other wise the current directory for the buffer)."
   "Compile using a command"
   (let ( (compile-command (project-value :compile-command)) )
     (compile-with-command (if target (concat compile-command " " target) compile-command)) ) )
-
-(defun run-database-for-project ()
-  "Run database for this project"
-  (interactive)
-  (let ( (run-database-command (project-required-value :run-database-command)) )
-    (eval run-database-command) ) )
-
-(defvar *mongod-process* nil "Running Mongo server")
-
-(defun mongod (port directory)
-  "Run mongod (for development) on PORT and directory"
-    (switch-to-buffer-other-window "*mongod*")
-    (clear-buffer)
-    (stop-then-start-process "mongod" '*mongod-process* "*mongod*"
-			     "mongod" (list "-port" (number-to-string port) "-dbpath" directory) ) )
