@@ -33,3 +33,7 @@
   (replace-in-buffer "{TITLE}" 
                      (create-title-from-file-name (buffer-file-name)) )
   (save-buffer) )
+
+(defun regenerate-sass-watch()
+  (interactive)
+  (apply 'run-project-command (project-value :sass-watch-command)) )

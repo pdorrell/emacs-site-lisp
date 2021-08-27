@@ -41,6 +41,7 @@
      ([?\M-Q] indent-sexp)
 
      ([?\M-S] start-killable-shell)
+     ([?\C-\M-S] regenerate-sass-watch)
 
      ([?\C-t]    toggle-truncate-lines)
      ([?\C-\M-t] toggle-truncate-lines)

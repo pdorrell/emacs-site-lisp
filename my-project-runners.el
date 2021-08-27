@@ -97,6 +97,9 @@
 	(setq buffer-file-name default-directory) )
     (expand-file-name (buffer-file-name)) ) )
 
+(defun get-no-command-params()
+  nil)
+
 (def-run-project-fun 'run-script-fun 'other-window 'script-to-other-window)
 (def-run-project-fun 'run-script-fun 'other-short-window-sync 'sync-script-to-other-short-window)
 
@@ -105,6 +108,7 @@
 (def-run-project-fun 'command-args-getter 'this-file 'buffer-file-name)
 (def-run-project-fun 'command-args-getter 'this-file-or-dir 'get-this-file-or-directory-name)
 (def-run-project-fun 'command-args-getter 'main-file 'get-project-main-file)
+(def-run-project-fun 'command-args-getter 'nil 'get-no-command-params)
 
 (defun run-project-command (run-script-fun-key working-dir-getter-key script command-args-getter-key)
   (save-this-buffer-and-others)
