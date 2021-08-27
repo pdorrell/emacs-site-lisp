@@ -147,5 +147,3 @@
         (apply 'run-project-command alternate-command)
       (run-alternate-command) ) ) )
 
-(global-set-key [M-f9] 'project-run-this-file)
-(global-set-key [M-S-f9] 'project-run-project)
