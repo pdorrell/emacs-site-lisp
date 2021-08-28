@@ -1,12 +1,11 @@
+(defun update-auto-mode-alist (regex-pattern mode)
+  (push (cons regex-pattern mode) auto-mode-alist) )
+
 (defun set-extension-mode (extension mode)
-  (setq auto-mode-alist
-        (cons (cons (concat "\\" extension "\\'") mode)
-              auto-mode-alist) ) )
+  (update-auto-mode-alist (concat "\\" extension "\\'") mode) )
 
 (defun set-file-name-mode (file-name mode)
-  (setq auto-mode-alist
-        (cons (cons (concat "[/]" (regexp-quote file-name) "\\'") mode)
-              auto-mode-alist) ) )
+  (update-auto-mode-alist (concat "[/]" (regexp-quote file-name) "\\'") mode) )
 
 (apply-to-list-of-arg-lists
  'set-file-name-mode
@@ -31,4 +30,5 @@
    (".ts"   typescript-mode)
    (".tsx"  rjsx-mode)
    (".yml"  yaml-mode)
+   (".file-menu" file-menu-mode)
    ) )
