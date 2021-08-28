@@ -1,2 +1,0 @@
-
-* Navigate directly to project-level file-menu from inside project, <something>-f7 ? (Maybe S-f7, and open in other window (because project menus usually small enough to fit in half-height window).
