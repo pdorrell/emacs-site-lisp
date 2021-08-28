@@ -6,7 +6,7 @@
   (interactive)
   (beginning-of-line)
   (if comment-start (insert comment-start))
-  (dotimes (i 65) (insert "-"))
+  (dotimes (i 80) (insert "-"))
   (if comment-end (insert comment-end))
   (newline) )
 
@@ -15,7 +15,7 @@
   (interactive)
   (beginning-of-line)
   (if comment-start (insert comment-start))
-  (dotimes (i 72) (insert "="))
+  (dotimes (i 100) (insert "="))
   (if comment-end (insert comment-end))
   (newline) )
 
