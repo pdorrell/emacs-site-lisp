@@ -64,7 +64,7 @@ processed."
   (interactive)
   (setq saved-mouse-selection 
 	(if mark-active (buffer-substring (region-beginning) (region-end))) )
-  (message saved-mouse-selection) )
+  (message "saved-mouse-selection = %S" saved-mouse-selection) )
 
 (defun get-saved-mouse-selection ()
   "Get saved-mouse-selection and then set it to nil"

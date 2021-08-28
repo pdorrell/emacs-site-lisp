@@ -108,6 +108,7 @@
 	    (return-from loop t) ) ) ) ) )
 
 (defun file-menu-filename-at-point ()
-  (let ( (file-name (file-menu-read-treed-name)) )
-    (message "filename=\"%s\"" file-name)
-    file-name) )
+  (if saved-mouse-selection
+      (get-saved-mouse-selection)
+    (let ( (file-name (file-menu-read-treed-name)) )
+      file-name) ) )
