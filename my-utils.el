@@ -2,6 +2,7 @@
 
 ;  Possibly not useful ...
 (defun apply-to-list-of-arg-lists (fun arg-lists)
+  (declare (indent defun))
   (dolist (arg-list
            arg-lists)
     (apply fun arg-list) ) )
