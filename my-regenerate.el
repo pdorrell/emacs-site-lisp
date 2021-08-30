@@ -36,4 +36,6 @@
 
 (defun regenerate-sass-watch()
   (interactive)
-  (apply 'run-project-command (project-value :sass-watch-command)) )
+  (let ( (sass-watch-command (project-required-value :sass-watch-command)) )
+    (apply 'run-project-command sass-watch-command) ) )
+

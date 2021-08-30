@@ -179,3 +179,6 @@
   "Get contents of line in current buffer at specified position POS"
   (buffer-substring-no-properties 
    (line-start pos) (line-end pos) ) )
+
+(defun listify-if-not-list (value)
+  (if (listp value) value (list value)) )
