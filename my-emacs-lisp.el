@@ -18,7 +18,7 @@
   "variable name") )
 
 (defun emacs-lisp-hook()
-  (setq abbreviation-language 'lisp)
+  (setq programming-language 'lisp)
   (local-set-key [?\C-m] 'return-and-indent)
   (local-set-key [?\C-w] 'lisp-search-for-identifier-at-point)
   (local-set-key [?\C-\S-p] 'emacs-lisp-insert-message-this)

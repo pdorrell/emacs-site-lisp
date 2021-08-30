@@ -52,7 +52,7 @@
      (defun idris-highlight--overlay-modification-hook (&rest args) ) ) )
 
 (defun my-idris-mode-hook()
-  (setq abbreviation-language 'idris)
+  (setq programming-language 'idris)
   (setq word-alpha-table idris-word-table)
   (local-set-key [C-M-f9] 'idris-load-file)
   (local-set-key [M-f9] 'idris-compile-and-execute)

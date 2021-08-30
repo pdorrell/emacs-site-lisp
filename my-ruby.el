@@ -52,7 +52,7 @@
   (show-search-buffer (list default-directory) '(".yaml" ".rb" ".haml") identifier) )
 
 (defun ruby-mode-hook-function ()
-  (setq abbreviation-language 'ruby)
+  (setq programming-language 'ruby)
   (local-set-key [?\C-t] 'ruby-insert-member-equals)
   (local-set-key [?\C-p] 'ruby-insert-print-this)
   (local-set-key [?\C-\S-p] 'ruby-insert-print-this-inspected)

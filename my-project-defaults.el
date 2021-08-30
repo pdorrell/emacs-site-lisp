@@ -2,11 +2,11 @@
 (setq *project-type-default-values*
       '( 
         (python 
-         (:run-this-file ( (python . (other-window base-dir "run-python" this-file)) ))
+         ((:run-this-file . python) (other-window base-dir "run-python" this-file))
          (:run-main-file (other-window base-dir "run-python" main-file)) )
          
         (python-with-venv
-         (:run-this-file ( (python . (other-window base-dir "run-python-in-venv" this-file)) ))
+         ((:run-this-file . python) (other-window base-dir "run-python-in-venv" this-file))
          (:run-main-file (other-window base-dir "run-python-in-venv" main-file)) )
          
         (regenerated-blog 

@@ -14,7 +14,7 @@
   "Create a project object from given key/value pairs, optionally re-using an existing project if supplied"
   (let ( (project (if existing-project 
 		      (clrhash existing-project) 
-		    (make-hash-table :test 'eq))) )
+		    (make-hash-table :test 'equal))) )
     (dolist (key-value-pair key-value-pairs)
       (puthash (first key-value-pair) (second key-value-pair) project) )
     (let ( (project-type (gethash :project-type project)) )

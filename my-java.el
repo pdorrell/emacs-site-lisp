@@ -542,7 +542,7 @@
 (add-hook 'java-mode-hook 'java-hook)
 
 (defun java-hook ()
-  (setq abbreviation-language 'java)
+  (setq programming-language 'java)
   (local-set-key [?\C-m] 'java-return)
   (setq run-file-function #'java-run-file)
   (setq filter-regexp java-filter-regexp)

@@ -41,6 +41,9 @@
 (set-cursor-color "blue")
 (setq search-highlight t)
 
+(make-variable-buffer-local 'programming-language)
+
+
 ;-----------------------------------------------------------------
 
 (try-to-load "executables")

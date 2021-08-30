@@ -1,26 +1,12 @@
 (require 'cl-extra)
 
-(setq *language-by-extension* (make-hash-table :test 'equal))
-
-(defun set-language-for-extension(extension language)
-  (puthash extension language *language-by-extension*) )
-
-(set-language-for-extension "py" 'python)
-(set-language-for-extension "el" 'emacs-lisp)
-(set-language-for-extension "rb" 'ruby)
-
-(defun get-current-language()
-  (let* ( (extension (file-name-extension (buffer-file-name)))
-          (current-language (gethash extension *language-by-extension*)) )
-    (if (not current-language)
-        (error "No language found for extension %s" extension) )
-    current-language) )
+(defun project-value-for-language(value-key language)
+  (project-value (cons value-key language)) )
 
 (defun get-project-command (value-key &optional language)
-  (let* ( (value-for-value-key (project-value value-key)) )
-    (if language
-        (if value-for-value-key (cdr (assoc language value-for-value-key)))
-      value-for-value-key) ) )
+  (if language
+      (project-value-for-language value-key language)
+    (project-value-required value-key) ) )
 
 (defun get-project-name-from-base-dir()
   (let ( (base-dir (project-base-directory-value)) )
@@ -125,8 +111,7 @@
 (defun project-run-this-file()
   "Run the current file"
   (interactive)
-  (let* ( (current-language (get-current-language))
-          (run-this-file-command (get-project-command :run-this-file current-language)) )
+  (let* ( (run-this-file-command (get-project-command :run-this-file programming-language)) )
     (if run-this-file-command
         (apply 'run-project-command run-this-file-command)
       (run-this-file) ) ) )

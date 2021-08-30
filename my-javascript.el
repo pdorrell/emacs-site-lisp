@@ -59,7 +59,7 @@
 
 (defun javascript-hook ()
   (message "javascript-hook")
-  (setq abbreviation-language 'javascript)
+  (setq programming-language 'javascript)
   (setq js-indent-level 2)
   (local-set-key [?\C-m] 'return-and-indent)
   (setq c-basic-offset 2)
