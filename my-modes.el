@@ -23,6 +23,7 @@
      (".rb"   ruby-mode)
      (".scss" css-mode)
      (".song" melody-scripter-mode)
+     (".sql"  sql-mode)
      (".ts"   typescript-mode)
      (".tsx"  rjsx-mode)
      (".yml"  yaml-mode)
