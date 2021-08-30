@@ -6,7 +6,7 @@
 (defun get-project-command (value-key &optional language)
   (if language
       (project-value-for-language value-key language)
-    (project-value-required value-key) ) )
+    (project-value value-key) ) )
 
 (defun get-project-name-from-base-dir()
   (let ( (base-dir (project-base-directory-value)) )
@@ -135,4 +135,3 @@
     (if alternate-command
         (apply 'run-project-command alternate-command)
       (run-alternate-command) ) ) )
-

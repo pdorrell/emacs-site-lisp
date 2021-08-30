@@ -19,9 +19,9 @@
       (puthash (first key-value-pair) (second key-value-pair) project) )
     (let ( (project-type (gethash :project-type project)) )
       (if project-type
-          (let ( (project-defaults (assoc project-type *project-type-default-values*)) )
+          (let ( (project-defaults (get-project-type-default-values project-type) ) )
             (if project-defaults
-                (dolist (key-value-pair (cdr project-defaults))
+                (dolist (key-value-pair project-defaults)
                   (cl-destructuring-bind (key value) key-value-pair
                     (if (not (gethash key project))
                         (puthash key value project) ) ) )
