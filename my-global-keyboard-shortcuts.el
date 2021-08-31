@@ -96,6 +96,7 @@
      ([S-M-f7] open-base-file-menu-other-window)
 
      ([M-f8] run-alternate-command-on-file-or-dir)
+     ([C-S-M-f8] stop-on-1st-test-failure-minor-mode)
 
      ([S-C-f9] kill-buffer-process)
      ([M-f9] project-run-this-file)
