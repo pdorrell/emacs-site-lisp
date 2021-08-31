@@ -94,4 +94,4 @@
 
 (define-minor-mode stop-on-1st-test-failure-minor-mode
   "When running unit tests, stop on first failure"
-  nil " Stop1stFail")
+  nil " Stop1stFail" :global t)
