@@ -115,15 +115,16 @@
     (insert ", ") ) )
 
 (defun trim-trailing-whitespace-in-buffer()
-  (message "trim-trailing-whitespace-in-buffer ...")
-  (save-excursion
-    (goto-char (point-min))
-    (let ( (counter 0) )
-      (while (re-search-forward "[ ]+\n" nil t)
-        (setq counter (1+ counter))
-        (replace-match "\n") )
-      (if (> counter 0)
-          (message " trimmed trailing whitespace from %S lines" counter) ) ) ) )
+  (when *trim-trailing-whitespace-on-save*
+    (message "trim-trailing-whitespace-in-buffer ...")
+    (save-excursion
+      (goto-char (point-min))
+      (let ( (counter 0) )
+        (while (re-search-forward "[ ]+\n" nil t)
+          (setq counter (1+ counter))
+          (replace-match "\n") )
+        (if (> counter 0)
+            (message " trimmed trailing whitespace from %S lines" counter) ) ) ) ) )
 
 (defvar *trim-trailing-whitespace-on-save* nil "Should trailing whitespace be trimmed on save?")
 (make-variable-buffer-local '*trim-trailing-whitespace-on-save*)

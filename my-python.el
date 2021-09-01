@@ -67,7 +67,7 @@
     (switch-to-buffer-other-window "*python*")
     (clear-buffer)
     (setq *current-output-buffer* "*python*")
-    (start-process "python" "*python*" "env.exe" 
+    (start-process "python" "*python*" "env.exe"
 		   (concat "PYTHONPATH=" (getenv "PYTHONPATH") ";" (getenv "PYTHON_LOCALENV_PATH"))
 		   (project-file :python-executable) "-u" filename) ) )
 
