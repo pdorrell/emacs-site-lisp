@@ -1,8 +1,8 @@
 #!/bin/bash
 export VIRTUAL_ENV=${PWD}/_venv
-echo VIRTUAL_ENV=$VIRTUAL_ENV
+#echo VIRTUAL_ENV=$VIRTUAL_ENV
 export PYTHON=_venv/bin/python
-echo PYTHON=$PYTHON
+#echo PYTHON=$PYTHON
 export PYTHONPATH=.:$PYTHONPATH
 export PATH=$VIRTUAL_ENV/bin:$PATH
 export PS1_PREFIX="(_venv)"

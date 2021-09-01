@@ -13,8 +13,9 @@
      (:run-main-file (other-window base-dir "run-python" main-file)) ) )
 
 (set-project-type-default-values 'python-with-venv
-  '( ((:run-this-file . python) (other-window base-dir "run-python-in-venv" this-file))
-     (:run-main-file (other-window base-dir "run-python-in-venv" main-file)) ) )
+  '( ((:wrapper . python) "run-in-venv")
+     ((:run-this-file . python) (other-window base-dir (:wrapped python "python" "-u") this-file))
+     (:run-main-file (other-window base-dir (:wrapped python "python" "-u") main-file)) ) )
 
 (set-project-type-default-values 'regenerated-blog 
   '( (:search-extensions (".rb" ".html" ".rhtml" ".css"))
