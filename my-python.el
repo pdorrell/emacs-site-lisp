@@ -100,6 +100,7 @@
   (setq word-alpha-table python-word-table)
   (font-lock-mode 1)
   (setq filter-regexp "def\\|class")
+  (setq *trim-trailing-whitespace-on-save* t)
   (setq require-final-newline nil) )
 
 (defun python-insert-self-dot()

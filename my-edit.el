@@ -26,7 +26,7 @@
     (if word
         (describe-function (intern word))
       (call-interactively 'describe-function) ) ) )
-    
+
 (defun describe-variable-at-pos ()
   (interactive)
   (let ( (word (word-at emacs-lisp-word-alpha-table (point))) )
@@ -70,7 +70,7 @@
     (if word
         (progn
           (if (eql pos last-paste-end)
-              (setq letter-pos 
+              (setq letter-pos
                     (+ (length word) (- last-paste-start last-paste-end))) )
           (setq ch (aref word letter-pos))
           (delete-backward-char (length word))
@@ -106,10 +106,26 @@
 (defun insert-equals ()
   (interactive)
   (insert "=") )
-    
+
 (defun insert-spaced-comma ()
   "Insert , with space after"
   (interactive)
   (if (looking-at " ")
       (insert ",")
     (insert ", ") ) )
+
+(defun trim-trailing-whitespace-in-buffer()
+  (message "trim-trailing-whitespace-in-buffer ...")
+  (save-excursion
+    (goto-char (point-min))
+    (let ( (counter 0) )
+      (while (re-search-forward "[ ]+\n" nil t)
+        (setq counter (1+ counter))
+        (replace-match "\n") )
+      (if (> counter 0)
+          (message " trimmed trailing whitespace from %S lines" counter) ) ) ) )
+
+(defvar *trim-trailing-whitespace-on-save* nil "Should trailing whitespace be trimmed on save?")
+(make-variable-buffer-local '*trim-trailing-whitespace-on-save*)
+
+(add-hook 'before-save-hook 'trim-trailing-whitespace-in-buffer)

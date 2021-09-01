@@ -78,6 +78,7 @@
   (font-lock-mode 1)
   (setq comment-start "/*")
   (setq comment-end "*/")
+  (setq *trim-trailing-whitespace-on-save* t)
   (setq require-final-newline nil) )
 
 ;;-----------------------------------------------------------------
