@@ -79,7 +79,7 @@
   (setq comment-start "/*")
   (setq comment-end "*/")
   (setq *trim-trailing-whitespace-on-save* t)
-  (setq require-final-newline nil) )
+  (setq require-final-newline t) )
 
 ;;-----------------------------------------------------------------
 (set-abbrev-language 'javascript)

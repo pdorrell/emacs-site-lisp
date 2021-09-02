@@ -572,7 +572,7 @@
   (font-lock-mode 1)
   (setq comment-start "/*")
   (setq comment-end "*/")
-  (setq require-final-newline nil) )
+  (setq require-final-newline t) )
 
 ;;-----------------------------------------------------------------
 (defun java-search-for-identifier-at-point ()

@@ -101,7 +101,7 @@
   (font-lock-mode 1)
   (setq filter-regexp "def\\|class")
   (setq *trim-trailing-whitespace-on-save* t)
-  (setq require-final-newline nil) )
+  (setq require-final-newline t) )
 
 (defun python-insert-self-dot()
   (interactive)
