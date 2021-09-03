@@ -90,6 +90,8 @@
 
 (setq transient-mark-mode nil)
 
+(setq Buffer-menu-name-width 35)
+
 (defun yes-or-no-p (string)
   (y-or-n-p string) )
 

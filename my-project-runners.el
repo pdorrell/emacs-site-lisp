@@ -109,7 +109,33 @@
           (error "Unknown command-script type %S" (car command-script)) )
       (error "Command-script must be string of list: %S" command-script) ) ) )
 
-(defun run-project-command (run-script-fun-key working-dir-getter-key command-script command-args-getter-key)
+(defun last-file-path-part (file-or-dir-name)
+  (if (string-ends-with file-or-dir-name "/")
+      (file-name-nondirectory (directory-file-name file-or-dir-name))
+    (file-name-nondirectory file-or-dir-name) ) )
+
+(defun get-args-description (args-description-spec command-args)
+  (if (stringp args-description-spec)
+      args-description-spec
+    (if (null args-description-spec)
+        nil
+      (if (eq args-description-spec 'file)
+          (let ( (file-name (last-file-path-part (car (last command-args)))) )
+            file-name)
+        (error "Unknown args description spec %s" args-description-spec) ) ) ) )
+
+(defun get-script-description (description-spec script command-args)
+  (if description-spec
+      (let* ( (script-description (car description-spec))
+              (args-description-spec (cdr description-spec))
+              (args-description (get-args-description args-description-spec command-args)) )
+        (if args-description
+            (concat script-description "-" args-description)
+          script-description) )
+    script) )
+
+(defun run-project-command (run-script-fun-key working-dir-getter-key command-script command-args-getter-key
+                                               &optional description-spec)
   (save-this-buffer-and-others)
   (let* ( (run-script-fun (get-run-project-fun 'run-script-fun run-script-fun-key))
           (working-dir-getter (get-run-project-fun 'working-dir-getter working-dir-getter-key))
@@ -117,12 +143,12 @@
           (script-and-args (get-script-and-args command-script))
           (script (car script-and-args))
           (script-args (cdr script-and-args))
-          (script-buffer-name-part (if script-args (car script-args) script))
-          (output-buffer-name (concat "*" (get-project-name) "-" script-buffer-name-part "*"))
           (resolved-script-path (get-project-executable script))
           (working-dir (funcall working-dir-getter))
           (command-arg-or-args (funcall command-args-getter))
-          (command-args (if (listp command-arg-or-args) command-arg-or-args (list command-arg-or-args))) )
+          (command-args (if (listp command-arg-or-args) command-arg-or-args (list command-arg-or-args))) 
+          (script-description (get-script-description description-spec script command-args))
+          (output-buffer-name (concat "*" (get-project-name) "-" script-description "*")) )
     (funcall run-script-fun resolved-script-path working-dir output-buffer-name (append script-args command-args)) ) )
 
 (defun project-run-this-file()

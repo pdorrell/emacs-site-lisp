@@ -128,6 +128,9 @@ other wise the current directory for the buffer)."
 	(error "No value found for project key %s" key)
       value) ) )
 
+(defun file-relative-to-project-base-dir (filename)
+  (file-relative-name filename (project-base-directory)) )
+
 (defun project-file (key &optional default)
   "Get the expanded name of a file from project value for KEY, expanded against project base directory (if it's relative)"
   (let ( (file-name (project-value key default) ) )

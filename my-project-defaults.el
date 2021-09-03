@@ -9,17 +9,18 @@
   (gethash project-type *project-type-default-values*) )
 
 (set-project-type-default-values 'python
-  '( ((:run-this-file . python) (other-window base-dir "run-python" this-file))
-     (:run-main-file (other-window base-dir "run-python" main-file)) ) )
+  '( ((:run-this-file . python) (other-window base-dir "run-python" this-file ("PY" . file)))
+     (:run-main-file (other-window base-dir "run-python" main-file ("PYMAIN" . file))) ) )
 
 (set-project-type-default-values 'python-with-venv
   '( ((:wrapper . python) "run-in-venv")
-     ((:run-this-file . python) (other-window base-dir (:wrapped python "python" "-u") this-file))
-     (:run-main-file (other-window base-dir (:wrapped python "python" "-u") main-file)) ) )
+     ((:run-this-file . python) (other-window base-dir (:wrapped python "python" "-u") this-file ("PY" . file)))
+     (:run-main-file (other-window base-dir (:wrapped python "python" "-u") main-file ("PYMAIN" . file))) ) )
 
 (set-project-type-default-values 'regenerated-blog 
   '( (:search-extensions (".rb" ".html" ".rhtml" ".css"))
-     (:alternate-file-or-dir-command (other-short-window-sync base-dir "run-regenerate" this-file-or-dir)) ) )
+     (:alternate-file-or-dir-command (other-short-window-sync base-dir "run-regenerate" this-file-or-dir
+                                                              ("REGEN" . file) )) ) )
 
 (set-project-type-default-values 'sass
-  '( (:sass-watch-command (other-window base-dir "run-sass-watch" nil)) ) )
+  '( (:sass-watch-command (other-window base-dir "run-sass-watch" nil ("SASS-WATCH" . nil) )) ) )
