@@ -65,7 +65,7 @@
       (set-total-window-height (get-buffer-window output-buffer) 6) )
     (revert-if-saved) ) )
 
-(dolist (fun-type '(run-script-fun working-dir-getter command-args-getter))
+(dolist (fun-type '(run-script-fun working-dir-getter command-args-getter output-buffer-dir-getter))
   (put '*run-project-funs* fun-type (make-hash-table :test 'eq)) )
 
 (defun def-run-project-fun (fun-type key fun)
@@ -86,6 +86,11 @@
 (defun get-no-command-params()
   nil)
 
+(defun get-main-file-output-buffer-dir()
+  (let ( (main-file-output-buffer-dir-env-var (project-value :main-file-output-buffer-dir-env-var)) )
+    (if main-file-output-buffer-dir-env-var
+        (getenv main-file-output-buffer-dir-env-var) ) ) )
+
 (def-run-project-fun 'run-script-fun 'other-window 'script-to-other-window)
 (def-run-project-fun 'run-script-fun 'other-short-window-sync 'sync-script-to-other-short-window)
 
@@ -95,6 +100,8 @@
 (def-run-project-fun 'command-args-getter 'this-file-or-dir 'get-this-file-or-directory-name)
 (def-run-project-fun 'command-args-getter 'main-file 'get-project-main-file)
 (def-run-project-fun 'command-args-getter 'nil 'get-no-command-params)
+
+(def-run-project-fun 'output-buffer-dir-getter 'main-file-output-dir 'get-main-file-output-buffer-dir)
 
 (defun get-script-and-args (command-script)
   (if (stringp command-script)
@@ -135,7 +142,7 @@
     script) )
 
 (defun run-project-command (run-script-fun-key working-dir-getter-key command-script command-args-getter-key
-                                               &optional description-spec output-buffer-dir)
+                                               &optional description-spec output-buffer-dir-getter-key)
   (save-this-buffer-and-others)
   (let* ( (run-script-fun (get-run-project-fun 'run-script-fun run-script-fun-key))
           (working-dir-getter (get-run-project-fun 'working-dir-getter working-dir-getter-key))
@@ -148,11 +155,13 @@
           (command-arg-or-args (funcall command-args-getter))
           (command-args (if (listp command-arg-or-args) command-arg-or-args (list command-arg-or-args))) 
           (script-description (get-script-description description-spec script command-args))
-          (output-buffer-name (concat "*" (get-project-name) "-" script-description "*")) )
+          (output-buffer-name (concat "*" (get-project-name) "-" script-description "*"))
+          (output-buffer-dir (if output-buffer-dir-getter-key
+                                 (funcall (get-run-project-fun 'output-buffer-dir-getter output-buffer-dir-getter-key))
+                               nil) ) )
     (funcall run-script-fun resolved-script-path working-dir output-buffer-name (append script-args command-args))
     (with-current-buffer output-buffer-name
       (setq-local default-directory (or output-buffer-dir working-dir)) ) ) )
-
 
 (defun project-run-this-file()
   "Run the current file"

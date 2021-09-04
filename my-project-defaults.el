@@ -10,12 +10,14 @@
 
 (set-project-type-default-values 'python
   '( ((:run-this-file . python) (other-window base-dir "run-python" this-file ("PY" . file)))
-     (:run-main-file (other-window base-dir "run-python" main-file ("PYMAIN" . file))) ) )
+     (:run-main-file (other-window base-dir "run-python" main-file 
+                                   ("PYMAIN" . file) main-file-output-dir) ) ) )
 
 (set-project-type-default-values 'python-with-venv
   '( ((:wrapper . python) "run-in-venv")
      ((:run-this-file . python) (other-window base-dir (:wrapped python "python" "-u") this-file ("PY" . file)))
-     (:run-main-file (other-window base-dir (:wrapped python "python" "-u") main-file ("PYMAIN" . file))) ) )
+     (:run-main-file (other-window base-dir (:wrapped python "python" "-u") main-file ("PYMAIN" . file)
+                                   main-file-output-dir)) ) )
 
 (set-project-type-default-values 'regenerated-blog 
   '( (:search-extensions (".rb" ".html" ".rhtml" ".css"))
