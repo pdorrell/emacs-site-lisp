@@ -135,7 +135,7 @@
     script) )
 
 (defun run-project-command (run-script-fun-key working-dir-getter-key command-script command-args-getter-key
-                                               &optional description-spec)
+                                               &optional description-spec output-buffer-dir)
   (save-this-buffer-and-others)
   (let* ( (run-script-fun (get-run-project-fun 'run-script-fun run-script-fun-key))
           (working-dir-getter (get-run-project-fun 'working-dir-getter working-dir-getter-key))
@@ -149,7 +149,10 @@
           (command-args (if (listp command-arg-or-args) command-arg-or-args (list command-arg-or-args))) 
           (script-description (get-script-description description-spec script command-args))
           (output-buffer-name (concat "*" (get-project-name) "-" script-description "*")) )
-    (funcall run-script-fun resolved-script-path working-dir output-buffer-name (append script-args command-args)) ) )
+    (funcall run-script-fun resolved-script-path working-dir output-buffer-name (append script-args command-args))
+    (with-current-buffer output-buffer-name
+      (setq-local default-directory (or output-buffer-dir working-dir)) ) ) )
+
 
 (defun project-run-this-file()
   "Run the current file"
