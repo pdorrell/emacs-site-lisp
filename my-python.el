@@ -122,6 +122,7 @@
    ("di" ("def __init__(self):" indent return indent))
    ("d" ("def " mark "(self):" goto-mark))
    ("r" ("return "))
+   ("cm" ("@classmethod"))
    ("rf" ("return false"))
    ("p" ("print(\""))
    ("sae" ("self.assertEquals(" mark ")" goto-mark))
