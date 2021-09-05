@@ -92,6 +92,7 @@
         (getenv main-file-output-buffer-dir-env-var) ) ) )
 
 (def-run-project-fun 'run-script-fun 'other-window 'script-to-other-window)
+(def-run-project-fun 'run-script-fun 'other-window-show-top 'script-to-other-window) ;; TODO 
 (def-run-project-fun 'run-script-fun 'other-short-window-sync 'sync-script-to-other-short-window)
 
 (def-run-project-fun 'working-dir-getter 'base-dir 'project-base-directory-value)

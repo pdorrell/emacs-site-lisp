@@ -1,5 +1,7 @@
 ;; Copyright (C) 2001 Philip Dorrell
 
+(setq *search-python-script-path* (expand-file-name "bin" emacs-customisation-dir))
+
 (defun make-search-dir-with-excludes (dir-spec)
   (if (stringp dir-spec)
       dir-spec
@@ -37,15 +39,34 @@
 (defun project-search-for-identifier-at-point ()
   (interactive)
   (save-this-buffer-and-others)
-  (let ( (identifier (project-identifier-at-point)) )
-    (if identifier
-	(project-search-for-identifier identifier)
-      (call-interactively 'project-search-for-identifier) ) ) )
+  (if (project-value :new-search)
+      (project-new-search-for-identifier)
+    (project-search-for-identifier) ) )
 
-(defun project-search-for-identifier (identifier)
-  (interactive "sSearch for: ")
-  (let ((main-search-dir (project-base-directory-value))
-        (exclude-subdirs (project-value :search-exclude-subdirs)) )
+;;(let ( (value (read-from-minibuffer "Value: ")) ) (message "You told me %S" value) ) 
+
+(defun project-new-search-for-identifier()
+  (run-project-command 'other-window-show-top 'base-dir "search" 'identifier-for-search) )
+
+(defun get-identifier-for-search()
+  (or (project-identifier-at-point)
+      (read-from-minibuffer "Search for: ") ) )
+
+
+(defun get-identifier-for-search-args()
+  (let ( (identifier-for-search (get-identifier-for-search))
+         (search-python-script-path (or (project-file :search-python-script-path)
+                                        *search-python-script-path*)) )
+    (list search-python-script-path "--identifier" identifier-for-search) ) )
+
+(def-run-project-fun 'command-args-getter 'identifier-for-search 'get-identifier-for-search-args)
+
+(expand-file-name "./test" default-directory)
+
+(defun project-search-for-identifier ()
+  (let* ( (identifier (get-identifier-for-search))
+          (main-search-dir (project-base-directory-value))
+          (exclude-subdirs (project-value :search-exclude-subdirs)) )
     (if exclude-subdirs
         (setq main-search-dir (cons main-search-dir exclude-subdirs)) )
     (message "exclude-subdirs = %s" exclude-subdirs)
