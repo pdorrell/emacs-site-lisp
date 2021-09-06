@@ -1,3 +1,5 @@
 (load-this-project
- `( (:search-extensions (".el" ".java" ".xml")) ) )
+ `( (project-type 'emacs-site-lisp)
+    (:new-search t)
+    (:search-extensions (".el" ".java" ".xml")) ) )
 
