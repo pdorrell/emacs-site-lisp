@@ -113,7 +113,7 @@
 
      ([f12]   repeat-complex-command)
      ([M-f12] project-search-for-identifier-at-point)
-     ([C-M-f12] project-new-search-census)
+     ([C-S-f12] project-new-search-census)
      ) )
 
 (set-keyboard-shortcuts 'directional-key
