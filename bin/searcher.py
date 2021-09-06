@@ -28,8 +28,8 @@ class CensusResults:
 
         print("="*100)
         print("Census results")
-        show_results("EXPECTED", self.expected_results)
         show_results("UNEXPECTED", self.unexpected_results)
+        show_results("EXPECTED", self.expected_results)
 
 class PathMatcher:
     def __init__(self, specs):

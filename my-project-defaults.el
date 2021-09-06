@@ -8,6 +8,9 @@
 (defun get-project-type-default-values (project-type)
   (gethash project-type *project-type-default-values*) )
 
+(set-project-type-default-values 'emacs-site-lisp
+  '( (:key value) ) )
+
 (set-project-type-default-values 'python
   '( ((:run-this-file . python) (other-window base-dir "run-python" this-file ("PY" . file)))
      (:run-main-file (other-window base-dir "run-python" main-file 
