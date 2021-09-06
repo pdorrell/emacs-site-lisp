@@ -48,6 +48,10 @@
 (defun project-new-search-for-identifier()
   (run-project-command 'other-window-show-top 'base-dir "search" 'identifier-for-search) )
 
+(defun project-new-search-census()
+  (interactive)
+  (run-project-command 'other-window-show-top 'base-dir "search" 'search-census) )
+
 (defun get-identifier-for-search()
   (or (project-identifier-at-point)
       (read-from-minibuffer "Search for: ") ) )
@@ -63,11 +67,15 @@
     (list search-python-script-path "." "--project-type" (symbol-name project-type)
           "--value" identifier-for-search) ) )  ;; TODO - regexes for identifiers
 
+(defun get-search-census-args()
+  (list "." "--census") )
+
+(def-run-project-fun 'command-args-getter 'search-census 'get-search-census-args)
 (def-run-project-fun 'command-args-getter 'identifier-for-search 'get-identifier-for-search-args)
 
 (expand-file-name "./test" default-directory)
 
-(defun project-search-for-identifier ()
+(defun project-search-for-identifier()
   (let* ( (identifier (get-identifier-for-search))
           (main-search-dir (project-base-directory-value))
           (exclude-subdirs (project-value :search-exclude-subdirs)) )
@@ -76,3 +84,4 @@
     (message "exclude-subdirs = %s" exclude-subdirs)
     (show-search-buffer (cons main-search-dir (project-value :extra-search-directories))
                         (project-value :search-extensions) identifier) ) )
+
