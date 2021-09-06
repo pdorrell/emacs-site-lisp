@@ -52,12 +52,16 @@
   (or (project-identifier-at-point)
       (read-from-minibuffer "Search for: ") ) )
 
+(defun get-python-regex-for-identifier (identifier)
+  (format "\\b%s\\b" identifier) )
 
 (defun get-identifier-for-search-args()
   (let ( (identifier-for-search (get-identifier-for-search))
+         (project-type (project-value :project-type 'python))
          (search-python-script-path (or (project-file :search-python-script-path)
                                         *search-python-script-path*)) )
-    (list search-python-script-path "--identifier" identifier-for-search) ) )
+    (list search-python-script-path "." "--project-type" (symbol-name project-type)
+          "--value" identifier-for-search) ) )  ;; TODO - regexes for identifiers
 
 (def-run-project-fun 'command-args-getter 'identifier-for-search 'get-identifier-for-search-args)
 
