@@ -38,7 +38,7 @@
         (error "Executable %S not found on load path %S" executable-name load-path) )
     executable-path) )
 
-(defun script-to-other-window (script-path working-dir output-buffer-name command-args)
+(defun script-to-other-window (script-path working-dir output-buffer-name command-args &optional move-to-top)
   (let ( (process-variable-symbol (intern (concat "process-runner-process-" output-buffer-name))) )
     (if (not (boundp process-variable-symbol))
         (set process-variable-symbol nil) )
@@ -46,7 +46,11 @@
              output-buffer-name process-variable-symbol output-buffer-name
              *run-command-in-directory-script*
              (append (list working-dir script-path)
-                     command-args) ) ) )
+                     command-args)
+             move-to-top) ) )
+
+(defun script-to-other-window-show-top (script-path working-dir output-buffer-name command-args)
+  (script-to-other-window script-path working-dir output-buffer-name command-args t) )
 
 (defun set-total-window-height (window height)
   (let ( (delta (- height (window-total-height window))) )
@@ -92,7 +96,7 @@
         (getenv main-file-output-buffer-dir-env-var) ) ) )
 
 (def-run-project-fun 'run-script-fun 'other-window 'script-to-other-window)
-(def-run-project-fun 'run-script-fun 'other-window-show-top 'script-to-other-window) ;; TODO 
+(def-run-project-fun 'run-script-fun 'other-window-show-top 'script-to-other-window-show-top)
 (def-run-project-fun 'run-script-fun 'other-short-window-sync 'sync-script-to-other-short-window)
 
 (def-run-project-fun 'working-dir-getter 'base-dir 'project-base-directory-value)

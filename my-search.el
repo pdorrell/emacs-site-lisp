@@ -59,16 +59,18 @@
 (defun get-python-regex-for-identifier (identifier)
   (format "\\b%s\\b" identifier) )
 
-(defun get-identifier-for-search-args()
-  (let ( (identifier-for-search (get-identifier-for-search))
-         (project-type (project-value :project-type 'python))
+(defun get-base-search-args()
+  (let ( (project-type (project-value :project-type 'python))
          (search-python-script-path (or (project-file :search-python-script-path)
                                         *search-python-script-path*)) )
-    (list search-python-script-path "." "--project-type" (symbol-name project-type)
-          "--value" identifier-for-search) ) )  ;; TODO - regexes for identifiers
+    (list search-python-script-path "." "--project-type" (symbol-name project-type) ) ) )
+
+(defun get-identifier-for-search-args()
+  (let ( (identifier-for-search (get-identifier-for-search)) )
+    (append (get-base-search-args) (list "--value" identifier-for-search)) ) )  ;; TODO - regexes for identifiers
 
 (defun get-search-census-args()
-  (list "." "--census") )
+  (append (get-base-search-args) (list "--census")) )
 
 (def-run-project-fun 'command-args-getter 'search-census 'get-search-census-args)
 (def-run-project-fun 'command-args-getter 'identifier-for-search 'get-identifier-for-search-args)

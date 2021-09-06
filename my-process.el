@@ -48,9 +48,9 @@
     (set-buffer old-buffer) ) )
 
 (defun stop-start-process (name process-variable process-buffer-name
-				executable args)
+				executable args &optional move-to-top)
   (save-this-buffer-and-others)
-   (let ( (process (symbol-value process-variable)) )
+  (let ( (process (symbol-value process-variable)) )
     (if (not (equal process-buffer-name (buffer-name (current-buffer))))
 	(progn
 	  (switch-to-buffer-other-window process-buffer-name) ) )
@@ -65,10 +65,12 @@
 	(let ( (new-process (apply #'start-process name process-buffer-name executable args)) )
 	  (set process-variable new-process)
 	  (process-kill-without-query new-process)
-	  (message "%s STARTED" name) ) ) )) )
+	  (message "%s STARTED" name)
+          (if move-to-top 
+              (set-process-filter new-process 'goto-first-line-process-filter) ) ) ) ) ) )
 
 (defun stop-then-start-process (name process-variable process-buffer-name
-				     executable args)
+				     executable args &optional move-to-top)
   (save-this-buffer-and-others)
   (let ( (process (symbol-value process-variable)) )
     (if (not (equal process-buffer-name (buffer-name (current-buffer))))
@@ -80,9 +82,13 @@
 	  (set process-variable nil)
 	  (message "%s STOPPED" name) ) )
     (clear-buffer)
-    (let ( (new-process (apply #'start-process name process-buffer-name executable args)) )
+    (let ( (new-process (make-process :name name 
+                                      :buffer process-buffer-name
+                                      :command (cons executable args)
+                                      :noquery t
+                                      :filter (if move-to-top #'goto-first-line-process-filter)
+                                      :sentinel #'ignore) ) )
       (set process-variable new-process)
-      (set-process-query-on-exit-flag new-process nil)
       (message "%s STARTED" name) ) ) )
 
 (defun start-process-showing-console (name process-buffer-name
