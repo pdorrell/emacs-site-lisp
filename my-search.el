@@ -60,7 +60,7 @@
   (format "\\b%s\\b" identifier) )
 
 (defun get-base-search-args()
-  (let ( (project-type (project-value :project-type 'python))
+  (let ( (project-type (first-element-if-list (project-value :project-type 'default)))
          (search-python-script-path (or (project-file :search-python-script-path)
                                         *search-python-script-path*)) )
     (list search-python-script-path "." "--project-type" (symbol-name project-type) ) ) )

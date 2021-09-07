@@ -182,3 +182,6 @@
 
 (defun listify-if-not-list (value)
   (if (listp value) value (list value)) )
+
+(defun first-element-if-list(value)
+  (if (listp value) (car value) value) )
