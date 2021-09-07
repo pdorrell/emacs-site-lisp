@@ -47,7 +47,9 @@
              *run-command-in-directory-script*
              (append (list working-dir script-path)
                      command-args)
-             move-to-top) ) )
+             move-to-top)
+    (with-current-buffer output-buffer-name
+      (toggle-truncate-lines t) ) ) )
 
 (defun script-to-other-window-show-top (script-path working-dir output-buffer-name command-args)
   (script-to-other-window script-path working-dir output-buffer-name command-args t) )
