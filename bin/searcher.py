@@ -120,8 +120,9 @@ class RegexSerch(AbstractTextSearch):
 
 class SearchResultsReporter:
 
-    def report_search_start(self, search, description):
-        print("SEARCH FOR %s, %s" % (search.description, description))
+    def report_search_start(self, search, base_dir, description):
+        print("SEARCH FOR %s in %s, %s" % (search.description, base_dir,
+                                           description))
         print("")
 
     def report_search_end(self):
@@ -167,6 +168,7 @@ class SourceCodeSearcher:
 
         self.base_dir = Path(base_dir)
         os.chdir(self.base_dir)
+        self.full_base_dir = self.base_dir.absolute()
         self.included_extensions = set_from_list_or_none(included_extensions)
         self.excluded_extensions = set_from_list_or_none(excluded_extensions)
         self.included_files = PathMatcher(included_files)
@@ -175,7 +177,7 @@ class SourceCodeSearcher:
         self.search_target_description = self.get_search_target_description()
 
     def get_search_target_description(self):
-        return (" extensions %r (exclude %r), files %r (exclude %r), exclude directories %r" %
+        return ("extensions %r (exclude %r), files %r (exclude %r), exclude directories %r" %
                 (sorted(self.included_extensions),
                  sorted(self.excluded_extensions),
                  self.included_files.description(),
@@ -203,7 +205,7 @@ class SourceCodeSearcher:
         return file_path.name.endswith("~")
 
     def search_on_files(self, search_pattern, results_reporter):
-        results_reporter.report_search_start(search_pattern, self.search_target_description)
+        results_reporter.report_search_start(search_pattern, self.full_base_dir, self.search_target_description)
         unexpected_files = []
         for file_path, is_dir, is_expected, _, _ in self.iterate_for_search():
             if not is_dir:
