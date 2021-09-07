@@ -47,6 +47,15 @@
     (goto-first-line)
     (set-buffer old-buffer) ) )
 
+(defun write-end-of-buffer-sentinel (process event)
+  (let ( (buffer (process-buffer process)) )
+    (if buffer
+        (save-excursion
+          (with-current-buffer buffer
+            (goto-char (point-max))
+            (insert (concat "\nProcess " 
+                            (process-name process) " " event)) ) ) ) ) )
+
 (defun stop-start-process (name process-variable process-buffer-name
 				executable args &optional move-to-top)
   (save-this-buffer-and-others)
@@ -87,7 +96,7 @@
                                       :command (cons executable args)
                                       :noquery t
                                       :filter (if move-to-top #'goto-first-line-process-filter)
-                                      :sentinel #'ignore) ) )
+                                      :sentinel #'write-end-of-buffer-sentinel) ) )
       (set process-variable new-process)
       (message "%s STARTED" name) ) ) )
 
