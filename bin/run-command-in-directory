@@ -3,4 +3,4 @@ cd $1
 #echo Dir: $1
 shift
 #echo $@
-$@
+"$@"

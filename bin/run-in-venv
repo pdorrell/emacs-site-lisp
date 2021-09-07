@@ -6,6 +6,6 @@ export PYTHON=_venv/bin/python
 export PYTHONPATH=.:$PYTHONPATH
 export PATH=$VIRTUAL_ENV/bin:$PATH
 export PS1_PREFIX="(_venv)"
-echo $0 $@
-$@
+echo $0 "$@"
+"$@"
 

@@ -1,2 +1,2 @@
 #!/bin/bash
-/usr/bin/ruby -I${REGENERATE_BASE_DIR}/lib ${REGENERATE_BASE_DIR}/bin/regenerate $@
+/usr/bin/ruby -I${REGENERATE_BASE_DIR}/lib ${REGENERATE_BASE_DIR}/bin/regenerate "$@"
