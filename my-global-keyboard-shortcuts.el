@@ -63,6 +63,7 @@
 
 (set-keyboard-shortcuts 'punctuation-key
   '( ([?\M--] other-window)
+     ([?\C-+] toggle-large-frame-font)
      ) )
 
 (set-keyboard-shortcuts 'multi-key

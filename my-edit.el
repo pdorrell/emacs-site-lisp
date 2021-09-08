@@ -125,3 +125,12 @@
 (make-variable-buffer-local '*trim-trailing-whitespace-on-save*)
 
 (add-hook 'before-save-hook 'trim-trailing-whitespace-in-buffer)
+
+(setq *large-frame-font* nil)
+
+(defun toggle-large-frame-font()
+  "Toggle between large and small frame font"
+  (interactive)
+  (setq *large-frame-font* (not *large-frame-font*))
+  (set-frame-font (if *large-frame-font* "Liberation Mono-15" "Liberation Mono-13")) )
+
