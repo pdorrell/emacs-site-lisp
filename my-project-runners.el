@@ -97,11 +97,15 @@
     (if main-file-output-buffer-dir-env-var
         (getenv main-file-output-buffer-dir-env-var) ) ) )
 
+(defun get-alternate-command-dir()
+  (project-file :alternate-command-dir) )
+
 (def-run-project-fun 'run-script-fun 'other-window 'script-to-other-window)
 (def-run-project-fun 'run-script-fun 'other-window-show-top 'script-to-other-window-show-top)
 (def-run-project-fun 'run-script-fun 'other-short-window-sync 'sync-script-to-other-short-window)
 
 (def-run-project-fun 'working-dir-getter 'base-dir 'project-base-directory-value)
+(def-run-project-fun 'working-dir-getter 'alternate-command-dir 'get-alternate-command-dir)
 
 (def-run-project-fun 'command-args-getter 'this-file 'buffer-file-name)
 (def-run-project-fun 'command-args-getter 'this-file-or-dir 'get-this-file-or-directory-name)
@@ -197,3 +201,9 @@
     (if alternate-command
         (apply 'run-project-command alternate-command)
       (run-alternate-command) ) ) )
+
+(defun project-run-alternate-command()
+  "Run an alternate project command"
+  (interactive)
+  (let* ( (run-alternate-command (project-required-value :run-alternate-command)) )
+    (apply 'run-project-command run-alternate-command) ) )

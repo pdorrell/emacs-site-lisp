@@ -97,6 +97,7 @@
 
      ([M-f8] run-alternate-command-on-file-or-dir)
      ([S-f8] stop-on-1st-test-failure-minor-mode)
+     ([M-S-f8] project-run-alternate-command)
 
      ([S-C-f9] kill-buffer-process)
      ([M-f9] project-run-this-file)

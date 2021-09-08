@@ -11,7 +11,7 @@
 (make-variable-buffer-local 'current-project)
 
 (defun create-project (key-value-pairs &optional existing-project)
-  "Create a project object from given key/value pairs, optionally re-using an existing project if supplied"
+  "Create (or re-create) a project object from given key/value pairs, optionally re-using an existing project if supplied"
   (let ( (project (if existing-project 
 		      (clrhash existing-project) 
 		    (make-hash-table :test 'equal))) )
@@ -30,11 +30,11 @@
                   (error "No default project of type %S" project-type) ) ) ) ) )
     project) ) )
 
-(defvar *default-project* (create-project `((:python-executable ,*python-executable*)))
+(defvar *default-project* (create-project `((:python-executable ,*python-executable*)))  ;; TODO - don't set default project - set default project definition
   "The default project, which will contain default values for project values.")
 
 (defun get-directory-for-project()
-  "Find directory to be used as starting point to search for project file (either directory of buffer file,
+  "Find current directory to be used as starting point to search for project file (either directory of buffer file,
 other wise the current directory for the buffer)."
   (let* ( (filename (buffer-file-name))
 	  (directory-name (if filename
@@ -128,6 +128,7 @@ other wise the current directory for the buffer)."
 	(error "No value found for project key %s" key)
       value) ) )
 
+;; NOT USED
 (defun file-relative-to-project-base-dir (filename)
   (file-relative-name filename (project-base-directory)) )
 
@@ -141,6 +142,7 @@ other wise the current directory for the buffer)."
       )
     file-name) )
 
+;; NOT USED ??
 (defun* project-or-emacs-load-path-file(filename)
   "Look for a file in the project dir, or otherwise in the Emacs load path"
   (let ( (search-path (cons (project-base-directory) load-path)) )
@@ -186,6 +188,7 @@ other wise the current directory for the buffer)."
         (find-file-other-window project-dir)
         (message "File menu %s does not exist" file-menu-file) ) ) ) )
 
+;; TODO - copy from a template file
 (defun maybe-create-new-project-file()
   "Offer to create a project file in the current directory (which the user can edit before accepting)"
   (interactive)
@@ -193,8 +196,9 @@ other wise the current directory for the buffer)."
     (find-file (concat project-dir "_project.el"))
     (insert ";; Project values\n\n(load-this-project\n `( (:key \"value\") ) )\n") ) )
 
-(make-variable-buffer-local 'run-file-function)
+(make-variable-buffer-local 'run-file-function) ;; TODO - not project specific ?
 
+;; TODO - not project specific?
 (defun run-this-file()
   (interactive)
   (save-this-buffer-and-others)
@@ -202,6 +206,7 @@ other wise the current directory for the buffer)."
       (apply run-file-function (list (buffer-file-name)))
     (message "No run-file-function defined in this buffer") ) )
 
+;; SEMI-OBSOLETE - replaced by :run-main-file project value
 (defun run-project()
   (interactive)
   (save-this-buffer-and-others)
@@ -213,6 +218,7 @@ other wise the current directory for the buffer)."
             (eval run-project-command) ) )
       (message "No run-project-command defined in this buffer") ) ) )
 
+;; SEMI-OBSOLETE
 (defun show-project-log-buffer()
   (interactive)
   (apply *show-project-log-buffer-function* nil) )
@@ -221,14 +227,15 @@ other wise the current directory for the buffer)."
   (interactive)
   (find-file (concat (project-value :base-directory) "_")) )
 
-(defun build-project()
+(defun build-project() ;; 'make'
   (interactive)
-  (apply (project-value :build-function) nil) )
+  (apply (project-required-value :build-function) nil) )
 
-(defun build-project-with-target (target)
+(defun build-project-with-target (target) ;; 'make' with target
   (interactive "starget: ")
   (apply (project-value :build-function) (list target)) )
 
+;; UNUSED
 (defun project-compile-with-command (&optional target)
   "Compile using a command"
   (let ( (compile-command (project-value :compile-command)) )

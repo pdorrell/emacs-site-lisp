@@ -8,6 +8,7 @@
 (defun execution-logging-time-string()
   (format-time-string "%Y-%m-%d %H:%M:%S") )
 
+;; SEMI-OBSOLETE
 (defun python-run-file (file)
   (interactive)
   (let ( (filename (windowize-filename file)) )

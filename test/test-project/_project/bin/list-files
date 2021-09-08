@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "List of files in `pwd` :"
+echo ""
+ls -al
