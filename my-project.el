@@ -76,7 +76,7 @@ other wise the current directory for the buffer)."
 (defun project-base-directory-value()
   "Get base directory of current project, as a project value. 
 (Don't call this _within_ a project definition, because it will then recursively attempt to load
-       the project definnition.)"
+       the project definition.)"
   (project-value :base-directory) )
 
 (defun load-this-project (key-value-pairs)
@@ -93,16 +93,16 @@ other wise the current directory for the buffer)."
   "Find the project object for the current buffer"
   (let* ( (project-dir-and-file (get-current-project-dir-and-file))
 	  (project-dir (car project-dir-and-file))
-	  (project-file (cdr project-dir-and-file)) )
+	  (project-defn-file (cdr project-dir-and-file)) )
     (if project-dir
 	(let ( (project (gethash project-dir *projects*)) )
 	  (if (not project)
 	      (let ( (*project-base-directory* project-dir) )
-		(message "Loading project %s from %s ..." project-dir project-file)
-		(load project-file)
+		(message "Loading project %s from %s ..." project-dir project-defn-file)
+		(load project-defn-file)
 		(setq project (gethash project-dir *projects*))
 		(if (not project)
-		    (error "Failed to load project %s from %s" project-dir project-file) ) ) )
+		    (error "Failed to load project %s from %s" project-dir project-defn-file) ) ) )
 	  project)
       *default-project*) ) )
 
@@ -122,56 +122,14 @@ other wise the current directory for the buffer)."
 	  (setq value (gethash key *default-project*)) ) )
     value) )
 
-(defun project-required-value (key)
-  (let ( (value (project-value key)) )
-    (if (not value)
-	(error "No value found for project key %s" key)
-      value) ) )
-
-;; NOT USED
-(defun file-relative-to-project-base-dir (filename)
-  (file-relative-name filename (project-base-directory)) )
-
-(defun project-file (key &optional default)
-  "Get the expanded name of a file from project value for KEY, expanded against project base directory (if it's relative)"
-  (let ( (file-name (project-value key default) ) )
-    (if file-name
-	(let ( (base-directory (project-base-directory)) )
-	  (if base-directory
-	      (setq file-name (expand-file-name file-name base-directory)) ) )
-      )
-    file-name) )
-
-;; NOT USED ??
-(defun* project-or-emacs-load-path-file(filename)
-  "Look for a file in the project dir, or otherwise in the Emacs load path"
-  (let ( (search-path (cons (project-base-directory) load-path)) )
-    (dolist (dir search-path)
-      (let ( (full-file-name (concat (file-name-as-directory dir) filename) ) )
-	(message "Searching for %s ..." full-file-name)
-	(if (file-exists-p full-file-name)
-	    (progn 
-	      (message "Found it")
-	      (return-from project-or-emacs-load-path-file full-file-name) ) )
-	) )
-    (message "Didn't find %s" filename)
-    (error "Failed to find %s in project directory or Emacs load path" filename) ) )
-
-(defun project-directory (key)
-  "Get the expanded name of a directory from project value for KEY, expanded against project base directory (if it's relative)"
-  (let ( (directory-file (project-file key)) )
-    (if directory-file
-	(directory-file-name directory-file)
-      nil) ) )
-
 (defun visit-project-file ()
   "Visit the current project file (or offer to create one if it can't be found)"
   (interactive)
   (let ( (project-dir-and-file (get-current-project-dir-and-file)) )
     (if project-dir-and-file
-        (let ( (project-file (cdr project-dir-and-file)) )
-          (if project-file
-	      (find-file project-file)
+        (let ( (project-defn-file (cdr project-dir-and-file)) )
+          (if project-defn-file
+	      (find-file project-defn-file)
             (message "No project file exists at %s" (car project-dir-and-file)) ) )
       (maybe-create-new-project-file) ) ) )
 
@@ -198,13 +156,31 @@ other wise the current directory for the buffer)."
 
 (make-variable-buffer-local 'run-file-function) ;; TODO - not project specific ?
 
-;; TODO - not project specific?
-(defun run-this-file()
-  (interactive)
-  (save-this-buffer-and-others)
-  (if run-file-function
-      (apply run-file-function (list (buffer-file-name)))
-    (message "No run-file-function defined in this buffer") ) )
+
+;;====================================================================================================
+
+(defun project-file (key &optional default)
+  "Get the expanded name of a file from project value for KEY, expanded against project base directory (if it's relative)"
+  (let ( (file-name (project-value key default) ) )
+    (if file-name
+	(let ( (base-directory (project-base-directory)) )
+	  (if base-directory
+	      (setq file-name (expand-file-name file-name base-directory)) ) )
+      )
+    file-name) )
+
+(defun project-directory (key)
+  "Get the expanded name of a directory from project value for KEY, expanded against project base directory (if it's relative)"
+  (let ( (directory-file (project-file key)) )
+    (if directory-file
+	(directory-file-name directory-file)
+      nil) ) )
+
+(defun project-required-value (key)
+  (let ( (value (project-value key)) )
+    (if (not value)
+	(error "No value found for project key %s" key)
+      value) ) )
 
 ;; SEMI-OBSOLETE - replaced by :run-main-file project value
 (defun run-project()
@@ -218,11 +194,6 @@ other wise the current directory for the buffer)."
             (eval run-project-command) ) )
       (message "No run-project-command defined in this buffer") ) ) )
 
-;; SEMI-OBSOLETE
-(defun show-project-log-buffer()
-  (interactive)
-  (apply *show-project-log-buffer-function* nil) )
-
 (defun open-project-file-menu()
   (interactive)
   (find-file (concat (project-value :base-directory) "_")) )
@@ -234,9 +205,3 @@ other wise the current directory for the buffer)."
 (defun build-project-with-target (target) ;; 'make' with target
   (interactive "starget: ")
   (apply (project-value :build-function) (list target)) )
-
-;; UNUSED
-(defun project-compile-with-command (&optional target)
-  "Compile using a command"
-  (let ( (compile-command (project-value :compile-command)) )
-    (compile-with-command (if target (concat compile-command " " target) compile-command)) ) )

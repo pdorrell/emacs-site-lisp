@@ -1,7 +1,7 @@
 {
   "included_extensions":  [".py", ".txt", ".el", ".json", ".java", ".js", ".xml"],
   "excluded_extensions":  [".jar"],
-  "included_files":  ["**/_", "bin/*", "COPYING"],
+  "included_files":  ["**/_", "bin/*", "COPYING", "**/list-files"],
   "excluded_files":  [".gitignore"],
   "excluded_dirs": [".git", "elpa", "java/build"]
 }

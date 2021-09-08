@@ -33,7 +33,6 @@
 
      ([?\M-o]    filter-on-word-at-point)
      ([?\M-O]    toggle-filtering)
-     ([?\C-\M-o] show-project-log-buffer)
 
      ([?\M-p] visit-project-file)
      ([?\M-P] show-position)

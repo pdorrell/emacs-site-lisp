@@ -174,6 +174,14 @@
     (with-current-buffer output-buffer-name
       (setq-local default-directory (or output-buffer-dir working-dir)) ) ) )
 
+(defun run-this-file()
+  "Older version - set by buffer-local variable 'run-file-function"
+  (interactive)
+  (save-this-buffer-and-others)
+  (if run-file-function
+      (apply run-file-function (list (buffer-file-name)))
+    (message "No run-file-function defined in this buffer") ) )
+
 (defun project-run-this-file()
   "Run the current file"
   (interactive)
