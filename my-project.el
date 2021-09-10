@@ -20,12 +20,12 @@
     (let ( (project-type-value (gethash :project-type project)) )
       (if project-type-value
           (let ( (project-types (listify-if-not-list project-type-value)) )
-            (dolist (project-type project-types)
+            (dolist (project-type (reverse project-types)) ;; in reverse, so that last type takes priority
               (let ( (project-defaults (get-project-type-default-values project-type) ) )
                 (if project-defaults
                     (dolist (key-value-pair project-defaults)
                       (cl-destructuring-bind (key value) key-value-pair
-                        (if (not (gethash key project))
+                        (if (not (gethash key project))  ;; apply value if one is not yet there
                             (puthash key value project) ) ) )
                   (error "No default project of type %S" project-type) ) ) ) ) )
     project) ) )
