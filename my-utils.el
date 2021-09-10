@@ -185,3 +185,16 @@
 
 (defun first-element-if-list(value)
   (if (listp value) (car value) value) )
+
+(defmacro value-block (&rest statements)
+  (declare (indent defun))
+  `(block 'value ,@statements) )
+
+(defmacro return-value (expression)
+  `(cl-return-from 'value ,expression) )
+
+(defmacro cons-bind (var1 var2 expression &rest statements)
+  "Bind car and cdr of EXPRESSION to VAR1 and VAR2 in STATEMENTS"
+  (declare (indent defun))
+  `(cl-destructuring-bind (,var1 . ,var2) ,expression
+     ,@statements) )
