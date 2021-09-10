@@ -53,27 +53,25 @@ other wise the current directory for the buffer)."
 
 (file-name-directory (directory-file-name "/home/"))
 
-(defun find-project-directory-and-definition-file(directory)
+(defun-getting-value find-project-directory-and-definition-file(directory)
   "Return the project directory and project definition file for a directory as a cons pair - the directory is nil if no project marker
 is found at all, the definition file is nil if the project is defined by a sub-directory marker"
-  (value-block
-    (let ( (dir-to-check directory) )
-      (while (not (equal dir-to-check "/"))
-        (message "dir-to-check = %S" dir-to-check)
-        (dolist (project-definition-file-name *project-definition-file-names*)
-          (let ( (definition-file (concat dir-to-check project-definition-file-name)) )
-            (message "definition-file = %S" definition-file)
-            (if (file-exists-p definition-file)
-                (return-value (cons dir-to-check definition-file)) ) ) )
-        (dolist (project-marker-subdirectory *project-marker-subdirectories*)
-          (let ( (sub-directory (concat dir-to-check project-marker-subdirectory)) )
-            (if (file-exists-p sub-directory)
-                (return-value (cons dir-to-check nil)) ) ) )
-        (setq dir-to-check (file-name-directory (directory-file-name dir-to-check))) ) )
-    (return-value (cons nil nil)) ) )
+  (let ( (dir-to-check directory) )
+    (while (not (equal dir-to-check "/"))
+      (dolist (project-definition-file-name *project-definition-file-names*)
+        (let ( (definition-file (concat dir-to-check project-definition-file-name)) )
+             (if (file-exists-p definition-file)
+                 (return-value (cons dir-to-check definition-file)) ) ) )
+      (dolist (project-marker-subdirectory *project-marker-subdirectories*)
+        (let ( (sub-directory (concat dir-to-check project-marker-subdirectory)) )
+          (if (file-exists-p sub-directory)
+              (return-value (cons dir-to-check nil)) ) ) )
+      (setq dir-to-check (file-name-directory (directory-file-name dir-to-check))) ) )
+  (return-value (cons nil nil)) )
 
-(find-project-directory-and-definition-file 
- (expand-file-name "~/dev/emacs/emacs-site-lisp/test/test-project/src/subdir/"))
+(run-test-check-expected-result
+ (find-project-directory-and-definition-file (test-file "test-project/src/subdir/"))
+ (cons (test-file "test-project/") (test-file "test-project/_project.el")) )
 
 (defun get-current-project-dir-and-file()
   "Return the project directory and project file as a cons pair, or nil if no project file can be found."

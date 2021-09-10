@@ -186,15 +186,38 @@
 (defun first-element-if-list(value)
   (if (listp value) (car value) value) )
 
-(defmacro value-block (&rest statements)
+(defmacro getting-value (&rest statements)
   (declare (indent defun))
   `(block 'value ,@statements) )
 
 (defmacro return-value (expression)
   `(cl-return-from 'value ,expression) )
 
+(defmacro defun-getting-value (name args &rest body)
+  (declare (indent defun))
+  `(defun ,name ,args
+     (getting-value ,@body) ) )
+
 (defmacro cons-bind (var1 var2 expression &rest statements)
   "Bind car and cdr of EXPRESSION to VAR1 and VAR2 in STATEMENTS"
   (declare (indent defun))
   `(cl-destructuring-bind (,var1 . ,var2) ,expression
      ,@statements) )
+
+(defvar run-my-tests t
+  "When t, run tests")
+
+(defmacro run-test-check-expected-result (expression expected-result-expression)
+  (declare (indent defun))
+  `(if run-my-tests
+       (let ( (test-result ,expression)
+              (expected-result ,expected-result-expression) )
+         (if (equal test-result expected-result)
+             (message "Test passed %S = %S" ',expression ',expected-result-expression)
+           (error "Test failure %S != expected %S" test-result expected-result) ) ) ) )
+
+(setq *test-files-directory* (expand-file-name "test" emacs-customisation-dir))
+
+(defun test-file (file-name)
+  (expand-file-name file-name *test-files-directory*) )
+
