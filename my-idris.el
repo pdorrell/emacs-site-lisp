@@ -6,7 +6,7 @@
 (setq idris-word-table
       (make-alpha-table letters-digits-string "_'") )
 
-(defun add-idris-defn()
+(defun add-idris-definition()
   (interactive)
   (beginning-of-line)
   (search-forward-regexp "\\sw")
@@ -57,7 +57,7 @@
   (local-set-key [C-M-f9] 'idris-load-file)
   (local-set-key [M-f9] 'idris-compile-and-execute)
   (local-set-key [C-f8] 'idris-proof-search)
-  (local-set-key [S-f8] 'add-idris-defn)  
+  (local-set-key [S-f8] 'add-idris-definition)  
   (local-set-key [f8] 'idris-case-dwim)
   (local-set-key [?\C-.] 'insert-idris-function-arrow)
   (local-set-key [?\C->] 'insert-idris-constraint-arrow)

@@ -93,16 +93,16 @@ other wise the current directory for the buffer)."
   "Find the project object for the current buffer"
   (let* ( (project-dir-and-file (get-current-project-dir-and-file))
 	  (project-dir (car project-dir-and-file))
-	  (project-defn-file (cdr project-dir-and-file)) )
+	  (project-definition-file (cdr project-dir-and-file)) )
     (if project-dir
 	(let ( (project (gethash project-dir *projects*)) )
 	  (if (not project)
 	      (let ( (*project-base-directory* project-dir) )
-		(message "Loading project %s from %s ..." project-dir project-defn-file)
-		(load project-defn-file)
+		(message "Loading project %s from %s ..." project-dir project-definition-file)
+		(load project-definition-file)
 		(setq project (gethash project-dir *projects*))
 		(if (not project)
-		    (error "Failed to load project %s from %s" project-dir project-defn-file) ) ) )
+		    (error "Failed to load project %s from %s" project-dir project-definition-file) ) ) )
 	  project)
       *default-project*) ) )
 
@@ -127,9 +127,9 @@ other wise the current directory for the buffer)."
   (interactive)
   (let ( (project-dir-and-file (get-current-project-dir-and-file)) )
     (if project-dir-and-file
-        (let ( (project-defn-file (cdr project-dir-and-file)) )
-          (if project-defn-file
-	      (find-file project-defn-file)
+        (let ( (project-definition-file (cdr project-dir-and-file)) )
+          (if project-definition-file
+	      (find-file project-definition-file)
             (message "No project file exists at %s" (car project-dir-and-file)) ) )
       (maybe-create-new-project-file) ) ) )
 
