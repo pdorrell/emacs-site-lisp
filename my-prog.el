@@ -23,7 +23,7 @@
     (and found parent)) )
 
 (defun compile-with-command (command &optional command-file)
-  (let ( (project-base-dir (project-base-directory)) )
+  (let ( (project-base-dir (get-current-project-base-directory)) )
     (save-this-buffer-and-others)
     (if command-file
 	(let ( (command-file-dir (find-parent-directory-with-file default-directory command-file)) )

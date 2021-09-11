@@ -4,7 +4,7 @@
 	    1 2) )
 
 (defun visit-project-file-grep-n-line (file-name line-number-string)
-  (let ( (full-file-name (expand-file-name file-name (project-base-directory)))
+  (let ( (full-file-name (expand-file-name file-name (get-current-project-base-directory)))
 	 (line-number (string-to-number line-number-string)) )
     ;; (message "visiting file %s line %s ..." full-file-name line-number)
     (find-file full-file-name)

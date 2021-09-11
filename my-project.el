@@ -64,7 +64,6 @@
 
 (defun get-project-for-base-directory (base-directory)
   (let ( (project (gethash base-directory *project-by-base-directory*)) )
-    (message "project from hash = %S" project)
     (if (not project)
         (let ( (project-definition-file (gethash base-directory *project-definition-file-by-base-directory*)) )
           (when project-definition-file
@@ -79,7 +78,7 @@
 (get-project-for-base-directory default-directory)
 
 (defvar *project-definition-file-names* '("_project.el" "__project.el")
-  "Possible names for project definition files")
+  "Possible names for project definition files - first one is default value for new project files.")
 
 (defvar *project-marker-subdirectories* '(".git")
   "Sub-directories, if they exist, which mark the base directory of a project")
@@ -103,9 +102,6 @@ is found at all, the definition file is nil if the project is defined by a sub-d
 (run-test-check-expected-result
  (find-project-directory-and-definition-file (test-file "test-project/src/subdir/"))
  (cons (test-file "test-project/") (test-file "test-project/_project.el")) )
-
-  
-
 
 (defun create-project (key-value-pairs &optional existing-project)
   "Create (or re-create) a project object from given key/value pairs, optionally re-using an existing project if supplied"
@@ -132,7 +128,7 @@ is found at all, the definition file is nil if the project is defined by a sub-d
 
 (defun get-directory-for-project()
   "Find current directory to be used as starting point to search for project file (either directory of buffer file,
-other wise the current directory for the buffer)."
+other wise the current directory for the buffer - not too sure why this is required)."
   (let* ( (filename (buffer-file-name))
 	  (directory-name (if filename
 			      (file-name-directory filename)
@@ -187,29 +183,6 @@ other wise the current directory for the buffer)."
       (puthash *project-base-directory* project *project-by-base-directory*)
       (puthash *project-base-directory* project *projects*) ) ) )
 
-(defun find-current-project ()
-  "Find the project object for the current buffer"
-  (let* ( (project-dir-and-file (get-current-project-dir-and-file))
-	  (project-dir (car project-dir-and-file))
-	  (project-definition-file (cdr project-dir-and-file)) )
-    (if project-dir
-	(let ( (project (gethash project-dir *projects*)) )
-	  (if (not project)
-	      (let ( (*project-base-directory* project-dir) )
-		(message "Loading project %s from %s ..." project-dir project-definition-file)
-		(load project-definition-file)
-		(setq project (gethash project-dir *projects*))
-		(if (not project)
-		    (error "Failed to load project %s from %s" project-dir project-definition-file) ) ) )
-	  project)
-      *default-project*) ) )
-
-(defun current-project ()
-  "Get the project object for the current buffer, first looking in the buffer-local variable current-project"
-  (if (not current-project)
-      (setq current-project (find-current-project)) )
-  current-project)
-
 (defun project-value (key &optional default)
   "Get the value for KEY in the current project, or from the default project if there is no current project."
   (let* ( (project (get-current-project) )
@@ -223,34 +196,35 @@ other wise the current directory for the buffer)."
 (defun visit-project-file ()
   "Visit the current project file (or offer to create one if it can't be found)"
   (interactive)
-  (let ( (project-dir-and-file (get-current-project-dir-and-file)) )
-    (if project-dir-and-file
-        (let ( (project-definition-file (cdr project-dir-and-file)) )
-          (if project-definition-file
-	      (find-file project-definition-file)
-            (message "No project file exists at %s" (car project-dir-and-file)) ) )
-      (maybe-create-new-project-file) ) ) )
+  (let ( (project-definition-file (get-current-project-definition-file)) )
+    (if project-definition-file
+	(find-file project-definition-file)
+      (progn
+        (message "No project file exists at %s" current-project-base-directory)
+        (maybe-create-new-project-file) ) ) ) )
 
 (defun visit-project-file-menu-other-window ()
   "Visit file-menu file for project"
   (interactive)
-  (let* ( (project-dir (project-base-directory))
-          (file-menu-file (concat project-dir "_")) )
+  (let* ( (project-base-directory (get-current-project-base-directory))
+          (file-menu-file (expand-file-name "_" project-base-directory)) )
     (if (file-exists-p file-menu-file)
         (progn
           (find-file-other-window file-menu-file)
           (message file-menu-file) )
       (progn
-        (find-file-other-window project-dir)
+        (find-file-other-window project-base-directory)
         (message "File menu %s does not exist" file-menu-file) ) ) ) )
 
 ;; TODO - copy from a template file
 (defun maybe-create-new-project-file()
   "Offer to create a project file in the current directory (which the user can edit before accepting)"
   (interactive)
-  (let ( (project-dir (read-file-name "No project file found, create new one in directory: ")) )
+  (let* ( (existing-project-directory (get-current-project-base-directory))
+          (project-dir (read-file-name "No project file found, create new one in directory: " 
+                                       existing-project-directory) ) )
     (find-file (concat project-dir "_project.el"))
-    (insert ";; Project values\n\n(load-this-project\n `( (:key \"value\") ) )\n") ) )
+    (insert ";; Project values\n\n(load-this-project\n `( (:project-type default)\n     (:key \"value\") ) )\n") ) )
 
 (make-variable-buffer-local 'run-file-function) ;; TODO - not project specific ?
 
