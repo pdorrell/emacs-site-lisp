@@ -39,9 +39,9 @@
 (defun project-search-for-identifier-at-point ()
   (interactive)
   (save-this-buffer-and-others)
-  (if (project-value :new-search)
-      (project-new-search-for-identifier)
-    (project-search-for-identifier) ) )
+  (if (project-value :old-search)
+      (project-search-for-identifier)
+    (project-new-search-for-identifier) ) )
 
 ;;(let ( (value (read-from-minibuffer "Value: ")) ) (message "You told me %S" value) ) 
 
@@ -83,7 +83,6 @@
           (exclude-subdirs (project-value :search-exclude-subdirs)) )
     (if exclude-subdirs
         (setq main-search-dir (cons main-search-dir exclude-subdirs)) )
-    (message "exclude-subdirs = %s" exclude-subdirs)
     (show-search-buffer (cons main-search-dir (project-value :extra-search-directories))
                         (project-value :search-extensions) identifier) ) )
 
