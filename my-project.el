@@ -185,9 +185,9 @@ other wise the current directory for the buffer - not too sure why this is requi
   "Offer to create a project file in the current directory (which the user can edit before accepting)"
   (interactive)
   (let* ( (existing-project-directory (get-current-project-base-directory))
-          (project-dir (read-file-name "No project file found, create new one in directory: " 
-                                       existing-project-directory) ) )
-    (find-file (concat project-dir "_project.el"))
+          (project-dir (read-directory-name "No project file found, create new one in directory: " 
+                                            existing-project-directory) ) )
+    (find-file (concat project-dir (car *project-definition-file-names*)))
     (insert ";; Project values\n\n(load-this-project\n `( (:project-type default)\n     (:key \"value\") ) )\n") ) )
 
 (make-variable-buffer-local 'run-file-function) ;; TODO - not project specific ?
