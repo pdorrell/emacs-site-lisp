@@ -27,8 +27,14 @@
 (make-variable-buffer-local 'current-project-definition-file)
 
 (defun get-current-directory()
-  ;; Does this always work ???
-  default-directory)
+  "Find current directory to be used as starting point to search for project file.
+   If visiting a file, use directory of buffer file name (usually default-directory, put sometimes isn't),
+   otherwise just use default-directory"
+  (let* ( (filename (buffer-file-name))
+	  (directory-name (if filename
+			      (file-name-directory filename)
+			    default-directory)) )
+    (expand-file-name directory-name) ) )
 
 (defun get-current-project-base-directory()
   (when (not current-project-base-directory)
@@ -121,17 +127,8 @@ is found at all, the definition file is nil if the project is defined by a sub-d
                   (error "No default project of type %S" project-type) ) ) ) ) )
     project) ) )
 
-(defvar *default-project* (create-project `((:python-executable ,*python-executable*)))  ;; TODO - don't set default project - set default project definition
+(defvar *default-project* (create-project `((:python-executable ,*python-executable*)))
   "The default project, which will contain default values for project values.")
-
-(defun get-directory-for-project()
-  "Find current directory to be used as starting point to search for project file (either directory of buffer file,
-other wise the current directory for the buffer - not too sure why this is required)."
-  (let* ( (filename (buffer-file-name))
-	  (directory-name (if filename
-			      (file-name-directory filename)
-			    default-directory)) )
-    (expand-file-name directory-name) ) )
 
 (defvar *project-base-directory* nil 
   "A variable which stores the current project base directly, while loading an existing project file. ")
@@ -141,11 +138,11 @@ other wise the current directory for the buffer - not too sure why this is requi
    It assumes that *project-base-directory* is defined.
    Except, it can be invoked interatively from within the _project.el file to reload new project values,
    in which case *project-base-directory* is set to be the current directory."
-  (let ( (*project-base-directory* (if load-file-name *project-base-directory* (get-directory-for-project))) )
-    (let ( (project (create-project key-value-pairs (gethash *project-base-directory* *projects*))) )
-      (puthash :base-directory *project-base-directory* project)
-      (puthash *project-base-directory* project *project-by-base-directory*)
-      (puthash *project-base-directory* project *projects*) ) ) )
+  (let* ( (*project-base-directory* (if load-file-name *project-base-directory* 
+                                      (file-name-directory (buffer-file-name)) ) )
+          (project (create-project key-value-pairs (gethash *project-base-directory* *projects*))) )
+    (puthash *project-base-directory* project *project-by-base-directory*)
+    (puthash *project-base-directory* project *projects*) ) )
 
 (defun project-value (key &optional default)
   "Get the value for KEY in the current project, or from the default project if there is no current project."
@@ -220,7 +217,7 @@ other wise the current directory for the buffer - not too sure why this is requi
 
 (defun open-project-file-menu()
   (interactive)
-  (find-file (concat (project-value :base-directory) "_")) )
+  (find-file (expand-file-name "_" (get-current-project-base-directory))) )
 
 (defun build-project() ;; 'make'
   (interactive)
