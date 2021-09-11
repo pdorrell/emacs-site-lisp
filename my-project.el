@@ -75,8 +75,6 @@
   (let ( (*project-base-directory* base-directory) )
     (load project-definition-file) ) )
 
-(get-project-for-base-directory default-directory)
-
 (defvar *project-definition-file-names* '("_project.el" "__project.el")
   "Possible names for project definition files - first one is default value for new project files.")
 
@@ -137,40 +135,6 @@ other wise the current directory for the buffer - not too sure why this is requi
 
 (defvar *project-base-directory* nil 
   "A variable which stores the current project base directly, while loading an existing project file. ")
-
-(defun get-current-project-dir-and-file()
-  "Return the project directory and project file as a cons pair, or nil if no project file can be found."
-  (let ( (directory (get-directory-for-project)) 
-	 (project-file-not-found nil)
-	 project-lisp-file)
-    (block nil
-      (while (not project-file-not-found)
-	(setq project-lisp-file (concat directory "_project.el"))
-	(if (file-exists-p project-lisp-file)
-	    (return (cons directory project-lisp-file)) )
-	(setq project-lisp-file (concat directory "__project.el"))
-	(if (file-exists-p project-lisp-file)
-	    (return (cons directory project-lisp-file)) )
-        (setq dot-git-dir (concat directory ".git"))
-        (if (file-exists-p dot-git-dir)
-            (return (cons directory nil) ) )
-	(let ( (parent-directory (file-name-directory (directory-file-name directory))) )
-	  (if (equal parent-directory directory)
-	      (setq project-file-not-found t)
-	    (setq directory parent-directory) ) ) )
-      nil) ) )
-
-(defun project-base-directory()
-  "Get base directory of current project, _without_ loading the project definition."
-  (if *project-base-directory*
-      *project-base-directory*
-    (car (get-current-project-dir-and-file)) ) )
-
-(defun project-base-directory-value()
-  "Get base directory of current project, as a project value. 
-(Don't call this _within_ a project definition, because it will then recursively attempt to load
-       the project definition.)"
-  (project-value :base-directory) )
 
 (defun load-this-project (key-value-pairs)
   "This function is called from within a _project.el file with key/value pairs as a list of cons pairs. 
@@ -235,7 +199,7 @@ other wise the current directory for the buffer - not too sure why this is requi
   "Get the expanded name of a file from project value for KEY, expanded against project base directory (if it's relative)"
   (let ( (file-name (project-value key default) ) )
     (if file-name
-	(let ( (base-directory (project-base-directory)) )
+	(let ( (base-directory (get-current-project-base-directory)) )
 	  (if base-directory
 	      (setq file-name (expand-file-name file-name base-directory)) ) )
       )
@@ -253,18 +217,6 @@ other wise the current directory for the buffer - not too sure why this is requi
     (if (not value)
 	(error "No value found for project key %s" key)
       value) ) )
-
-;; SEMI-OBSOLETE - replaced by :run-main-file project value
-(defun run-project()
-  (interactive)
-  (save-this-buffer-and-others)
-  (let ( (run-project-command (project-value :run-project-command)) )
-    (if run-project-command
-	(progn
-	  (message "Running project command %s ..." run-project-command)
-          (let ((default-directory (project-base-directory)))
-            (eval run-project-command) ) )
-      (message "No run-project-command defined in this buffer") ) ) )
 
 (defun open-project-file-menu()
   (interactive)

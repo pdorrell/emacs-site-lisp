@@ -79,7 +79,7 @@
 
 (defun project-search-for-identifier()
   (let* ( (identifier (get-identifier-for-search))
-          (main-search-dir (project-base-directory-value))
+          (main-search-dir (get-current-project-base-directory))
           (exclude-subdirs (project-value :search-exclude-subdirs)) )
     (if exclude-subdirs
         (setq main-search-dir (cons main-search-dir exclude-subdirs)) )

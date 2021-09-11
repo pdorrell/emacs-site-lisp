@@ -9,7 +9,7 @@
     (project-value value-key) ) )
 
 (defun get-project-name-from-base-dir()
-  (let ( (base-dir (project-base-directory-value)) )
+  (let ( (base-dir (get-current-project-base-directory)) )
     (file-name-nondirectory (directory-file-name base-dir)) ) )
 
 (defun get-project-name()
@@ -22,7 +22,7 @@
       (concat *default-executable-load-path* "run-command-in-directory"))
 
 (defun get-project-executable-load-path()
-    (list (concat (project-base-directory-value) "_project/bin/")
+    (list (concat (get-current-project-base-directory) "_project/bin/")
           *default-executable-load-path*) )
 
 (defun file-if-it-exists (file-path)
@@ -104,7 +104,7 @@
 (def-run-project-fun 'run-script-fun 'other-window-show-top 'script-to-other-window-show-top)
 (def-run-project-fun 'run-script-fun 'other-short-window-sync 'sync-script-to-other-short-window)
 
-(def-run-project-fun 'working-dir-getter 'base-dir 'project-base-directory-value)
+(def-run-project-fun 'working-dir-getter 'base-dir 'get-current-project-base-directory)
 (def-run-project-fun 'working-dir-getter 'alternate-command-dir 'get-alternate-command-dir)
 
 (def-run-project-fun 'command-args-getter 'this-file 'buffer-file-name)
@@ -174,21 +174,13 @@
     (with-current-buffer output-buffer-name
       (setq-local default-directory (or output-buffer-dir working-dir)) ) ) )
 
-(defun run-this-file()
-  "Older version - set by buffer-local variable 'run-file-function"
-  (interactive)
-  (save-this-buffer-and-others)
-  (if run-file-function
-      (apply run-file-function (list (buffer-file-name)))
-    (message "No run-file-function defined in this buffer") ) )
-
 (defun project-run-this-file()
   "Run the current file"
   (interactive)
   (let* ( (run-this-file-command (get-project-command :run-this-file programming-language)) )
     (if run-this-file-command
         (apply 'run-project-command run-this-file-command)
-      (run-this-file) ) ) )
+      (message "No project command for %S" (cons :run-this-file programming-language)) ) ) )
 
 ;; test/test-project/src/subdir/hello_world.py
 
@@ -201,7 +193,7 @@
   (let* ( (run-main-file-command (project-value :run-main-file)) )
     (if run-main-file-command
         (apply 'run-project-command run-main-file-command)
-      (run-project) ) ) )
+      (message "No :run-main-file command defined in project") ) ) )
 
 (defun run-alternate-command-on-file-or-dir()
   (interactive)

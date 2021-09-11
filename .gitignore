@@ -3,4 +3,4 @@
 /java/build/
 _test.*
 elpa/archives/
-
+.git/
