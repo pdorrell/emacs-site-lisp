@@ -1,6 +1,6 @@
 ;; Copyright (C) 2001 Philip Dorrell
 
-(setq *search-python-script-path* (expand-file-name "bin" emacs-customisation-dir))
+(defvar *search-python-script-path* (expand-file-name "bin" emacs-customisation-dir))
 
 (defun make-search-dir-with-excludes (dir-spec)
   (if (stringp dir-spec)
@@ -24,6 +24,7 @@
   '(".el" ".java" ".html" ".txt" ".csv" ".xml" ".ftl" ".tex" ".py" ".sty" ".dtx" ".c" ".h" ".cpp" ".def" ".lisp" ".cls" ".ml" ".mli" ".rb" ".rhtml" ".rxml" ".js" ".hx" ".css" ".svg" ".drl" ".erb" ".md" ".haml" ".yml" ".scss" ".bracketup" ".corrml" ".idr" ".ipkg" ".brackdom" ".hs" ".json")
   "List of extensions for files to search")
 
+
 (defun search-this-dir (string)
   (interactive "sSearch for: ")
   (show-search-buffer (list (file-truename default-directory)) *default-search-extensions* string) )
@@ -45,6 +46,10 @@
 
 ;;(let ( (value (read-from-minibuffer "Value: ")) ) (message "You told me %S" value) ) 
 
+(defun search-this-directory()
+  (interactive)
+  (run-project-command 'other-window-show-top 'current-dir "search" 'search-string-for-general-search) )
+
 (defun project-new-search-for-identifier()
   (run-project-command 'other-window-show-top 'base-dir "search" 'identifier-for-search) )
 
@@ -59,11 +64,12 @@
 (defun get-python-regex-for-identifier (identifier)
   (format "\\b%s\\b" identifier) )
 
+(defun get-search-python-script-path()
+  (or (project-file :search-python-script-path) *search-python-script-path*) )
+
 (defun get-base-search-args()
-  (let ( (project-type (first-element-if-list (project-value :project-type 'default)))
-         (search-python-script-path (or (project-file :search-python-script-path)
-                                        *search-python-script-path*)) )
-    (list search-python-script-path "." "--project-type" (symbol-name project-type) ) ) )
+  (let ( (project-type (first-element-if-list (project-value :project-type 'default))) )
+    (list (get-search-python-script-path) "." "--project-type" (symbol-name project-type) ) ) )
 
 (defun get-identifier-for-search-args()
   (let ( (identifier-for-search (get-identifier-for-search)) )
@@ -72,8 +78,13 @@
 (defun get-search-census-args()
   (append (get-base-search-args) (list "--census")) )
 
+(defun get-search-string-for-general-search-args()
+  (let ( (search-string (read-from-minibuffer "Search for: ")) )
+    (list (get-search-python-script-path) "." "--project-type" "general" "--include-unexpected" "--value" search-string) ) )
+
 (def-run-project-fun 'command-args-getter 'search-census 'get-search-census-args)
 (def-run-project-fun 'command-args-getter 'identifier-for-search 'get-identifier-for-search-args)
+(def-run-project-fun 'command-args-getter 'search-string-for-general-search 'get-search-string-for-general-search-args)
 
 (expand-file-name "./test" default-directory)
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 search_script_path=$1
 search_script=$search_script_path/searcher.py
-#echo $search_script $@
+echo $search_script $@
 shift
 /usr/bin/python3 $search_script "$@"

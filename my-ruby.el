@@ -57,7 +57,6 @@
   (local-set-key [?\C-p] 'ruby-insert-print-this)
   (local-set-key [?\C-\S-p] 'ruby-insert-print-this-inspected)
   (local-set-key [?\C-m] 'return-and-indent)
-  (local-set-key [?\C-w] 'ruby-search-for-identifier-at-point)
   (local-set-key "," 'insert-spaced-comma)
   (local-set-key [f2] 'my-expand-abbrev)
   (local-set-key "=" 'insert-spaced-equals)

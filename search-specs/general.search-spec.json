@@ -1,0 +1,7 @@
+{
+  "included_extensions":  [".py"],
+  "excluded_extensions":  [],
+  "included_files":  [],
+  "excluded_files":  [],
+  "excluded_dirs": ["**/.git"]
+}

@@ -48,7 +48,7 @@
 
      ([?\C-u] undo)
 
-     ([?\C-w] search-this-dir)
+     ([?\C-w] search-this-directory)
 
      ([?\M-z] show-messages-buffer)
      ) )

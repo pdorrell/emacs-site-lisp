@@ -100,11 +100,17 @@
 (defun get-alternate-command-dir()
   (project-file :alternate-command-dir) )
 
+(defun get-default-directory()
+  (if default-directory
+      default-directory
+    (error "default-directory is not defined in this buffer") ) )
+
 (def-run-project-fun 'run-script-fun 'other-window 'script-to-other-window)
 (def-run-project-fun 'run-script-fun 'other-window-show-top 'script-to-other-window-show-top)
 (def-run-project-fun 'run-script-fun 'other-short-window-sync 'sync-script-to-other-short-window)
 
 (def-run-project-fun 'working-dir-getter 'base-dir 'get-current-project-base-directory)
+(def-run-project-fun 'working-dir-getter 'current-dir 'get-default-directory)
 (def-run-project-fun 'working-dir-getter 'alternate-command-dir 'get-alternate-command-dir)
 
 (def-run-project-fun 'command-args-getter 'this-file 'buffer-file-name)

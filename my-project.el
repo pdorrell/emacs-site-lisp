@@ -146,12 +146,8 @@ is found at all, the definition file is nil if the project is defined by a sub-d
 
 (defun project-value (key &optional default)
   "Get the value for KEY in the current project, or from the default project if there is no current project."
-  (let* ( (project (get-current-project) )
-	  (value (gethash key project)) )
-    (if (not value)
-	(if default
-	    (setq value default)
-	  (setq value (gethash key *default-project*)) ) )
+  (let* ( (project (or (get-current-project) *default-project*))
+	  (value (or (gethash key project) default)) )
     value) )
 
 (defun visit-project-file ()

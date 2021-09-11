@@ -551,7 +551,6 @@
   (local-set-key [?\M-R] 'java-run-main)
   (local-set-key [?\C-t] 'insert-this-equals)
   (local-set-key [?\C-v] 'toggle-private)
-  (local-set-key [?\C-w] 'java-search-for-identifier-at-point)
   (local-set-key "=" 'insert-spaced-equals)
   (local-set-key [?\C-=] 'insert-equals)
   (local-set-key [?\C-a] 'insert-routine-args)

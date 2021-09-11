@@ -20,7 +20,6 @@
 (defun emacs-lisp-hook()
   (setq programming-language 'lisp)
   (local-set-key [?\C-m] 'return-and-indent)
-  (local-set-key [?\C-w] 'lisp-search-for-identifier-at-point)
   (local-set-key [?\C-\S-p] 'emacs-lisp-insert-message-this)
   (setq run-file-function #'load)
   (setq filter-regexp emacs-lisp-filter-regexp)

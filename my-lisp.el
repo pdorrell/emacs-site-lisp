@@ -13,7 +13,6 @@
   (local-set-key [?\M-k] 'show-inferior-lisp-buffer)
   (local-set-key [?\C-\M-n] 'lisp-setup)
   (local-set-key [f2] 'my-expand-abbrev)
-  (local-set-key [?\C-w] 'lisp-search-for-identifier-at-point)
   (local-set-key [?\C-m] 'return-and-indent)
   (setq comment-start ";;") ; Single semi-colon not for comment on new line
   (setq comment-end "")
