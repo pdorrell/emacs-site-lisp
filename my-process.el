@@ -38,6 +38,13 @@
   (search-forward-regexp line-completion-first-line-regexp nil t)
   (beginning-of-line) )
 
+(defun do-not-move-point-process-filter (process string)
+  (message string)
+  (save-excursion
+    (set-buffer (process-buffer process))
+    (goto-char (point-max))
+    (insert string) ) )
+
 (defun goto-first-line-process-filter (process string)
   (let ( (old-buffer (current-buffer))
 	 (buffer (process-buffer process)) )
@@ -76,7 +83,7 @@
 	  (process-kill-without-query new-process)
 	  (message "%s STARTED" name)
           (if move-to-top 
-              (set-process-filter new-process 'goto-first-line-process-filter) ) ) ) ) ) )
+              (set-process-filter new-process 'do-not-move-point-process-filter) ) ) ) ) ) )
 
 (defun stop-then-start-process (name process-variable process-buffer-name
 				     executable args &optional move-to-top)
