@@ -73,7 +73,6 @@
 (try-to-load "my-html")
 (try-to-load "my-regenerate")
 (try-to-load "my-window")
-(try-to-load "my-browser")
 (try-to-load "my-sql")
 (try-to-load "file-menu")
 (try-to-load "my-python")
