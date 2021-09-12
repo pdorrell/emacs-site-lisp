@@ -1,0 +1,7 @@
+{
+  "included_extensions":  [".rb", ".html", ".rhtml", ".css", ".brackdom", ".el", ".js", ".properties", ".txt", ".json"],
+  "excluded_extensions":  [".dia", ".mid", ".mp3", ".pdf", ".png", ".svg", ".xcf"],
+  "included_files":  [".gitignore", "**/_"],
+  "excluded_files":  [],
+  "excluded_dirs": [".git", "output/.git", "output"]
+}

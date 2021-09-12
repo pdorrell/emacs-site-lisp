@@ -23,8 +23,7 @@
                                    main-file-output-dir)) ) )
 
 (set-project-type-default-values 'regenerated-blog 
-  '( (:search-extensions (".rb" ".html" ".rhtml" ".css"))
-     (:alternate-file-or-dir-command (other-short-window-sync base-dir "run-regenerate" this-file-or-dir
+  '( (:alternate-file-or-dir-command (other-short-window-sync base-dir "run-regenerate" this-file-or-dir
                                                               ("REGEN" . file) )) ) )
 
 (set-project-type-default-values 'sass
