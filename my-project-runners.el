@@ -176,6 +176,8 @@
           (output-buffer-dir (if output-buffer-dir-getter-key
                                  (funcall (get-run-project-fun 'output-buffer-dir-getter output-buffer-dir-getter-key))
                                nil) ) )
+    (if (null working-dir)
+        (error "Failed to find working directory from %s (%s)" working-dir-getter-key working-dir-getter) )
     (funcall run-script-fun resolved-script-path working-dir output-buffer-name (append script-args command-args))
     (with-current-buffer output-buffer-name
       (setq-local default-directory (or output-buffer-dir working-dir)) ) ) )
