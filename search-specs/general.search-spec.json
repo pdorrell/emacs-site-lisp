@@ -3,5 +3,5 @@
   "excluded_extensions":  [],
   "included_files":  [],
   "excluded_files":  [],
-  "excluded_dirs": ["**/.git"]
+  "excluded_dirs": ["**/.git", "**/__pycache__"]
 }
