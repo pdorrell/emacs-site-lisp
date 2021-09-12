@@ -39,11 +39,11 @@
 (defun mysql-set-connection (url &optional user password)
   (sql-set-connection url "com.mysql.jdbc.Driver" user password) )
 
+(defun sqlite-set-connection (url)
+  (sql-set-connection url "org.sqlite.JDBC") )
+
 (defun hsqldb-set-connection (url &optional user password)
   (sql-set-connection url "org.hsqldb.jdbcDriver" user password) )
-
-(defun mysql-set-connection (url &optional user password)
-  (sql-set-connection url "com.mysql.jdbc.Driver" user password) )
 
 (defun sql-execute-query (query)
   (sql-command
