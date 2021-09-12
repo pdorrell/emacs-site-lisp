@@ -38,43 +38,11 @@
         (error "Executable %S not found on load path %S" executable-name load-path) )
     executable-path) )
 
-(defun script-to-other-window (script-path working-dir output-buffer-name command-args &optional move-to-top)
-  (let ( (process-variable-symbol (intern (concat "process-runner-process-" output-buffer-name))) )
-    (if (not (boundp process-variable-symbol))
-        (set process-variable-symbol nil) )
-    (funcall 'stop-then-start-process 
-             output-buffer-name process-variable-symbol output-buffer-name
-             *run-command-in-directory-script*
-             (append (list working-dir script-path)
-                     command-args)
-             move-to-top)
-    (with-current-buffer output-buffer-name
-      (toggle-truncate-lines t) ) ) )
-
-(defun script-to-other-window-show-top (script-path working-dir output-buffer-name command-args)
-  (script-to-other-window script-path working-dir output-buffer-name command-args t) )
-
-(defun set-total-window-height (window height)
-  (let ( (delta (- height (window-total-height window))) )
-    (window-resize window delta) ) )
-
-(defun sync-script-to-other-short-window (script-path working-dir output-buffer-name command-args)
-  (let ( (output-buffer (get-buffer-create output-buffer-name)) )
-    (message "Running %s on %S" script-path command-args)
-    (display-buffer output-buffer)
-    (save-selected-window
-      (set-buffer output-buffer)
-      (clear-buffer)
-      (apply 'call-process script-path nil '(t t) 't command-args)
-      (message "   finished running %s on %S" script-path command-args)
-      (set-window-point (get-buffer-window output-buffer) (point-max))
-      (set-total-window-height (get-buffer-window output-buffer) 6) )
-    (revert-if-saved) ) )
-
 (dolist (fun-type '(run-script-fun working-dir-getter command-args-getter output-buffer-dir-getter))
   (put '*run-project-funs* fun-type (make-hash-table :test 'eq)) )
 
 (defun def-run-project-fun (fun-type key fun)
+  (declare (indent defun))
   (puthash key fun (get '*run-project-funs* fun-type)) )
 
 (defun get-run-project-fun (fun-type key)
@@ -83,42 +51,68 @@
         (error "Cannot get run-project function of type %s and key %s" fun-type key) )
     fun ) )
 
-(defun get-this-file-or-directory-name()
-  (let ( (buffer-file-name (buffer-file-name)) )
-    (if (not buffer-file-name)
-	(setq buffer-file-name default-directory) )
-    (expand-file-name (buffer-file-name)) ) )
-
-(defun get-no-command-params()
-  nil)
-
-(defun get-main-file-output-buffer-dir()
-  (let ( (main-file-output-buffer-dir-env-var (project-value :main-file-output-buffer-dir-env-var)) )
-    (if main-file-output-buffer-dir-env-var
-        (getenv main-file-output-buffer-dir-env-var) ) ) )
-
-(defun get-alternate-command-dir()
-  (project-file :alternate-command-dir) )
-
-(defun get-default-directory()
-  (if default-directory
-      (expand-file-name default-directory)
-    (error "default-directory is not defined in this buffer") ) )
-
-(def-run-project-fun 'run-script-fun 'other-window 'script-to-other-window)
-(def-run-project-fun 'run-script-fun 'other-window-show-top 'script-to-other-window-show-top)
-(def-run-project-fun 'run-script-fun 'other-short-window-sync 'sync-script-to-other-short-window)
-
 (def-run-project-fun 'working-dir-getter 'base-dir 'get-current-project-base-directory)
-(def-run-project-fun 'working-dir-getter 'current-dir 'get-default-directory)
-(def-run-project-fun 'working-dir-getter 'alternate-command-dir 'get-alternate-command-dir)
-
 (def-run-project-fun 'command-args-getter 'this-file 'buffer-file-name)
-(def-run-project-fun 'command-args-getter 'this-file-or-dir 'get-this-file-or-directory-name)
-(def-run-project-fun 'command-args-getter 'main-file 'get-project-main-file)
-(def-run-project-fun 'command-args-getter 'nil 'get-no-command-params)
+(def-run-project-fun 'command-args-getter 'nil 'ignore)
 
-(def-run-project-fun 'output-buffer-dir-getter 'main-file-output-dir 'get-main-file-output-buffer-dir)
+(def-run-project-fun 'run-script-fun 'other-window
+  (defun script-to-other-window (script-path working-dir output-buffer-name command-args &optional move-to-top)
+    (let ( (process-variable-symbol (intern (concat "process-runner-process-" output-buffer-name))) )
+      (if (not (boundp process-variable-symbol))
+          (set process-variable-symbol nil) )
+      (funcall 'stop-then-start-process 
+               output-buffer-name process-variable-symbol output-buffer-name
+               *run-command-in-directory-script*
+               (append (list working-dir script-path)
+                       command-args)
+               move-to-top)
+      (with-current-buffer output-buffer-name
+        (toggle-truncate-lines t) ) ) ) )
+
+(def-run-project-fun 'run-script-fun 'other-window-show-top
+  (defun script-to-other-window-show-top (script-path working-dir output-buffer-name command-args)
+    (script-to-other-window script-path working-dir output-buffer-name command-args t) ) )
+
+(defun set-total-window-height (window height)
+  (let ( (delta (- height (window-total-height window))) )
+    (window-resize window delta) ) )
+
+(def-run-project-fun 'run-script-fun 'other-short-window-sync
+  (defun sync-script-to-other-short-window (script-path working-dir output-buffer-name command-args)
+    (let ( (output-buffer (get-buffer-create output-buffer-name)) )
+      (message "Running %s on %S" script-path command-args)
+      (display-buffer output-buffer)
+      (save-selected-window
+        (set-buffer output-buffer)
+        (clear-buffer)
+        (apply 'call-process script-path nil '(t t) 't command-args)
+        (message "   finished running %s on %S" script-path command-args)
+        (set-window-point (get-buffer-window output-buffer) (point-max))
+        (set-total-window-height (get-buffer-window output-buffer) 6) )
+      (revert-if-saved) ) ) )
+
+(def-run-project-fun 'command-args-getter 'this-file-or-dir
+  (defun get-this-file-or-directory-name()
+    (let ( (buffer-file-name (buffer-file-name)) )
+      (if (not buffer-file-name)
+	  (setq buffer-file-name default-directory) )
+      (expand-file-name (buffer-file-name)) ) ) )
+
+(def-run-project-fun 'output-buffer-dir-getter 'main-file-output-dir
+  (defun get-main-file-output-buffer-dir()
+    (let ( (main-file-output-buffer-dir-env-var (project-value :main-file-output-buffer-dir-env-var)) )
+      (if main-file-output-buffer-dir-env-var
+          (getenv main-file-output-buffer-dir-env-var) ) ) ) )
+
+(def-run-project-fun 'working-dir-getter 'alternate-command-dir
+  (defun get-alternate-command-dir()
+    (project-file :alternate-command-dir) ) )
+
+(def-run-project-fun 'working-dir-getter 'current-dir
+  (defun get-default-directory()
+    (if default-directory
+        (expand-file-name default-directory)
+      (error "default-directory is not defined in this buffer") ) ) )
 
 (defun get-script-and-args (command-script)
   (if (stringp command-script)
@@ -192,8 +186,9 @@
 
 ;; test/test-project/src/subdir/hello_world.py
 
-(defun get-project-main-file()
-  (project-file :main-file) )
+(def-run-project-fun 'command-args-getter 'main-file
+  (defun get-project-main-file()
+    (project-file :main-file) ) )
 
 (defun project-run-project()
   "Run the project's main file"
