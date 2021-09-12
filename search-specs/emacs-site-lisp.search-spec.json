@@ -3,5 +3,5 @@
   "excluded_extensions":  [".jar"],
   "included_files":  ["**/_", "bin/*", "COPYING", "**/list-files"],
   "excluded_files":  [".gitignore"],
-  "excluded_dirs": ["test/test-project2", ".git", "elpa", "java/build"]
+  "excluded_dirs": ["test/test-project2", ".git", "elpa", "java/build", "test/test-project/src/subdir"]
 }

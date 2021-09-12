@@ -30,17 +30,6 @@
   (font-lock-mode 1)
   )
 
-(defun lisp-search-for-identifier-at-point ()
-  (interactive)
-  (let ( (word (word-at word-alpha-table (point))) )
-    (if word
-	(lisp-search-for-identifier word)
-      (call-interactively 'lisp-search-for-identifier) ) ) )
-
-(defun lisp-search-for-identifier (identifier)
-  (interactive "sSearch for: ")
-  (show-search-buffer (list default-directory) '(".el" ".lisp") identifier) )
-
 (defun buffer-for-name (name)
   (block nil
     (let ( (buffers (buffer-list)) )

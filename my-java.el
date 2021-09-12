@@ -573,18 +573,6 @@
   (setq comment-end "*/")
   (setq require-final-newline t) )
 
-;;-----------------------------------------------------------------
-(defun java-search-for-identifier-at-point ()
-  (interactive)
-  (let ( (word (word-at word-alpha-table (point))) )
-    (if word
-	(java-search-for-identifier word)
-      (call-interactively 'java-search-for-identifier) ) ) )
-
-(defun java-search-for-identifier (identifier)
-  (interactive "sSearch for: ")
-  (show-search-buffer (list (java-get-base-src-dir)) '(".java") identifier) )
-
 (set-abbrev-language 'java)
 
 (try-to-load "java-abbrev")

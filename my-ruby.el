@@ -40,17 +40,6 @@
   (search-forward "-")
   (backward-char 1))
 
-(defun ruby-search-for-identifier-at-point ()
-  (interactive)
-  (let ( (word (word-at word-alpha-table (point))) )
-    (if word
-	(ruby-search-for-identifier word)
-      (call-interactively 'ruby-search-for-identifier) ) ) )
-
-(defun ruby-search-for-identifier (identifier)
-  (interactive "sSearch for: ")
-  (show-search-buffer (list default-directory) '(".yaml" ".rb" ".haml") identifier) )
-
 (defun ruby-mode-hook-function ()
   (setq programming-language 'ruby)
   (local-set-key [?\C-t] 'ruby-insert-member-equals)
