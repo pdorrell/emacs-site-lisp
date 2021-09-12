@@ -1,7 +1,9 @@
 {
-  "included_extensions":  [".rb", ".html", ".rhtml", ".css", ".brackdom", ".el", ".js", ".properties", ".txt", ".json"],
-  "excluded_extensions":  [".dia", ".mid", ".mp3", ".pdf", ".png", ".svg", ".xcf"],
-  "included_files":  [".gitignore", "**/_"],
-  "excluded_files":  [],
-  "excluded_dirs": [".git", "output/.git", "output"]
+  "included_extensions":  [".rb", ".html", ".rhtml", ".css", ".brackdom", ".el", ".js", ".properties", ".txt", ".json",
+                          ".brack", ".corrml", ".xml"],
+  "excluded_extensions":  [".dia", ".mid", ".mp3", ".pdf", ".png", ".svg", ".xcf", ".gif", ".ico", ".jar", ".jpg", ".ogg",
+                          ".log", ".py", ".scss", ".zip"],
+  "included_files":  [".git-backup-name", ".gitignore", "**/_", "rakefile", "**/.htaccess"],
+  "excluded_files":  ["**/.gitkeep"],
+  "excluded_dirs": [".git", "output/.git", "output", "**/.sass-cache"]
 }
