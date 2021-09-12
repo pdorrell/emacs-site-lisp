@@ -388,12 +388,6 @@
 (defvar java-extra-class-loading-args nil 
   "Extra args that might be needed to prevent static initializer errors loading Java classes")
 
-(defun get-list-methods-startup-command ()
-  (append
-   (list *java-executable* "-cp" 
-	(concat (get-java-classpath) ";" emacs-util-classpath) )
-   (list "com1729.methods.JavaHelper") ) )
-
 (defun get-list-methods-input-line (packages class-name method-start is-static)
   (concat (if is-static "list_static_members#" "list_instance_members#")
 	  (separated-values
@@ -433,25 +427,6 @@
 	      (backward-char) )
 	    (setq var-name (buffer-substring-no-properties var-start var-end)) ) )
       (list var-name method-name) ) ) )
-
-(defun java-list-methods-completion ()
-  (interactive)
-  (let* ( (var-and-method (get-var-and-method-before-point))
-	  (variable-name (first var-and-method))
-	  (method-name (second var-and-method)) 
-	  is-static class-name packages list-methods-startup-command list-methods-input-line)
-    (if (null variable-name) (setq variable-name "this"))
-    (and
-     (if (starts-upper-case variable-name)
-	 (progn
-	   (setq is-static t)
-	   (setq class-name variable-name) )
-       (setq class-name (java-type-for-variable variable-name)) )
-     (setq packages (java-packages-for-class class-name))
-     (setq list-methods-startup-command (get-list-methods-startup-command))
-     (setq list-methods-input-line (get-list-methods-input-line packages class-name method-name is-static))
-     (show-completion-buffer "*java-methods*" list-methods-startup-command 
-			     list-methods-input-line 'java-complete-method-function) ) ) )
 
 (setq java-method-call-regexp (make-regexp '(or "." start)))
 
@@ -567,7 +542,6 @@
   (local-set-key [C-f8] 'visit-java-source-file-for-class)
   (local-set-key [C-M-f8] 'java-insert-import-line-if-needed)
   (local-set-key [S-f8] 'show-javadoc-url)
-  (local-set-key [f8] 'java-list-methods-completion)
   (font-lock-mode 1)
   (setq comment-start "/*")
   (setq comment-end "*/")
