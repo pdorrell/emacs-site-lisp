@@ -10,7 +10,7 @@
 
 (defun get-project-name-from-base-dir()
   (let ( (base-dir (get-current-project-base-directory)) )
-    (file-name-nondirectory (directory-file-name base-dir)) ) )
+    (if base-dir (file-name-nondirectory (directory-file-name base-dir)) ) ) )
 
 (defun get-project-name()
   (let ( (project-name (project-value :project-name)) )
@@ -102,7 +102,7 @@
 
 (defun get-default-directory()
   (if default-directory
-      default-directory
+      (expand-file-name default-directory)
     (error "default-directory is not defined in this buffer") ) )
 
 (def-run-project-fun 'run-script-fun 'other-window 'script-to-other-window)
