@@ -1,6 +1,6 @@
 // Copyright (C) 2001 Philip John Dorrell
 
-package com1729.emacs.sql;
+package thinkinghard.emacs.sql;
 
 /**
  * 
@@ -10,7 +10,7 @@ package com1729.emacs.sql;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
-import com1729.emacs.*;
+import thinkinghard.emacs.*;
 
 public class Sql extends LineScriptable {
 

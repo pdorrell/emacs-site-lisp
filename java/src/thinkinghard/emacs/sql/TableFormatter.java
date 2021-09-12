@@ -1,6 +1,6 @@
 // Copyright (C) 2001 Philip John Dorrell
 
-package com1729.emacs.sql;
+package thinkinghard.emacs.sql;
 
 /**
  * 
