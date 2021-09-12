@@ -10,16 +10,16 @@
 (defun project-search-for-identifier-at-point ()
   (interactive)
   (save-this-buffer-and-others)
-  (project-new-search-for-identifier) )
+  (project-search-for-identifier) )
 
 (defun search-this-directory()
   (interactive)
   (run-project-command 'other-window-show-top 'current-dir "search" 'search-string-for-general-search) )
 
-(defun project-new-search-for-identifier()
+(defun project-search-for-identifier()
   (run-project-command 'other-window-show-top 'base-dir "search" 'identifier-for-search) )
 
-(defun project-new-search-census()
+(defun project-search-census()
   (interactive)
   (run-project-command 'other-window-show-top 'base-dir "search" 'search-census) )
 
