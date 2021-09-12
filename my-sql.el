@@ -2,8 +2,8 @@
 (defvar *jdbc-drivers-classpath* "" "Classpath for JDBC drivers")
 
 (defun make-sql-startup-command ()
-  (list *java-executable* "-cp" (concat emacs-util-classpath ";" *jdbc-drivers-classpath*) 
-	"thinkinghard.emacs.sql.Sql") )
+  (let ( (java-classpath (concat emacs-util-classpath ":" *jdbc-drivers-classpath*)) )
+    (list *java-executable* "-cp" java-classpath "thinkinghard.emacs.sql.Sql") ) )
 
 (defun sql-command (command)
   (if (not (equal (buffer-name) "*sql*"))
