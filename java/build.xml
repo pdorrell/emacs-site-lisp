@@ -9,9 +9,11 @@
     <delete dir="${build.dir}"/>
   </target>
 
-  <target name="compile">
+  <target name="compile" depends="clean">
     <mkdir dir="${classes.dir}"/>
-    <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false"/>
+    <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false">
+      <compilerarg line="-Xlint:unchecked -Xlint:deprecation"/>
+    </javac>
   </target>
 
   <target name="jar" depends="compile">
