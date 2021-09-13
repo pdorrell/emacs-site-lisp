@@ -11,16 +11,27 @@ import java.io.*;
 import java.lang.reflect.*;
 
 public class LineScriptable {
+  
+  public String readLine(BufferedReader br) throws IOException{
+    String line = br.readLine();
+    if (line == null) {
+      System.out.println("EOF");
+    }
+    else {
+      System.out.println("IN: " + line);
+    }
+    return line;
+  }
 
   public void processLines (BufferedReader br) 
       throws IOException {
     String line;
-    while ((line = br.readLine()) != null) {
+    while ((line = this.readLine(br)) != null) {
       int numParams = Integer.parseInt (line)-1;
-      String methodName = "script_" + br.readLine();
+      String methodName = "script_" + this.readLine(br);
       String params[] = new String[numParams];
       for (int i=0; i<numParams; i++) {
-        params[i] = br.readLine();
+        params[i] = this.readLine(br);
       }
       Class clazz = this.getClass();
       Method methods[] = clazz.getDeclaredMethods();
