@@ -10,7 +10,8 @@
 
 (setq-default indent-tabs-mode nil)
 
-(setq emacs-util-classpath (concat emacs-customisation-dir "/emacs.jar"))
+;;(setq emacs-util-classpath (expand-file-name "emacs.jar" emacs-customisation-dir))
+(setq emacs-util-classpath (expand-file-name "java/build/dist/emacs.jar" emacs-customisation-dir))
 (setq package-user-dir (concat emacs-customisation-dir "/elpa"))
 
 (require 'package)
