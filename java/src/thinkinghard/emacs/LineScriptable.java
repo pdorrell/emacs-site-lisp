@@ -17,9 +17,6 @@ public class LineScriptable {
     if (line == null) {
       System.out.println("EOF");
     }
-    else {
-      System.out.println("IN: " + line);
-    }
     return line;
   }
 
