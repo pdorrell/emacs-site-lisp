@@ -1,7 +1,8 @@
 {
   "included_extensions":  [".py", ".txt", ".el", ".json", ".java", ".js", ".xml"],
-  "excluded_extensions":  [".jar"],
-  "included_files":  ["**/_", "bin/*", "COPYING", "**/list-files"],
+  "excluded_extensions":  [".jar", ".sqlite"],
+  "included_files":  ["**/_", "bin/*", "COPYING", "**/list-files", "**/Makefile"],
   "excluded_files":  [".gitignore"],
-  "excluded_dirs": ["test/test-project2", ".git", "elpa", "java/build", "test/test-project/src/subdir"]
+  "excluded_dirs": ["test/test-project2", ".git", "elpa", "java/build", "test/test-project/src/subdir",
+                    "**/_venv"]
 }

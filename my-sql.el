@@ -1,9 +1,13 @@
 
 (defvar *jdbc-drivers-classpath* "" "Classpath for JDBC drivers")
 
+(defvar *new-sql-client* nil "If t, use new Python sql client")
+
 (defun make-sql-startup-command ()
-  (let ( (java-classpath (concat emacs-util-classpath ":" *jdbc-drivers-classpath*)) )
-    (list *java-executable* "-cp" java-classpath "thinkinghard.emacs.sql.Sql") ) )
+  (if *new-sql-client*
+      (list (expand-file-name "bin/run-sql-client" emacs-customisation-dir))
+    (let ( (java-classpath (concat emacs-util-classpath ":" *jdbc-drivers-classpath*)) )
+      (list *java-executable* "-cp" java-classpath "thinkinghard.emacs.sql.Sql") ) ) )
 
 (defun sql-command (command)
   (if (not (equal (buffer-name) "*sql*"))
