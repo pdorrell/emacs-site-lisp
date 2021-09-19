@@ -2,8 +2,8 @@
 
 (def-html-abbrevs
   '(
-    ("style" ("<style type=\"text/css\">" return "<!--" return mark return
-	      "-->" return "</style>" return goto-mark))
+    ("style" ("<style type=\"text/css\">" return mark return
+	      "</style>" return goto-mark))
     ("n" "&ndash; ")
     ("br" "<br/>")
     ("brn" "<br/>&nbsp;&nbsp;&nbsp;&nbsp;")

@@ -1,6 +1,6 @@
 {
   "included_extensions":  [".py"],
-  "excluded_extensions":  [],
+  "excluded_extensions":  [".so"],
   "included_files":  [],
   "excluded_files":  [],
   "excluded_dirs": ["**/.git", "**/__pycache__"]
