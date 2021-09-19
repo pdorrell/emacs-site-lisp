@@ -6,3 +6,4 @@ elpa/archives/
 .git/
 enormous.py
 test/test_db/
+_venv/

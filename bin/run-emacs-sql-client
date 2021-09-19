@@ -1,0 +1,3 @@
+#!/bin/bash
+this_dir=$(readlink -f $(dirname $0))
+. $this_dir/emacs_sql_client/_venv/bin/activate ; python $this_dir/emacs_sql_client/emacs_sql_client.py
