@@ -56,7 +56,7 @@
 
 (defun write-end-of-buffer-sentinel (process event)
   (let ( (buffer (process-buffer process)) )
-    (if buffer
+    (if (and buffer (buffer-live-p buffer))
         (save-excursion
           (with-current-buffer buffer
             (goto-char (point-max))
