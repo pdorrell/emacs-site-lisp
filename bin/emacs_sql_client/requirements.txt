@@ -1,1 +1,4 @@
 sqlalchemy
+wheel
+psycopg2
+

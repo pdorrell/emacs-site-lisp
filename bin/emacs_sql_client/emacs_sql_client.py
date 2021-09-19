@@ -74,7 +74,7 @@ class LineScriptable:
 
     def process_input_lines(self, lines):
         for line in lines:
-            self.output_writer("IN: %s" % line)
+            # self.output_writer("IN: %s" % line)
             self.process_line(line)
 
     def process_command(self, command, params):
