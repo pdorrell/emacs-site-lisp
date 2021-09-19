@@ -77,10 +77,6 @@ class LineScriptable:
             # self.output_writer("IN: %s" % line)
             self.process_line(line)
 
-    def process_command(self, command, params):
-        getattr(self, command)(*params)
-        self.output_writer(THICK_LINE)
-
 class SqlClient(LineScriptable):
 
     def rewrite_jdbc_url(self, jdbc_url):
@@ -91,7 +87,16 @@ class SqlClient(LineScriptable):
         if prefix == 'sqlite':
             return 'sqlite:///%s' % url_path
         else:
-            return url_path
+            return unprefixed_url
+
+    def process_command(self, command, params):
+        try:
+            getattr(self, command)(*params)
+        except sqlalchemy.exc.SQLAlchemyError as sae:
+            self.output_writer('SQL ERROR: %s' % sae.orig)
+        except Exception as e:
+            self.output_writer(traceback.format_exc())
+        self.output_writer(THICK_LINE)
 
     def setConnection(self, db_url, driver_class):
         if db_url.startswith("jdbc:"):
@@ -123,20 +128,14 @@ class SqlClient(LineScriptable):
     def executeQuery(self, sql):
         self.output_writer('QUERY: %s' % sql)
         with self.engine.connect() as connection:
-            try:
-                result = connection.execute(sqlalchemy.text(sql))
-                if result.returns_rows:
-                    self.output_writer(THIN_LINE)
-                    for line in PagedRowWriter().write_rows(result, columns = list(result.keys())):
-                        self.output_writer(line)
-                else:
-                    updated_rows = 0 if result.rowcount == -1 else result.rowcount
-                    self.output_writer("Updated rows: %d" % updated_rows)
-            except sqlalchemy.exc.OperationalError as oe:
-                self.output_writer('SQL ERROR: %s' % oe.orig)
-            except Exception as e:
-                #self.output_writer(traceback.format_exc())
-                raise
+            result = connection.execute(sqlalchemy.text(sql))
+            if result.returns_rows:
+                self.output_writer(THIN_LINE)
+                for line in PagedRowWriter().write_rows(result, columns = list(result.keys())):
+                    self.output_writer(line)
+            else:
+                updated_rows = 0 if result.rowcount == -1 else result.rowcount
+                self.output_writer("Updated rows: %d" % updated_rows)
 
 def write_output(text):
     print(text)
