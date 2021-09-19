@@ -1,7 +1,7 @@
 {
-  "included_extensions":  [".py"],
+  "included_extensions":  [".py", ".el"],
   "excluded_extensions":  [".so"],
-  "included_files":  [],
+  "included_files":  ["**/.gitignore", "**/Makefile", "**/_"],
   "excluded_files":  [],
   "excluded_dirs": ["**/.git", "**/__pycache__"]
 }

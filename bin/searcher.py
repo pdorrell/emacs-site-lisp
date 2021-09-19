@@ -159,9 +159,11 @@ class SearchResultsReporter:
         print("")
         print(" UNEXPECTED FILES:")
         unexpected_files_by_suffix_items = list(unexpected_files_by_suffix.items())
-        print("     extensioned: %s" % (", ".join([extension_summary(suffix, files)
-                                                   for suffix, files in list(unexpected_files_by_suffix.items())])))
-        print("     extensionless: %r" % stringified_path_list(unexpected_extensionless_files))
+        if unexpected_files_by_suffix:
+            print("     extensioned: %s" % (", ".join([extension_summary(suffix, files)
+                                                       for suffix, files in list(unexpected_files_by_suffix.items())])))
+        if unexpected_extensionless_files:
+            print("     extensionless: %r" % stringified_path_list(unexpected_extensionless_files))
 
     def report_unexpected_files(self, unexpected_files):
         if unexpected_files:
@@ -298,8 +300,8 @@ class SourceCodeSearcher:
         results_reporter.report_unsearched_items('symlinks', symlinks, symlink_display)
         results_reporter.report_unsearched_items('too large', too_large_files, too_large_display)
         if self.project_type == 'general':
-            results_reporter.report_unexpected_files_summary(unexpected_files)
             if unexpected_files:
+                results_reporter.report_unexpected_files_summary(unexpected_files)
                 print("")
                 print("  ( SEARCH SPECS: %s )" % (", ".join(stringified_path_list(self.spec_files))))
         else:
