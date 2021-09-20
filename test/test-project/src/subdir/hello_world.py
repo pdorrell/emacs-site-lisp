@@ -8,7 +8,7 @@ def main():
         hello_world()
     for i in range(1000):
         print("Sleep %d ..." % i)
-        sleep(1)
+        sleep(0.3)
 
 if __name__ == "__main__":
     main()
