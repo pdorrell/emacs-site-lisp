@@ -14,6 +14,8 @@
 (setq emacs-util-classpath (expand-file-name "java/build/dist/emacs.jar" emacs-customisation-dir))
 (setq package-user-dir (concat emacs-customisation-dir "/elpa"))
 
+(setenv "EMACS_SITE_LISP_DIR" (expand-file-name emacs-customisation-dir))
+
 (require 'package)
 (package-initialize)
 
