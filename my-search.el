@@ -52,3 +52,17 @@
       (list (get-search-python-script-path) "." "--project-type" "general" 
             "--include-unexpected" "--value" search-string) ) ) )
 
+(defun project-create-project-search-spec-file (project-type)
+  (let* ( (project-base-directory (get-current-project-base-directory))
+          (project-type-search-spec-file-name (concat project-type ".search-spec.json"))
+          (project-search-spec-directory (expand-file-name "_project/search" project-base-directory))
+          (project-search-spec-file-name (expand-file-name project-type-search-spec-file-name 
+                                                           project-search-spec-directory))
+          (search-spec-template-file-name (expand-file-name (concat "search-specs/empty-template.search-spec.json")
+                                                            emacs-customisation-dir) ) )
+    (if (file-exists-p project-search-spec-file-name)
+        (error "File %S already exists" project-search-spec-file-name) )
+    (make-directory project-search-spec-directory t)
+    (copy-file search-spec-template-file-name project-search-spec-file-name)
+    (message "Project search spec file %s created" project-search-spec-file-name) ) )
+          

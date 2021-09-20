@@ -25,7 +25,6 @@ class CensusResults:
             for key in sorted(results.keys()):
                 paths = results[key]
                 print("     %s, %d items: %r" % (key, len(paths), paths))
-        print("")
         print("="*100)
         print("Census results")
         show_results("UNEXPECTED", self.unexpected_results)
@@ -212,12 +211,15 @@ class SourceCodeSearcher:
                 for param in cls.search_spec_params:
                     if param in spec_json:
                         search_specs[param].extend(spec_json[param])
+        project_spec_file = source_dir_spec_dir / project_search_spec_file_name
+        missing_project_spec_file = project_spec_file if not project_spec_file.is_file() else None
         search_specs['include_unexpected'] = include_unexpected
         search_specs['max_line_length_to_show'] = max_line_length_to_show
         search_specs['max_file_size'] = max_file_size
-        return SourceCodeSearcher(source_dir, project_type, spec_files, **search_specs)
+        return SourceCodeSearcher(source_dir, project_type, spec_files, missing_project_spec_file,
+                                  **search_specs)
 
-    def __init__(self, base_dir, project_type, spec_files,
+    def __init__(self, base_dir, project_type, spec_files, missing_project_spec_file,
                  included_extensions=None, excluded_extensions=None,
                  included_files=None, excluded_files=None, excluded_dirs=None,
                  include_unexpected=False,
@@ -229,6 +231,7 @@ class SourceCodeSearcher:
         self.base_dir = Path(base_dir)
         self.project_type = project_type
         self.spec_files = spec_files
+        self.missing_project_spec_file = missing_project_spec_file
         os.chdir(self.base_dir)
         self.full_base_dir = self.base_dir.absolute()
         self.included_extensions = set_from_list_or_none(included_extensions)
@@ -249,9 +252,18 @@ class SourceCodeSearcher:
                  self.excluded_files.description(),
                  self.excluded_dirs.description()))
 
+    def show_missing_project_spec_file(self):
+        print("")
+        print("Project spec file %s not found (execute command below to create it)"
+              % self.missing_project_spec_file)
+        print("")
+        print('(project-create-project-search-spec-file "%s")' % self.project_type)
+        print("")
+
     def census(self):
         census_results = CensusResults()
-        print("Census:")
+        if self.missing_project_spec_file:
+            self.show_missing_project_spec_file()
         for item in self.iterate_for_search(yield_excluded=True):
             action = 'unexpected' if (not item.is_expected) else ('excluded' if item.is_excluded else 'included')
             if item.is_dir:
