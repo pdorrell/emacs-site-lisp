@@ -17,7 +17,7 @@
 	      (apply 'start-process 
 		     (append (list name (current-buffer)) startup-command) ) ) )
     (process-kill-without-query process)
-    (if move-to-top (set-process-filter process 'goto-first-line-process-filter))
+    (if move-to-top (set-process-filter process (make-goto-first-line-process-filter)))
     process) )
  
 (defun run-process-with-line (name startup-command input-line &optional move-to-top)
@@ -39,20 +39,23 @@
   (beginning-of-line) )
 
 (defun do-not-move-point-process-filter (process string)
-  (message string)
   (save-excursion
     (set-buffer (process-buffer process))
     (goto-char (point-max))
     (insert string) ) )
 
-(defun goto-first-line-process-filter (process string)
-  (let ( (old-buffer (current-buffer))
-	 (buffer (process-buffer process)) )
-    (set-buffer buffer)
-    (goto-char (point-max))
-    (insert string)
-    (goto-first-line)
-    (set-buffer old-buffer) ) )
+(defun make-goto-first-line-process-filter ()
+  (lexical-let ( (first-time t) )
+    (lambda (process string)
+      (if first-time
+          (let ( (old-buffer (current-buffer))
+	         (buffer (process-buffer process)) )
+            (when buffer
+              (insert string)
+              (goto-first-line)
+              (setq first-time nil) )
+            (set-buffer old-buffer) )
+        (do-not-move-point-process-filter process string) ) ) ) )
 
 (defun write-end-of-buffer-sentinel (process event)
   (let ( (buffer (process-buffer process)) )
@@ -102,7 +105,7 @@
                                       :buffer process-buffer-name
                                       :command (cons executable args)
                                       :noquery t
-                                      :filter (if move-to-top #'goto-first-line-process-filter)
+                                      :filter (if move-to-top (make-goto-first-line-process-filter))
                                       :sentinel #'write-end-of-buffer-sentinel) ) )
       (set process-variable new-process)
       (message "%s STARTED" name) ) ) )
