@@ -439,9 +439,25 @@ def run_test():
     print('-'*100)
     searcher.search_on_files(search, results_reporter)
 
+def show_if_dev():
+    emacs_site_lisp_dir = os.getenv("EMACS_SITE_LISP_DIR")
+    if not emacs_site_lisp_dir:
+        print("Running in environment where $EMACS_SITE_LISP_DIR is not defined")
+    else:
+        emacs_site_lisp_dir_path = Path(emacs_site_lisp_dir)
+        this_dir = Path(__file__).parent
+        if not emacs_site_lisp_dir_path in this_dir.parents:
+            banner_line = "##### DEVELOPMENT VERSION running from %s #" % this_dir
+            banner_length = len(banner_line)
+            print("#" * banner_length)
+            print(banner_line)
+            print("#" * banner_length)
+
 if __name__ == "__main__":
+    show_if_dev()
     args = sys.argv[1:]
     if args:
         run_search_command(args)
     else:
         run_test()
+    show_if_dev()
