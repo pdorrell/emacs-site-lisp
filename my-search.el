@@ -107,9 +107,3 @@
     (puthash :after-definition after-definition regex-hash-table)
     (puthash language regex-hash-table *language-search-regexes*) ) )
 
-(set-language-search-regexes 'python
-  :before-identifier "(^|[^A-Za-z0-9_])"
-  :after-identifier "($|[^A-Za-z0-9_])"
-  :before-definition"(def|class)\s+"
-  :after-definition "($|[^A-Za-z0-9_])")
-

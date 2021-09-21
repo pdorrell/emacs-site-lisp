@@ -47,6 +47,12 @@
   (let ( (expression (match-string 0)) )
     (replace-match (concat "print(\"" expression " = %r\" % " expression ")")) ) )
 
+(set-language-search-regexes 'python
+  :before-identifier "(^|[^A-Za-z0-9_])"
+  :after-identifier "($|[^A-Za-z0-9_])"
+  :before-definition"(def|class)\s+"
+  :after-definition "($|[^A-Za-z0-9_])")
+
 (set-abbrev-language 'python)
 
 (set-abbrevs
