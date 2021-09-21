@@ -12,12 +12,20 @@
   (save-this-buffer-and-others)
   (project-search-for-identifier) )
 
+(defun project-search-for-definition-at-point ()
+  (interactive)
+  (save-this-buffer-and-others)
+  (project-search-for-definition) )
+
 (defun search-this-directory()
   (interactive)
   (run-project-command 'other-window-show-top 'current-dir "search" 'search-string-for-general-search) )
 
 (defun project-search-for-identifier()
-  (run-project-command 'other-window-show-top 'base-dir "search" 'identifier-for-search) )
+  (run-project-command 'other-window-show-top 'base-dir "search" 'search-for-identifier) )
+
+(defun project-search-for-definition()
+  (run-project-command 'other-window-show-top 'base-dir "search" 'search-for-definition) )
 
 (defun project-search-census()
   (interactive)
@@ -37,7 +45,7 @@
   (let ( (project-type (first-element-if-list (project-value :project-type 'default))) )
     (list (get-search-python-script-path) "." "--project-type" (symbol-name project-type) ) ) )
 
-(def-run-project-fun 'command-args-getter 'identifier-for-search
+(def-run-project-fun 'command-args-getter 'search-for-identifier
   (defun get-identifier-for-search-args()
     (let* ( (identifier-at-point (project-identifier-at-point))
             (language-regexes (gethash programming-language *language-search-regexes*))
@@ -50,6 +58,18 @@
                                          (read-from-minibuffer "Search for: ") )) )
                  (list "--value" search-string) ) ) ) )
       (append (get-base-search-args) search-pattern-args) ) ) )
+
+(def-run-project-fun 'command-args-getter 'search-for-definition
+  (defun get-identifier-for-definition-search-args()
+    (let* ( (identifier-for-search (get-identifier-for-search))
+            (language-regexes (gethash programming-language *language-search-regexes*)) )
+      (if (not language-regexes)
+          (error "No language search regexes defined for language %S" % programming-language) )
+      (let ( (search-pattern-args 
+              (list "--before-regex" (gethash :before-definition language-regexes)
+                    "--value" identifier-for-search
+                    "--after-regex" (gethash :after-definition language-regexes) ) ) )
+        (append (get-base-search-args) search-pattern-args) ) ) ) )
 
 (def-run-project-fun 'command-args-getter 'search-census
   (defun get-search-census-args()
