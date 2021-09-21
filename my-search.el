@@ -39,8 +39,17 @@
 
 (def-run-project-fun 'command-args-getter 'identifier-for-search
   (defun get-identifier-for-search-args()
-    (let ( (identifier-for-search (get-identifier-for-search)) )
-      (append (get-base-search-args) (list "--value" identifier-for-search)) ) ) )  ;; TODO - regexes for identifiers
+    (let* ( (identifier-at-point (project-identifier-at-point))
+            (language-regexes (gethash programming-language *language-search-regexes*))
+            (search-pattern-args 
+             (if (and identifier-at-point language-regexes)
+                 (list "--before-regex" (gethash :before-identifier language-regexes)
+                       "--value" identifier-at-point
+                       "--after-regex" (gethash :after-identifier language-regexes) )
+               (let ( (search-string (or identifier-at-point
+                                         (read-from-minibuffer "Search for: ") )) )
+                 (list "--value" search-string) ) ) ) )
+      (append (get-base-search-args) search-pattern-args) ) ) )
 
 (def-run-project-fun 'command-args-getter 'search-census
   (defun get-search-census-args()
@@ -66,3 +75,21 @@
     (copy-file search-spec-template-file-name project-search-spec-file-name)
     (message "Project search spec file %s created" project-search-spec-file-name) ) )
           
+(defvar *language-search-regexes* nil "Table of tables of regexes used for search in each programming language")
+(setq *language-search-regexes* (make-hash-table :test 'eq))
+
+(cl-defun set-language-search-regexes (language &key before-identifier after-identifier before-definition after-definition)
+  (declare (indent defun))
+  (let ( (regex-hash-table (make-hash-table :test 'eq)) )
+    (puthash :before-identifier before-identifier regex-hash-table)
+    (puthash :after-identifier after-identifier regex-hash-table)
+    (puthash :before-definition before-definition regex-hash-table)
+    (puthash :after-definition after-definition regex-hash-table)
+    (puthash language regex-hash-table *language-search-regexes*) ) )
+
+(set-language-search-regexes 'python
+  :before-identifier "(^|[^A-Za-z0-9_])"
+  :after-identifier "($|[^A-Za-z0-9_])"
+  :before-definition"(def|class)\s+"
+  :after-definition "($|[^A-Za-z0-9_])")
+

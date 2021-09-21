@@ -113,6 +113,7 @@
      ([S-C-f11] describe-key)
 
      ([f12]   repeat-complex-command)
+     ([C-f12] search-for-definition-at-point)
      ([M-f12] project-search-for-identifier-at-point)
      ([C-S-f12] project-search-census)
      ) )
