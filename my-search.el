@@ -35,6 +35,10 @@
   (or (project-identifier-at-point)
       (read-from-minibuffer "Search for: ") ) )
 
+(defun get-identifier-for-definition-search()
+  (or (project-identifier-at-point)
+      (read-from-minibuffer "Search for definition of: ") ) )
+
 (defun get-python-regex-for-identifier (identifier)  ;; TODO actually use this somehow
   (format "\\b%s\\b" identifier) )
 
@@ -62,7 +66,7 @@
 
 (def-run-project-fun 'command-args-getter 'search-for-definition
   (defun get-identifier-for-definition-search-args()
-    (let* ( (identifier-for-search (get-identifier-for-search))
+    (let* ( (identifier-for-search (get-identifier-for-definition-search))
             (language-regexes (gethash programming-language *language-search-regexes*)) )
       (if (not language-regexes)
           (error "No language search regexes defined for language %S" % programming-language) )
