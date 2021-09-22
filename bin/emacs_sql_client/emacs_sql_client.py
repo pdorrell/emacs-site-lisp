@@ -98,12 +98,15 @@ class SqlClient(LineScriptable):
             self.output_writer(traceback.format_exc())
         self.output_writer(THICK_LINE)
 
+    def create_autocommit_engine(self, db_url):
+        return create_engine(db_url).execution_options(isolation_level = "AUTOCOMMIT")
+
     def setConnection(self, db_url, driver_class):
         if db_url.startswith("jdbc:"):
             actual_db_url = self.rewrite_jdbc_url(db_url)
         else:
             actual_db_url = db_url
-        self.engine = create_engine(actual_db_url)
+        self.engine = self.create_autocommit_engine(actual_db_url)
         self.output_writer("Connection set to URL: %s, driver = %s" % (db_url, driver_class))
 
     def add_user_and_password(self, db_url, user, password):
@@ -121,8 +124,7 @@ class SqlClient(LineScriptable):
         else:
             actual_db_url = db_url
         actual_db_url = self.add_user_and_password(actual_db_url, user, password)
-        print("actual_db_url = %r" % actual_db_url)
-        self.engine = create_engine(actual_db_url)
+        self.engine = self.create_autocommit_engine(actual_db_url)
         self.output_writer("Connection set to URL: %s, driver = %s, user = %s" % (db_url, driver_class, user))
 
     def executeQuery(self, sql):
