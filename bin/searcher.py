@@ -86,6 +86,11 @@ class PathMatcher:
 
 class AbstractTextSearch:
 
+    value_description = None
+
+    def set_value_description(self, value_description):
+        self.value_description = value_description
+
     def matches_file_path(self, file_path):
         return self.matches_on_text(file_path.name)
 
@@ -106,14 +111,21 @@ class ExactStringSearch(AbstractTextSearch):
     def matches_on_text(self, text):
         return self.value in text
 
+    def full_description(self):
+        return "exact %r" % self.value
 
-class RegexSerch(AbstractTextSearch):
+class RegexSearch(AbstractTextSearch):
     def __init__(self, regex_string):
         self.regex_string = regex_string
         self.regex = re.compile(self.regex_string)
+        self.description = self.regex_string
 
     def matches_on_text(self, file_path):
         return self.regex.search(file_path)
+
+    def full_description(self):
+        return "regex %s" % self.regex_string
+
 
 def stringified_path_list(paths):
     return [str(path) for path in paths]
@@ -124,8 +136,10 @@ class SearchResultsReporter:
         self.max_line_length_to_show = max_line_length_to_show
 
     def report_search_start(self, search, base_dir, description):
-        print("  SEARCH FOR %s in %s, %s" % (search.description, base_dir,
-                                           description))
+        value_description = search.value_description or search.description
+        full_description = " (search = %s )" % search.full_description() if search.value_description else ""
+        print("  SEARCH FOR %s in %s, %s%s" % (value_description, base_dir,
+                                             description, full_description))
         print("")
 
     def report_search_end(self):
@@ -410,6 +424,10 @@ def get_argument_parser():
     group.add_argument('--census', action='store_true')
     group.add_argument('--regex')
     group.add_argument('--value')
+    parser.add_argument('--after-regex')
+    parser.add_argument('--before-regex')
+    parser.add_argument('--value-description')
+
     return parser
 
 def run_search_command(command_line_args):
@@ -424,13 +442,22 @@ def run_search_command(command_line_args):
     if args.census:
         searcher.census()
     else:
+        has_before_or_after_regex = args.before_regex or args.after_regex
+        if has_before_or_after_regex and not args.value:
+            raise Exception("--before-regex & --after-regex are only valid with --value: %r" % command_line_args)
         results_reporter = SearchResultsReporter(max_line_length_to_show=searcher.max_line_length_to_show)
         if args.regex:
             search = RegexSearch(args.regex)
         elif args.value:
-            search = ExactStringSearch(args.value)
+            if has_before_or_after_regex:
+                regex_pattern = (args.before_regex or "") + re.escape(args.value) + (args.after_regex or "")
+                search = RegexSearch(regex_pattern)
+            else:
+                search = ExactStringSearch(args.value)
         else:
             raise Exception("Unexpected args %r, no census, regex or value" % command_line_args)
+        if args.value_description:
+            search.set_value_description(args.value_description)
         searcher.search_on_files(search, results_reporter)
 
 def run_test():
