@@ -47,6 +47,13 @@
   (if (not (buffer-for-name "*Messages*")) (message ""))
   (display-buffer "*Messages*") )
 
+(let ( (non-identifier-char-regex "[' ()]") )
+  (set-language-search-regexes 'lisp
+    :before-identifier (format "(^|%s)" non-identifier-char-regex)
+    :after-identifier (format "($|%s)" non-identifier-char-regex)
+    :before-definition "(def|class)\s+"
+    :after-definition (format "($|%s)" non-identifier-char-regex) ) )
+
 ;;-----------------------------------------------------------------
 (set-abbrev-language 'lisp)
 

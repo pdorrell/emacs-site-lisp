@@ -47,11 +47,12 @@
   (let ( (expression (match-string 0)) )
     (replace-match (concat "print(\"" expression " = %r\" % " expression ")")) ) )
 
-(set-language-search-regexes 'python
-  :before-identifier "(^|[^A-Za-z0-9_])"
-  :after-identifier "($|[^A-Za-z0-9_])"
-  :before-definition"(def|class)\s+"
-  :after-definition "($|[^A-Za-z0-9_])")
+(let ( (non-identifier-char-regex "[^A-Za-z0-9_]") )
+  (set-language-search-regexes 'python
+    :before-identifier (format "(^|%s)" non-identifier-char-regex)
+    :after-identifier (format "($|%s)" non-identifier-char-regex)
+    :before-definition "(def|class)\s+"
+    :after-definition (format "($|%s)" non-identifier-char-regex) ) )
 
 (set-abbrev-language 'python)
 

@@ -53,6 +53,7 @@
              (if (and identifier-at-point language-regexes)
                  (list "--before-regex" (gethash :before-identifier language-regexes)
                        "--value" identifier-at-point
+                       "--value-description" identifier-at-point
                        "--after-regex" (gethash :after-identifier language-regexes) )
                (let ( (search-string (or identifier-at-point
                                          (read-from-minibuffer "Search for: ") )) )
@@ -68,6 +69,7 @@
       (let ( (search-pattern-args 
               (list "--before-regex" (gethash :before-definition language-regexes)
                     "--value" identifier-for-search
+                    "--value-description" (concat "(defn) " identifier-for-search)
                     "--after-regex" (gethash :after-definition language-regexes) ) ) )
         (append (get-base-search-args) search-pattern-args) ) ) ) )
 
