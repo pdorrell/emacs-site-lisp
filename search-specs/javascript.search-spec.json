@@ -1,0 +1,7 @@
+{
+  "included_extensions":  [".css", ".el", ".html", ".js", ".md", ".scss", ".txt"],
+  "excluded_extensions":  [".gif", ".png"],
+  "included_files":  ["**/_"],
+  "excluded_files":  [],
+  "excluded_dirs": ["**/.git"]
+}

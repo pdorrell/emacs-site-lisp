@@ -28,3 +28,6 @@
 
 (set-project-type-default-values 'sass
   '( (:sass-watch-command (other-window base-dir "run-sass-watch" nil ("SASS-WATCH" . nil) )) ) )
+
+(set-project-type-default-values 'javascript
+  '( (:key value) ) )

@@ -81,6 +81,13 @@
   (setq *trim-trailing-whitespace-on-save* t)
   (setq require-final-newline t) )
 
+(let ( (non-identifier-char-regex "[^A-Za-z0-9_]") )
+  (set-language-search-regexes 'javascript
+    :before-identifier (format "(^|%s)" non-identifier-char-regex)
+    :after-identifier (format "($|%s)" non-identifier-char-regex)
+    :before-definition "(function|class|async|const)\s+"
+    :after-definition (format "($|%s)" non-identifier-char-regex) ) )
+
 ;;-----------------------------------------------------------------
 (set-abbrev-language 'javascript)
 
