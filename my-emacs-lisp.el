@@ -51,7 +51,7 @@
   (set-language-search-regexes 'lisp
     :before-identifier (format "(^|%s)" non-identifier-char-regex)
     :after-identifier (format "($|%s)" non-identifier-char-regex)
-    :before-definition "(def|class)\s+"
+    :before-definition "(defun|defvar|setq|cl-defun|defmacro)\s+"
     :after-definition (format "($|%s)" non-identifier-char-regex) ) )
 
 ;;-----------------------------------------------------------------
