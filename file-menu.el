@@ -9,16 +9,17 @@
 
 (defun get-file-menu-file-name (file-name)
   (if (string-ends-with file-name "/")
-      (concat file-name "_")
-    file-name) )
+      (expand-file-name "_" file-name) ) )
 
 (defun open-menu-or-file-at-point()
   (interactive)
   (let* ( (filename-at-point (file-menu-filename-at-point))
-          (file-menu-file-name (get-file-menu-file-name filename-at-point)) )
-    (if (file-exists-p file-menu-file-name)
+          (file-menu-file-name 
+           (if (string-ends-with filename-at-point "/")
+               (expand-file-name "_" filename-at-point) ) ) )
+    (if (and file-menu-file-name (file-exists-p file-menu-file-name))
         (find-file file-menu-file-name)
-      (find-file-from-name filename-at-point) ) ) )
+      (find-file filename-at-point) ) ) )
                                        
 (defun file-menu-mode ()
   (setq major-mode 'file-menu-mode
