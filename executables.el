@@ -7,4 +7,4 @@
 (defvar *git-executable* "git" "Git executable")
 (defvar *gitk-executable* "gitk" "Git executable")
 (defvar *java-executable* "java.exe" "Java executable")
-(defvar *python-executable* "python.exe" "Python executable")
+(defvar *python-executable* "python3" "Python executable")
