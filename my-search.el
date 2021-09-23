@@ -69,7 +69,7 @@
     (let* ( (identifier-for-search (get-identifier-for-definition-search))
             (language-regexes (gethash programming-language *language-search-regexes*)) )
       (if (not language-regexes)
-          (error "No language search regexes defined for language %S" % programming-language) )
+          (error "No language search regexes defined for language %S" programming-language) )
       (let ( (search-pattern-args 
               (list "--before-regex" (gethash :before-definition language-regexes)
                     "--value" identifier-for-search

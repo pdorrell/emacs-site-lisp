@@ -206,7 +206,7 @@ class PathItem:
 class SourceCodeSearcher:
 
     search_spec_params = ['included_extensions', 'excluded_extensions',
-                          'included_files', 'excluded_files', 'excluded_dirs']
+                          'included_files', 'excluded_files', 'excluded_dirs', 'extra_included_dirs']
 
     @classmethod
     def get_searcher(cls, source_dir, project_type, spec_path, verbose=False, include_unexpected=False,
@@ -236,6 +236,7 @@ class SourceCodeSearcher:
     def __init__(self, base_dir, project_type, spec_files, missing_project_spec_file,
                  included_extensions=None, excluded_extensions=None,
                  included_files=None, excluded_files=None, excluded_dirs=None,
+                 extra_included_dirs=None,
                  include_unexpected=False,
                  max_line_length_to_show=None,
                  max_file_size=None):
@@ -253,10 +254,18 @@ class SourceCodeSearcher:
         self.included_files = PathMatcher(included_files)
         self.excluded_files = PathMatcher(excluded_files)
         self.excluded_dirs = PathMatcher(excluded_dirs)
+        self.extra_included_dirs = extra_included_dirs or []
         self.include_unexpected = include_unexpected
         self.max_line_length_to_show = max_line_length_to_show
         self.max_file_size = max_file_size
         self.search_target_description = self.get_search_target_description()
+
+    def get_extra_included_dirs(self):
+        for base_dir_and_sub_dirs in self.extra_included_dirs:
+            base_dir = Path(base_dir_and_sub_dirs["base_dir"])
+            sub_dirs = base_dir_and_sub_dirs["sub_dirs"]
+            for sub_dir in sub_dirs:
+                yield base_dir / sub_dir
 
     def get_search_target_description(self):
         return ("extensions %r (exclude %r), files %r (exclude %r), exclude directories %r" %
@@ -335,7 +344,9 @@ class SourceCodeSearcher:
         results_reporter.report_search_end()
 
     def iterate_for_search(self, yield_excluded=False):
-        return self.iterate_for_search_on_subdir(Path("."), yield_excluded=yield_excluded)
+        yield from self.iterate_for_search_on_subdir(Path("."), yield_excluded=yield_excluded)
+        for extra_included_dir in self.get_extra_included_dirs():
+            yield from self.iterate_for_search_on_subdir(extra_included_dir, yield_excluded=yield_excluded)
 
     def iterate_for_search_on_subdir(self, subdir, yield_excluded):
         """Yield file path, is_dir, is_expected, is_excluded, reason (for inclusion/exclusion)"""

@@ -1,6 +1,6 @@
 {
   "included_extensions":  [".py", ".txt", ".el", ".json", ".sql"],
-  "excluded_extensions":  [".pyc", ".sqlite"],
+  "excluded_extensions":  [".pyc", ".sqlite", ".so"],
   "included_files":  ["Makefile", "**/_"],
   "excluded_files":  [".gitignore"],
   "excluded_dirs": [".git", "**/__pycache__", "_venv"]
