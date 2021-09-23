@@ -25,9 +25,7 @@
 
 (defvar *classpath-separator* ";")
 
-(defvar *my-name* "<Put your name here>" "My name")
-
-(defvar copyright-line (concat "Copyright (C) 2021 " *my-name*))
+(defvar *classpath-separator* ":")
 
 (try-to-load "my-start.el")
 

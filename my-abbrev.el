@@ -95,9 +95,6 @@
 (def-abbrev-fun thick-comment-line ()
   (thick-comment-line) )
 
-(def-abbrev-fun copyright ()
-  (insert (concat comment-start copyright-line comment-end "\n") ) )
-
 (def-abbrev-fun file (name &optional default-value)
   (if (file-exists-p name)
       (forward-char (second (insert-file-contents name)))

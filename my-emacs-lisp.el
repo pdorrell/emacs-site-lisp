@@ -64,7 +64,7 @@
    ("i" "(interactive)")
    ("l" "(local-set-key ")
    ("cldb" "cl-destructuring-bind ")
-   ("copy" (concat ";; " copyright-line)) ) )
+   ) )
 
 (defvar emacs-customisation-dir nil
   "File to visit in order to alter your own emacs customisations")
