@@ -180,9 +180,6 @@
 (defun get-java-javadoc-path ()
   (get-java-path 'javadoc) )
 
-(defun get-java-classpath ()
-  (separated-values (get-java-path 'classpath) ";") )
-
 (defun get-java-class-names (packages base-name)
   (let ( (class-names nil) )
     (dolist (package packages)
@@ -480,10 +477,6 @@
     (if package
 	(concat package "." class-name)
       class-name) ) )
-
-;<target name="run" depends="classes">
-;  <java fork="yes" classname="${run.class}" dir="${run.dir}" classpath="${run.classpath}" />
-;</target>
 
 (defvar java-run-main-set-run-dir nil "Whether java-run-main should include run.dir")
 

@@ -1,7 +1,5 @@
 ;; Copyright (C) 2008 Philip Dorrell
 
-(defvar emacs-util-classpath "." "Class path for list methods utility")
-
 (defun process-kill-without-query(process)
   (set-process-query-on-exit-flag process nil) )
 

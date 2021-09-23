@@ -23,17 +23,11 @@
 
 (setq mouse-1-click-follows-link nil)
 
-(defvar *classpath-separator* ";")
-
-(defvar *classpath-separator* ":")
-
 (try-to-load "my-start.el")
 
 (setq sql-file "~/test.sql")
 
 (open-base-file-menu)
-
-(setq vc-cvs-stay-local nil)
 
 (setq spell-command "aspell")
 
