@@ -93,11 +93,11 @@ is found at all, the definition file is nil if the project is defined by a sub-d
   (let ( (dir-to-check directory) )
     (while (not (equal dir-to-check "/"))
       (dolist (project-definition-file-name *project-definition-file-names*)
-        (let ( (definition-file (concat dir-to-check project-definition-file-name)) )
+        (let ( (definition-file (expand-file-name project-definition-file-name dir-to-check)) )
              (if (file-exists-p definition-file)
                  (return-value (cons dir-to-check definition-file)) ) ) )
       (dolist (project-marker-subdirectory *project-marker-subdirectories*)
-        (let ( (sub-directory (concat dir-to-check project-marker-subdirectory)) )
+        (let ( (sub-directory (expand-file-name project-marker-subdirectory dir-to-check)) )
           (if (file-exists-p sub-directory)
               (return-value (cons dir-to-check nil)) ) ) )
       (setq dir-to-check (file-name-directory (directory-file-name dir-to-check))) ) )
@@ -180,7 +180,7 @@ is found at all, the definition file is nil if the project is defined by a sub-d
   (let* ( (existing-project-directory (get-current-project-base-directory))
           (project-dir (read-directory-name "No project file found, create new one in directory: " 
                                             existing-project-directory) ) )
-    (find-file (concat project-dir (car *project-definition-file-names*)))
+    (find-file (expand-file-name (car *project-definition-file-names*) project-dir))
     (insert ";; Project values\n\n(load-this-project\n `( (:project-type default)\n     (:key \"value\") ) )\n") ) )
 
 (make-variable-buffer-local 'run-file-function) ;; TODO - not project specific ?

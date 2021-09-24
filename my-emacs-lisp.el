@@ -72,4 +72,4 @@
 (defun edit-emacs-customisation()
   "Edit emacs-customisation"
   (interactive)
-  (find-file (concat emacs-customisation-dir "/" file-menu-file-name)) )
+  (find-file (expand-file-name file-menu-file-name emacs-customisation-dir)) )

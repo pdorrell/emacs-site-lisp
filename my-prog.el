@@ -6,16 +6,10 @@
 (defvar rake-file "rakefile")
 (defvar *current-output-buffer* nil "Last buffer which for the output of running or compiling something")
 
-(message (file-exists-p (concat default-directory "rakefile")))
-
-(list default-directory)
-
-(file-name-directory (substring default-directory 0 -1))
-
 (defun find-parent-directory-with-file (dir filename)
   (let ( (parent dir) (found nil) (finished nil))
     (while (and (not found) (not finished))
-      (if (file-exists-p (concat parent filename))
+      (if (file-exists-p (expand-file-name filename parent))
 	  (setq found t)
 	(let ( (newparent (file-name-directory (substring parent 0 -1))) )
 	  (setq finished (equal newparent parent))

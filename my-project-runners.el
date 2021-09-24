@@ -16,13 +16,13 @@
   (let ( (project-name (project-value :project-name)) )
     (or project-name (get-project-name-from-base-dir)) ) )
 
-(setq *default-executable-load-path* (concat emacs-customisation-dir "/bin/"))
+(setq *default-executable-load-path* (expand-file-name "bin" emacs-customisation-dir))
 
 (setq *run-command-in-directory-script* 
-      (concat *default-executable-load-path* "run-command-in-directory"))
+      (expand-file-name "run-command-in-directory" *default-executable-load-path*) )
 
 (defun get-project-executable-load-path()
-    (list (concat (get-current-project-base-directory) "_project/bin/")
+    (list (expand-file-name "_project/bin" (get-current-project-base-directory))
           *default-executable-load-path*) )
 
 (defun file-if-it-exists (file-path)
@@ -32,7 +32,7 @@
 (defun get-project-executable (executable-name)
   (let* ( (load-path (get-project-executable-load-path))
           (executable-path (cl-some 
-                            (lambda (path) (file-if-it-exists (concat path executable-name)))
+                            (lambda (path) (file-if-it-exists (expand-file-name executable-name path)))
                             load-path) ) )
     (if (not executable-path)
         (error "Executable %S not found on load path %S" executable-name load-path) )

@@ -93,7 +93,7 @@
           (project-search-spec-directory (expand-file-name "_project/search" project-base-directory))
           (project-search-spec-file-name (expand-file-name project-type-search-spec-file-name 
                                                            project-search-spec-directory))
-          (search-spec-template-file-name (expand-file-name (concat "search-specs/empty-template.search-spec.json")
+          (search-spec-template-file-name (expand-file-name "search-specs/empty-template.search-spec.json"
                                                             emacs-customisation-dir) ) )
     (if (file-exists-p project-search-spec-file-name)
         (error "File %S already exists" project-search-spec-file-name) )

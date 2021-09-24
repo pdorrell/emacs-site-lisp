@@ -10,7 +10,7 @@
 
 (setq-default indent-tabs-mode nil)
 
-(setq package-user-dir (concat emacs-customisation-dir "/elpa"))
+(setq package-user-dir (expand-file-name "elpa" emacs-customisation-dir))
 
 (setenv "EMACS_SITE_LISP_DIR" (expand-file-name emacs-customisation-dir))
 
