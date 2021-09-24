@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "FETCHING ..."
+git fetch --all
+echo "VIEWING ..."
+gitk --all

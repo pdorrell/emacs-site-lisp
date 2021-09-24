@@ -105,6 +105,7 @@
      ([S-M-f9] project-run-project)
 
      ([C-f10]   set-dual-frames)
+     ([C-S-f10] git-fetch-and-view)
      ([C-M-f10] comment-region)
      ([S-M-f10] gitk-this-directory)
 

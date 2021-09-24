@@ -77,6 +77,12 @@
   (interactive)
   (set-process-query-on-exit-flag (start-process "gitk" nil *gitk-executable* "--all") nil) )
 
+(defun git-fetch-and-view()
+  (interactive)
+  (let ( (git-fetch-and-view-script (expand-file-name "bin/git-fetch-and-view" emacs-customisation-dir)) )
+    (script-to-other-window git-fetch-and-view-script (get-current-project-base-directory)
+                            "git-fetch-and-view" '()) ) )
+
 (defun run-alternate-command()
   "Compile this file"
   (interactive)
