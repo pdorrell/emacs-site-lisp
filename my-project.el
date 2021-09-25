@@ -222,3 +222,14 @@ is found at all, the definition file is nil if the project is defined by a sub-d
 (defun build-project-with-target (target) ;; 'make' with target
   (interactive "starget: ")
   (apply (project-value :build-function) (list target)) )
+
+(defun project-buffers-menu()
+  "Display buffers with a default-directory contained within project-base-dir"
+  (interactive)
+  (let ( (project-base-directory (get-current-project-base-directory)) )
+    (ibuffer-list-buffers)
+    (switch-to-buffer "*Ibuffer*")
+    (ibuffer-filter-disable)
+    (ibuffer-filter-by-predicate
+     `(equal (get-current-project-base-directory) ,project-base-directory) ) ) )
+

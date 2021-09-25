@@ -5,7 +5,8 @@
     (message "Set %S %S keyboard shortcuts" (length shortcuts) label) )
 
 (set-keyboard-shortcuts 'alphabetic-key
-  '( ([?\M-B] buffer-menu)
+  '( ([?\C-B] project-buffers-menu)
+     ([?\M-B] buffer-menu)
      ([?\M-C] clear-buffer)
      
      ([?\M-d]    delete-word-at-point)
