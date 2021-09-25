@@ -55,13 +55,13 @@
             (language-regexes (gethash programming-language *language-search-regexes*))
             (search-pattern-args 
              (if (and identifier-at-point language-regexes)
-                 (list "--before-regex" (gethash :before-identifier language-regexes)
-                       "--value" identifier-at-point
-                       "--value-description" identifier-at-point
-                       "--after-regex" (gethash :after-identifier language-regexes) )
+                 (list (concat "--before-regex=" (gethash :before-identifier language-regexes))
+                       (concat "--value=" identifier-at-point)
+                       (concat "--value-description=" identifier-at-point)
+                       (concat "--after-regex=" (gethash :after-identifier language-regexes)) )
                (let ( (search-string (or identifier-at-point
                                          (read-from-minibuffer "Search for: ") )) )
-                 (list "--value" search-string) ) ) ) )
+                 (list (concat "--value=" search-string)) ) ) ) )
       (append (get-base-search-args) search-pattern-args) ) ) )
 
 (def-run-project-fun 'command-args-getter 'search-for-definition
