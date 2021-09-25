@@ -84,7 +84,8 @@
     out-line) )
 
 (defun first-non-space-pos-in-line (line)
-  "Get position of first non-space character in LINE"
+  "Get position of either the first non-space character in LINE, or
+  if there is none, the end of the line"
   (let ( (start 0) (len (length line)) )
     (while (and (< start len) (= (aref line start) ? ))
       (setq start (1+ start)))
@@ -92,36 +93,53 @@
 
 (run-test-check-expected-result (first-non-space-pos-in-line "   jim") 3)
 
-(defun file-menu-read-treed-name ()
-  (save-excursion
-    (file-menu-read-treed-name2 (current-column)) ) )
+;; 'Treed' file-menu format:
+;;
+;; level1/
+;;   | level2a/
+;;   | level2b/
+;;     | level3c  level3d
+;;
+;; 'level3d' reads as level1/level2b/level3d
 
-(defun file-menu-read-treed-name2 (column)
+(defun file-menu-read-treed-name ()
+  "Read a 'treed' file name from a file menu at current point"
+  (save-excursion
+    (file-menu-read-treed-name-at-column (current-column)) ) )
+
+(defun file-menu-read-treed-name-at-column (column)
+  "Read a 'treed' file name from a file menu at position COLUMN in the current buffer line,
+  navigating within the buffer as necessary to find the ancestor names in the tree."
   (let* ( (line (tabs-to-spaces (buffer-line (point))))
 	  (word (word-at-pos-in-line line column)) )
     (if word
 	(let ( (line-start (first-non-space-pos-in-line line)) )
+          ;; if the start of the line is "|", treat that as the pointer to 
+          ;; a word on a previous line, and read the current word as being
+          ;; added to the end of the "treed" name read from that earlier word
 	  (if (and (< line-start (length line)) (= ?| (aref line line-start)))
-	      (if (find-line-with-word-at line-start)
-		  (let ( (dir (file-menu-read-treed-name2 line-start)))
-		    (if (string-ends-with dir "_")
+	      (if (find-a-previous-line-that-has-word-at line-start)
+		  (let ( (dir (file-menu-read-treed-name-at-column line-start)))
+		    (if (string-ends-with dir "_") ;; ignore a '_' at end of parent
 			(setq dir (substring dir 0 (1- (length dir)))))
 		    (concat dir word) )
 		word)
 	    word) ) ) ) )
 
-(defun find-line-with-word-at (pos)
-  (block loop
-    (while t
-      (beginning-of-line)
-      (if (= (point) (point-min))
-	  (return-from loop nil) )
-      (forward-line -1)
-      (let ( (line (tabs-to-spaces (buffer-line (point)))) )
-	(if (and (< pos (length line)) (not (= ?  (aref line pos))) (not (= ?| (aref line pos))))
-	    (return-from loop t) ) ) ) ) )
+(defun-getting-value find-a-previous-line-that-has-word-at (pos)
+  "In the current buffer, navigate to a previous line where there is a word (ie not '|' or ' ') at POS.
+   Navigate to earlier lines in the buffer as required to find if there is. Return t if we found the line."
+  (while t
+    (beginning-of-line)
+    (if (= (point) (point-min))
+	(return-value nil) )
+    (forward-line -1)
+    (let ( (line (tabs-to-spaces (buffer-line (point)))) )
+      (if (and (< pos (length line)) (not (= ?  (aref line pos))) (not (= ?| (aref line pos))))
+	  (return-value t) ) ) ) )
 
 (defun file-menu-filename-at-point ()
+  "Retrieve file name at point in a file menu, but if there is a saved-mouse-selection, return that instead."
   (if saved-mouse-selection
       (get-saved-mouse-selection)
     (let ( (file-name (file-menu-read-treed-name)) )
