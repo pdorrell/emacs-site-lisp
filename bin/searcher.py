@@ -117,11 +117,11 @@ class ExactStringSearch(AbstractTextSearch):
 class RegexSearch(AbstractTextSearch):
     def __init__(self, regex_string):
         self.regex_string = regex_string
-        self.regex = re.compile(self.regex_string)
+        self.regex = re.compile(self.regex_string, re.MULTILINE)
         self.description = self.regex_string
 
-    def matches_on_text(self, file_path):
-        return self.regex.search(file_path)
+    def matches_on_text(self, text):
+        return self.regex.search(text)
 
     def full_description(self):
         return "regex %s" % self.regex_string
