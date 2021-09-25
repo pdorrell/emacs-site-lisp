@@ -7,6 +7,7 @@
       (put 'my-abbrevs-by-language language (make-hash-table :test 'equal)) ) )
 
 (defun get-abbrevs-for-language(language)
+  "Get the hashtable of abbreviations for LANGUAGE"
   (let ( (language-abbrevs (get 'my-abbrevs-by-language language)) )
     (if language-abbrevs
         language-abbrevs
@@ -24,12 +25,15 @@
       (cl-destructuring-bind (abbrev expansion) abbrev-expansion
         (puthash abbrev expansion language-abbrevs) ) ) ) )
 
+(defvar abbrev-word-table nil 
+  "The alphabet table used to identify an abbreviation just before the current point")
 (make-variable-buffer-local 'abbrev-word-table)
 
 (setq-default abbrev-word-table (make-alpha-table
 				 "abcdefghijklmnopqrstuvwxyz") )
 
 (defun get-abbrev-before()
+  "Get the abbreviation before the current point, ie (usually) what the user has just typed"
    (let ((start (1- (point))) (end (point)) )
     (while (buffer-char-in-table abbrev-word-table start)
       (setq start (1- start)) )
@@ -39,7 +43,8 @@
       nil) ) )
 
 (defun my-expand-abbrev ()
-  "Expand abbreviation defined using get-abbrev and programming-language"
+  "Expand abbreviation defined using get-abbrev and programming-language. 
+   An abbreviation may map to a list of instructions, or if may map simply to a longer string"
   (interactive)
   (let ( (abbrev (get-abbrev-before)) expansion)
     (if abbrev
@@ -57,6 +62,10 @@
       (message "No abbreviation before point") ) ) )
 
 (defun complex-expand (expansion)
+  "Expand an abbreviation that maps to a list of instructions to be executed. 
+   Each instruction can be a string to be inserved, and function to be called,
+   or a function to be called with some arguments. Functions are represented by
+   symbols that are properties of the symbol 'abbrev-fun"
   (let ( (mark (point)) )
     (dolist (item expansion)
       (if (stringp item)
