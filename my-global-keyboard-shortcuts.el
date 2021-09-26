@@ -64,6 +64,8 @@
 (set-keyboard-shortcuts 'punctuation-key
   '( ([?\M--] other-window)
      ([?\C-+] toggle-large-frame-font)
+     ([?\C-'] start-single-quoted-string)
+     ([?\C-\"] start-double-quoted-string)
      ) )
 
 (set-keyboard-shortcuts 'multi-key

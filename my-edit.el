@@ -2,12 +2,25 @@
 
 ;-----------------------------------------------------------------
 (defun return-and-indent ()
-  "Insert new line and indent"
+  "Insert new line and indent."
   (interactive)
   (newline)
   (indent-for-tab-command) )
 
+(defun start-single-quoted-string()
+  "Insert two single quotes with point inside them."
+  (interactive)
+  (insert "''")
+  (backward-char 1) )
+
+(defun start-double-quoted-string()
+  "Insert two double quotes with point inside them."
+  (interactive)
+  (insert "\"\"")
+  (backward-char 1) )
+
 (defun insert-space-if-not-there()
+  "Insert a space character if it isn't already there"
   (let* ( (point (point))
           (prev-char (char-after (- point 1))) )
     (if (not (= prev-char 32))
@@ -15,12 +28,15 @@
 
 ;-----------------------------------------------------------------
 (defun text-hook ()
-  (local-unset-key [?\M-S]) )
+  "Hook function for text mode"
+  (local-unset-key [?\M-S])  ;; remove M-S defn for text mode to unmask global M-S (start-killable-shell)
+  )
 
 (setq text-mode-hook '(text-hook))
 
 ;;-----------------------------------------------------------------
 (defun describe-function-at-pos ()
+  "Describe function with name at point, otherwise call normal describe-function (which prompts for function name)"
   (interactive)
   (let ( (word (word-at emacs-lisp-word-alpha-table (point))) )
     (if word
@@ -28,6 +44,7 @@
       (call-interactively 'describe-function) ) ) )
 
 (defun describe-variable-at-pos ()
+  "Describe variable with name at point, otherwise call normal describe-variable (which prompts for variable name)"
   (interactive)
   (let ( (word (word-at emacs-lisp-word-alpha-table (point))) )
     (if word
@@ -44,7 +61,7 @@
 
 ;;-----------------------------------------------------------------
 (defun clear-buffer ()
-  "Clear buffer not visiting file."
+  "Clear the buffer as long as the buffer is not visiting file."
   (interactive)
   (if (buffer-file-name)
       (message "Cannot clear a buffer visiting a file")
@@ -55,6 +72,7 @@
 
 ;;-----------------------------------------------------------------
 (defun revert-if-saved()
+  "Revert the buffer to the file on disk, but only if there are no unsaved changes."
   (interactive)
   (if (buffer-modified-p)
       (message "Buffer has been modified, save it first")
@@ -63,6 +81,7 @@
       (message "Buffer reloaded from current file contents.") ) ) )
 
 (defun shift-initial-case ()
+  "Toggle the case of the first character in the word at point."
   (interactive)
   (let* ( (pos (point))
           (word (word-before java-word-table pos))
@@ -84,6 +103,7 @@
 ;; For emacs 24, re-instate auto-copy when selecting region with mouse
 (setq mouse-drag-copy-region t)
 
+;; Show 'region' selected by mouse as black text on yellow background.
 (set-face-attribute 'region nil :background "#ffff00" :foreground "#000")
 
 ;;-----------------------------------------------------------------
@@ -104,19 +124,20 @@
 	(progn (insert-space-if-not-there) (insert "= ") ) ) ) ) )
 
 (defun insert-equals ()
+  "Insert '-', without doing anything else fancy."
   (interactive)
   (insert "=") )
 
 (defun insert-spaced-comma ()
-  "Insert , with space after"
+  "Insert ',' with space after"
   (interactive)
   (if (looking-at " ")
       (insert ",")
     (insert ", ") ) )
 
-(setq delete-trailing-lines t)
-
 (defun trim-trailing-whitespace-in-buffer()
+  "If *trim-trailing-whitespace-on-save* is set for the buffer, delete all trailing whitespace
+   (ie from ends of lines or end of file)"
   (when *trim-trailing-whitespace-on-save*
     (message "trim-trailing-whitespace-in-buffer ...")
     (delete-trailing-whitespace (point-min) nil) ) )
