@@ -3,13 +3,6 @@
 (defvar saved-completing-buffer nil "Global variable to hold pointer to buffer being completed")
 (defvar saved-completion-insertion-function nil "Global variable to hold pointer to insertion function for completion")
 
-(defun show-completion-buffer (name startup-command input-line insertion-function)
-  (setq saved-completing-buffer (current-buffer))
-  (setq saved-completion-insertion-function insertion-function)
-  (switch-to-buffer name)
-  (let ( (process (run-process-with-line name startup-command input-line t)) )
-    (line-completion-mode)
-    (setq completion-process process) ) )
 
 (defun show-completion-buffer-with-string (name string insertion-function)
   (setq saved-completing-buffer (current-buffer))
