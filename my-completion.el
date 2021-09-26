@@ -13,8 +13,6 @@
   (insert string)
   (line-completion-mode) )
 
-(setq line-completion-first-line-regexp 
-      (make-regexp '(seq start (at-least-once (not-set " \t")))) )
 
 (defvar line-completion-mode-map nil)
 (if line-completion-mode-map

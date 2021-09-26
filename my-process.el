@@ -36,10 +36,17 @@
       (process-send-string process (concat input-line "\n")) )
     process) )
 
-(defun goto-first-line ()
+(defconst line-starting-with-non-whitespace-regex 
+  (make-regexp '(seq start (at-least-once (not-set " \t"))))
+  "A regex matching start of a line that begins with a non-whitespace character")
+
+(defun goto-first-unindented-line ()
+  "Go to first line that doesn't start with white space (the assumption is that non-actionable 
+   header lines start with whitespace and you want to sit on the first actionable output line)"
   (goto-char (point-min))
-  (search-forward-regexp line-completion-first-line-regexp nil t)
-  (beginning-of-line) )
+  (if (search-forward-regexp line-starting-with-non-whitespace-regex nil t)
+      (progn (beginning-of-line) t)
+    nil) )
 
 (defun do-not-move-point-process-filter (process string)
   (save-excursion
@@ -55,8 +62,8 @@
 	         (buffer (process-buffer process)) )
             (when buffer
               (insert string)
-              (goto-first-line)
-              (setq first-time nil) )
+              (if (goto-first-unindented-line)
+                  (setq first-time nil) ) )
             (set-buffer old-buffer) )
         (do-not-move-point-process-filter process string) ) ) ) )
 
