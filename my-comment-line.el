@@ -2,7 +2,7 @@
 
 ;;========================================================================
 (defun thin-comment-line ()
-  "Insert thin-comment"
+  "Insert thin comment line"
   (interactive)
   (beginning-of-line)
   (if comment-start (insert comment-start))
@@ -11,7 +11,7 @@
   (newline) )
 
 (defun thick-comment-line ()
-  "Insert thin-comment"
+  "Insert thick comment line"
   (interactive)
   (beginning-of-line)
   (if comment-start (insert comment-start))
@@ -20,7 +20,7 @@
   (newline) )
 
 (defun find-thick-comment-line-fwd()
-  "Find thick comment line forward"
+  "Find thick comment line going forward"
   (interactive)
   (forward-char)
   (if (search-forward (concat comment-start "=====") nil t)
@@ -31,7 +31,7 @@
 
 ;;-----------------------------------------------------------------
 (defun find-thick-comment-line-bwd()
-  "Find thick comment line backward"
+  "Find thick comment line going backward"
   (interactive)
   (forward-char -1)
   (if (search-backward (concat comment-start "=====") nil t)
@@ -40,7 +40,7 @@
 
 ;;-----------------------------------------------------------------
 (defun find-comment-line-fwd()
-  "Find comment line forward"
+  "Find thick or thin comment line going forward"
   (interactive)
   (forward-char)
   (if (re-search-forward "^......[=-][=-][=-][=-][=-]" nil t)
@@ -51,7 +51,7 @@
 
 ;;-----------------------------------------------------------------
 (defun find-comment-line-bwd()
-  "Find comment line backward"
+  "Find thick or thin comment line going backward"
   (interactive)
   (forward-char -1)
   (if (re-search-backward "^......[=-][=-][=-][=-][=-]" nil t)

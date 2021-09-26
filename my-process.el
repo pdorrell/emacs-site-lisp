@@ -19,12 +19,17 @@
     process) )
  
 (defun run-process-with-line (name startup-command input-line &optional move-to-top)
+  "Start process in current buffer with name NAME that reads input lines if not already started,
+   clear any existing output in the buffer, pass in INPUT-LINE. If MOVE-TO-TOP then move to top of output"
   (let ( (process (start-process-if-not-going name startup-command move-to-top)) )
     (clear-buffer)
     (process-send-string process (concat input-line "\n"))
     process) )
 
 (defun run-process-with-lines (name startup-command input-lines &optional move-to-top clear-buffer)
+  "Start process in current buffer with name NAME that reads input lines if not already started,
+   pass in INPUT-LINES. If MOVE-TO-TOP then move to top of output. If CLEAR-BUFFER then clear
+   any existing output in the buffer."
   (let ( (process (start-process-if-not-going name startup-command move-to-top)) )
     (if clear-buffer (clear-buffer))
     (dolist (input-line input-lines)

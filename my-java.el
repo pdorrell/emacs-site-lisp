@@ -8,7 +8,7 @@
 (make-variable-buffer-local 'for-loop-variable-declarer)
 
 (defun make-for-loop ()
-  "Make for loop using preceding variable name"
+  "Make for loop using preceding variable name (used by javascript-mode)"
   (interactive)
   (let ( (var (word-before word-alpha-table (point)))
 	 saved-point)
@@ -24,7 +24,7 @@
       (message "No variable name given for for loop") ) ) )
 
 (defun insert-this-equals ()
-  "Do this.x=x on preceding x"
+  "Do this.x=x on preceding x (used by javascript mode)"
   (interactive)
   (let* ( (var (word-before word-alpha-table (point)))
 	  (member-var var) )

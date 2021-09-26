@@ -75,36 +75,46 @@
 	  (call-abbrev-fun (car item) (cdr item)) ) ) ) ) )
 
 (defun call-abbrev-fun (name args)
+  "Call the named abbreviation function with a list of arguments"
   (let ( (fun (get 'abbrev-fun name)) )
     (if fun
 	(apply fun args)
       (error "Undefined abbreviation function: ~A" name) ) ) )
 
 (defmacro def-abbrev-fun (name args &rest code)
+  "Define the abbreviation function with arguments and code"
   `(put 'abbrev-fun ',name #'(lambda ,args ,@code)) )
 
 (def-abbrev-fun mark ()
+  "Remember current position into variable abbrev-mark"
   (setq abbrev-mark (point)) )
 
 (def-abbrev-fun goto-mark ()
+  "Go to previously remembered position in abbrev-mark"
   (goto-char abbrev-mark) )
 
 (def-abbrev-fun indent ()
+  "Indent this line"
   (indent-for-tab-command) )
 
 (def-abbrev-fun return ()
+  "Start a new line"
   (insert "\n") )
 
 (def-abbrev-fun space-if-not-there ()
+  "Insert space if not already there"
   (insert-space-if-not-there) )
 
 (def-abbrev-fun base-name ()
+  "Get base name of file"
   (insert (file-name-minus-extension (buffer-name))) )
 
 (def-abbrev-fun thick-comment-line ()
+  "Insert a thick comment line"
   (thick-comment-line) )
 
 (def-abbrev-fun file (name &optional default-value)
+  "Insert contents of named file, and option default-value if the named file does not exist"
   (if (file-exists-p name)
       (forward-char (second (insert-file-contents name)))
     (if default-value
@@ -118,6 +128,7 @@
   (insert "package " (java-get-package) ";\n") )
 
 (def-abbrev-fun new-line-before ()
+  "Insert a new line before this line"
   (let ( empty-line )
     (save-excursion
       (beginning-of-line)

@@ -3,8 +3,9 @@
 (defvar saved-completing-buffer nil "Global variable to hold pointer to buffer being completed")
 (defvar saved-completion-insertion-function nil "Global variable to hold pointer to insertion function for completion")
 
-
 (defun show-completion-buffer-with-string (name string insertion-function)
+  "Show completion buffer NAME with content STRING, calling INSERTION-FUNCTION
+   on the line selected by the user"
   (setq saved-completing-buffer (current-buffer))
   (setq saved-completion-insertion-function insertion-function)
   (switch-to-buffer name)
