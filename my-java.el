@@ -427,17 +427,6 @@
 
 (setq java-method-call-regexp (make-regexp '(or "." start)))
 
-(defun java-complete-method-function (string)
-  (let ( (var-start (point)) )
-    (save-excursion
-      (backward-char)
-      (while (looking-at "[A-Za-z0-9_]")
-	(setq var-start (point))
-	(backward-char) ) )
-    (delete-region var-start (point)) )
-  (insert string)
-  (goto-first-parameter-on-line) )
-
 (defun visit-java-source-file-for-class ()
   (interactive)
   (let ( class-name source-file-name )
