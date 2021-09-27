@@ -90,13 +90,13 @@
      ([C-f6] start-or-end-kbd-macro)
      ([S-f6] call-last-kbd-macro)
 
-     ([f7]     open-base-file-menu)
+     ([f7]     open-home-file-menu)
      ([C-f7]   edit-emacs-customisation)
      ([C-M-f7] open-project-file-menu)
      ([C-S-f7] visit-sql-file)
      ([M-f7]   open-file-menu)
      ([S-f7]   visit-project-file-menu-other-window)
-     ([S-M-f7] open-base-file-menu-other-window)
+     ([S-M-f7] open-home-file-menu-other-window)
 
      ([M-f8] run-alternate-command-on-file-or-dir)
      ([S-f8] stop-on-1st-test-failure-minor-mode)

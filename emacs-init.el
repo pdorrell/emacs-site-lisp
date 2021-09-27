@@ -27,7 +27,7 @@
 
 (setq sql-file "~/test.sql")
 
-(open-base-file-menu)
+(open-home-file-menu)
 
 (setq spell-command "aspell")
 

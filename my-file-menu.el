@@ -2,7 +2,7 @@
 
 ;-----------------------------------------------------------------
 
-(defvar *base-file-menu*
+(defvar *home-file-menu*
   "~/_" "The base file menu")
 
 (defun messaged-find-file (filename)
@@ -10,10 +10,10 @@
   (find-file filename)
   (message "%s" (buffer-file-name)) )
 
-(defun open-base-file-menu ()
+(defun open-home-file-menu ()
   "Open 'home' file menu"
   (interactive)
-  (messaged-find-file *base-file-menu*) )
+  (messaged-find-file *home-file-menu*) )
 
 (defun open-file-menu ()
   "Open file menu"
@@ -26,8 +26,8 @@
   (find-file-other-window file-menu-file-name) 
   (message "%s" (buffer-file-name)) )
 
-(defun open-base-file-menu-other-window ()
+(defun open-home-file-menu-other-window ()
   "Open file file-menu in other window"
   (interactive)
-  (find-file-other-window *base-file-menu*) 
+  (find-file-other-window *home-file-menu*) 
   (message "%s" (buffer-file-name)) )
