@@ -4,25 +4,6 @@
 (setq java-word-table
       (make-alpha-table letters-digits-string "_") )
 
-(make-variable-buffer-local 'word-alpha-table)
-(make-variable-buffer-local 'for-loop-variable-declarer)
-
-(defun make-for-loop ()
-  "Make for loop using preceding variable name (used by javascript-mode)"
-  (interactive)
-  (let ( (var (word-before word-alpha-table (point)))
-	 saved-point)
-    (if var
-	(progn
-	  (delete-backward-char (length var))
-	  (insert "for (" for-loop-variable-declarer " " var "=0; " var "<")
-	  (setq saved-point (point))
-	  (insert "; " var "++) {\n")
-	  (indent-for-tab-command)
-	  (insert "\n}") (indent-for-tab-command)
-	  (goto-char saved-point) )
-      (message "No variable name given for for loop") ) ) )
-
 (defun insert-routine-args ()
   "Insert space, brackets and braces"
   (interactive)
