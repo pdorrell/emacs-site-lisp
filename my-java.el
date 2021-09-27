@@ -23,19 +23,6 @@
 	  (goto-char saved-point) )
       (message "No variable name given for for loop") ) ) )
 
-(defun insert-this-equals ()
-  "Do this.x=x on preceding x (used by javascript mode)"
-  (interactive)
-  (let* ( (var (word-before word-alpha-table (point)))
-	  (member-var var) )
-    (if var
-	(progn
-	  (delete-backward-char (length var))
-	  (insert "this." member-var " = " var ";") )
-      (message "No variable name given") ) ) )
-
-(setq equals-op-table (make-alpha-table "+-=/*&|^%<>!"))
-
 (defun insert-routine-args ()
   "Insert space, brackets and braces"
   (interactive)

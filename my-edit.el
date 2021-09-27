@@ -1,32 +1,6 @@
 ;; Copyright (C) 2000,2001 Philip Dorrell
 
 ;-----------------------------------------------------------------
-(defun return-and-indent ()
-  "Insert new line and indent."
-  (interactive)
-  (newline)
-  (indent-for-tab-command) )
-
-(defun start-single-quoted-string()
-  "Insert two single quotes with point inside them."
-  (interactive)
-  (insert "''")
-  (backward-char 1) )
-
-(defun start-double-quoted-string()
-  "Insert two double quotes with point inside them."
-  (interactive)
-  (insert "\"\"")
-  (backward-char 1) )
-
-(defun insert-space-if-not-there()
-  "Insert a space character if it isn't already there"
-  (let* ( (point (point))
-          (prev-char (char-after (- point 1))) )
-    (if (not (= prev-char 32))
-        (insert " ")) ) )
-
-;-----------------------------------------------------------------
 (defun text-hook ()
   "Hook function for text mode"
   (local-unset-key [?\M-S])  ;; remove M-S defn for text mode to unmask global M-S (start-killable-shell)
@@ -107,34 +81,6 @@
 (set-face-attribute 'region nil :background "#ffff00" :foreground "#000")
 
 ;;-----------------------------------------------------------------
-(defun insert-spaced-equals ()
-  "Insert = with spaced around, unless part of another operator"
-  (interactive)
-  (let* ( (point (point))
-	  (prev-char (char-after (- point 1)))
-	  (prev-prev-char (char-after (- point 2))) )
-    (if (and prev-char (aref equals-op-table prev-char))
-	(progn
-	  (forward-char -1)
-	  (insert-space-if-not-there)
-	  (forward-char 1)
-	  (insert "= ") )
-      (if (and (= prev-prev-char 61) (= prev-char 32))
-	  (progn (delete-backward-char 1) (insert "= "))
-	(progn (insert-space-if-not-there) (insert "= ") ) ) ) ) )
-
-(defun insert-equals ()
-  "Insert '-', without doing anything else fancy."
-  (interactive)
-  (insert "=") )
-
-(defun insert-spaced-comma ()
-  "Insert ',' with space after"
-  (interactive)
-  (if (looking-at " ")
-      (insert ",")
-    (insert ", ") ) )
-
 (defun trim-trailing-whitespace-in-buffer()
   "If *trim-trailing-whitespace-on-save* is set for the buffer, delete all trailing whitespace
    (ie from ends of lines or end of file)"
