@@ -7,9 +7,9 @@
 (setq javascript-dotted-word-table
       (make-alpha-table letters-digits-string "._$") )
 
-(setq sgml-attribute-offset 0)
+(setq sgml-attribute-offset 0) ;; fix for something - used in rjsx-mode
 
-(eval-after-load 'js2-mode '(define-key js2-mode-map [down-mouse-3] nil))
+(eval-after-load 'js2-mode '(define-key js2-mode-map [down-mouse-3] nil)) ;; unmask mouse-3 definition
 
 (defun javascript-identifier-at-point ()
   (word-at word-alpha-table (point)) )
@@ -18,12 +18,14 @@
 (add-hook 'js-mode-hook 'javascript-hook)
 
 (defun javascript-run-file (file &rest args)
+  "Run javascript FILE in node with ARGS (or some other way using :run-javascript-function project value)"
   (let ( (run-javascript-function (project-value :run-javascript-function #'nodejs-run-file)) )
     (apply run-javascript-function (cons file args)) ) )
 
 (defvar *nodejs-process* nil)
 
 (defun nodejs-run-file (file &rest args)
+  "Run javascript FILE in node with ARGS"
   (let ( (filename (windowize-filename (expand-file-name file))) 
 	 (current-directory default-directory) )
     (let ( (javascript-executable (project-file :javascript-executable "/usr/bin/nodejs")) )
@@ -39,6 +41,7 @@
 (defvar *phantomjs-process* nil)
 
 (defun phantomjs-run-file (file &rest args)
+  "Run javascript FILE in PhantomJS with ARGS"
   (let ( (filename (windowize-filename (expand-file-name file))) 
 	 (current-directory default-directory) )
     (let ( (javascript-executable (project-file :javascript-executable "/usr/bin/phantomjs"))
@@ -50,14 +53,15 @@
 			     javascript-executable (list javascript-run-script filename) ) ) ) )
 
 (defun javascript-insert-print-this-inspected ()
-  "Do puts \"x=#{x}\"; on preceding x"
+  "Insert console.debug for (possibly dotted) variable name just inserted"
   (interactive)
   (insert-tranformed-word 
    javascript-dotted-word-table 
-   (lambda (var) (concat "console.log(\"" var " = \" + " var ");"))
+   (lambda (var) (concat "console.debug(\"" var " = \",  " var ");"))
    "dotted name") )
 
 (defun javascript-hook ()
+  "Hook function for javascript-mode"
   (message "javascript-hook")
   (setq programming-language 'javascript)
   (setq js-indent-level 2)
