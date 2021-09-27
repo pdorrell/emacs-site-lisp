@@ -19,7 +19,6 @@
 
 (defun python-mode-hook-function ()
   (setq programming-language 'python)
-  (setq run-file-function #'python-run-file)
   (local-set-key "," 'insert-spaced-comma)
   (local-set-key [f2] 'my-expand-abbrev)
   (local-set-key "=" 'insert-spaced-equals)

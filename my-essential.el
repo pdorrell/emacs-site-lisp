@@ -3,8 +3,11 @@
 (require 'debug)
 (require 'cl-print)
 
+;; Code deemed more 'essential', to be loaded early on in case other code has an error loading.
+
 ;;========================================================================
 (defun toggle-debug ()
+  "Toggle debug-on-error"
   (interactive)
   (setq debug-on-error (not debug-on-error))
   (message "Set debug %s" (if debug-on-error "on" "off")) )

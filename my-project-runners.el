@@ -179,10 +179,15 @@
 (defun project-run-this-file()
   "Run the current file"
   (interactive)
-  (let* ( (run-this-file-command (get-project-command :run-this-file programming-language)) )
-    (if run-this-file-command
-        (apply 'run-project-command run-this-file-command)
-      (message "No project command for %S" (cons :run-this-file programming-language)) ) ) )
+  (if run-file-function
+      (funcall run-file-function (buffer-file-name))
+    (let* ( (run-this-file-command (get-project-command :run-this-file programming-language)) )
+      (if run-this-file-command
+          (apply 'run-project-command run-this-file-command)
+        (if run-file-function
+            (funcall run-file-function (buffer-file-name))
+          (message "No project command for %S and no run-this-file-command value" 
+                   (cons :run-this-file programming-language)) ) ) ) ) )
 
 ;; test/test-project/src/subdir/hello_world.py
 

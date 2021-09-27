@@ -5,7 +5,7 @@
 (defvar run-file-program "/usr/bin/xdg-open")
 
 (defun kill-buffer-y-or-n ()
-  "Kill current buffer"
+  "Kill current buffer, after confirming loss of any unsaved changes."
   (interactive)
   (if (and (buffer-file-name) (buffer-modified-p))
       (progn
@@ -23,19 +23,10 @@
 
 (defun kill-buffer-safely ()
   "Kill buffer if not a running shell (in which case try to exit)
-and not unsaved file"
-  (if (and running-windows-9x (eq major-mode 'shell-mode))
-      (if (get-buffer-process (current-buffer))
-	  (run-command-in-shell "exit")
-	(kill-buffer nil) )
-    (if (and (buffer-file-name) (buffer-modified-p))
-	(message "Buffer has not been saved")
-      (kill-buffer nil) ) ) )
-
-(defun buffer-full-file-or-directory-name()
-  (if (eq major-mode 'dired-mode)
-      (expand-file-name default-directory)
-    (windowize-filename (expand-file-name (buffer-file-name))) ) )
+   and not unsaved file"
+  (if (and (buffer-file-name) (buffer-modified-p))
+      (message "Buffer has not been saved")
+    (kill-buffer nil) ) )
 
 (setq filename-word-table
       (make-alpha-table letters-digits-string
@@ -52,6 +43,7 @@ and not unsaved file"
 ;; that use mouse selection if available can see it (and ignore non-visible marked region).
 
 (defun mouse-selection-visible ()
+  "Is the mouse selection currently visible?"
   (and mark-active
        (eq (overlay-buffer mouse-drag-overlay) (current-buffer)) ) )
 
@@ -74,9 +66,7 @@ processed."
 
 ;;-----------------------------------------------------------------
 
-(setq quoted-filename-regexp (make-regexp '(seq (repeated (set " \t")) "\"" (paren (repeated (not-set "\""))) "\"")))
-
-(defvar filename-at-point-function 'de-cygwined-filename-at-point "Function to get file name at point")
+(defvar filename-at-point-function 'default-filename-at-point "Function to get file name at point")
 
 (make-variable-buffer-local 'filename-at-point-function)
 
@@ -94,42 +84,25 @@ processed."
       (message "No file to edit") ) )
 
 (defun filename-at-point ()
+  "Get filename at point, 1st look for saved-mouse-selection, 2nd if in dired, get the filename,
+   3rd call the filename-at-point-function for the buffer."
   (if saved-mouse-selection
       (get-saved-mouse-selection)
     (if (eq major-mode 'dired-mode)
 	(dired-get-filename)
-      (if (looking-at quoted-filename-regexp)
-	  (buffer-substring (match-beginning 1) (match-end 1))
-	(funcall filename-at-point-function) ) ) ) )
+      (funcall filename-at-point-function) ) ) )
 
 (defun default-filename-at-point()
+  "Default filename-at-point-function value, get a 'word' using filename-word-table"
   (word-at filename-word-table (point)) )
 
-(defun de-cygwined-filename-at-point()
-  (let ( (filename (word-at filename-word-table (point))) )
-    (if (string-starts-with filename "/cygdrive/")
-	(concat (substring filename 10 11) ":" (substring filename 11))
-      filename) ) )
-    
 (defun find-file-at-point ()
   "Find file whose name if any is at point"
   (interactive)
   (let ( (filename (filename-at-point)) )
     (if (or (not filename) (= (length filename) 0))
-	(error "No file name at point") )
-    (find-file-from-name filename) ) )
-
-(defun find-file-from-name(filename)
-    (cond
-     ((string-starts-with filename "****")
-      (browse-url-in-buffer (substring filename 4)) )
-     ((string-starts-with filename "***")
-      (run-test-url (substring filename 3)) )
-     ((string-starts-with filename "**")
-      (run-file (substring filename 2)) )
-     ((string-match "*" filename)
-      (dired filename) )
-     (t (messaged-find-file filename) ) ) )
+	(message "No file name at point")
+      (messaged-find-file filename) ) ) )
 
 (defvar run-test-url-function 'browse-url-in-buffer "Function to run on a test URL")
 
@@ -147,16 +120,15 @@ processed."
   (start-process "chromium-dev" nil "chromium-browser" "--allow-file-access-from-files" "--disable-popup-blocking" url) )
 
 (defun run-file (filename)
+  "Run file using OS 'run file' - treat URL's as a special case."
   (if (or (string-ends-with filename ".html")
 	  (eql (string-match "http\\(s\\|\\):" filename) 0) )
       (browse-in-dev-browser filename)
     (let ( (expanded-file-name (expand-file-name filename)))
       (message "Opening file %s" expanded-file-name)
-      (if (fboundp 'w32-shell-execute)
-	  (w32-shell-execute "open" (windowize-filename expanded-file-name))
-	(let ((process-connection-type nil))
-	  (start-process expanded-file-name nil
-	   run-file-program expanded-file-name ) ) ) ) ) )
+      (let ((process-connection-type nil))
+	(start-process expanded-file-name nil
+	               run-file-program expanded-file-name ) ) ) ) )
 
 (defun edit-this-file-in-external-text-editor ()
   "Edit this file in a (preferred) external text editor (useful for printing)"
@@ -167,17 +139,11 @@ processed."
       (message "No file to edit") ) )
 
 (defun windowize-filename (filename)
-  "Convert forward slashes to back slashes if necessary"
-  (if running-windows
-      (let* ( (new-name (copy-seq filename))
-	      (len (length new-name)) ch)
-	(dotimes (i len)
-	  (if (= (aref new-name i) ?/)
-	      (aset new-name i ?\\) ) )
-	new-name)
-    filename) )
+  "Do nothing"
+  filename)
 
 (defun execute-this-file ()
+  "Run the file being edited."
   (interactive)
   (let ( (file-name (buffer-file-name)) )
     (if file-name
@@ -197,7 +163,7 @@ processed."
   (run-file (filename-at-point)) )
 
 (defun paste-filename (event)
-  "paste word"
+  "paste word that is a filename"
   (interactive "e")
   (let ( (word (word-clicked-on event filename-word-table)) )
     (if word
@@ -219,6 +185,7 @@ processed."
 ;;-----------------------------------------------------------------
 
 (defun dired-hook ()
+  "Unset various local keys that mask preferred global keys"
   (local-unset-key [?\M-\C-d])
   (local-unset-key [?\M-\C-N])
   (local-set-key "r" 'wdired-change-to-wdired-mode)

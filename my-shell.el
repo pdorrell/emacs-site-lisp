@@ -4,15 +4,8 @@
   "Start a shell that can be killed no questions asked (unless win9x)"
   (interactive)
   (shell)
-  (if (not running-windows-9x)
-      (process-kill-without-query 
-       (get-buffer-process (current-buffer)) ) ) )
-
-(defun run-command-in-shell (command)
-  "Run command in shell"
-  (end-of-buffer)
-  (insert command)
-  (comint-send-input) )
+  (process-kill-without-query 
+   (get-buffer-process (current-buffer)) ) )
 
 (defun put-command-in-shell (command)
   "Put command in shell ready to be sent"
@@ -40,32 +33,9 @@
       (progn
 	(substring filename 0 colon-pos) ) ) ) )
 
-(defun show-shell-this-dir ()
-  "Bring up shell and set to this directory"
-  (interactive)
-  (let ( (new-dir (windowize-filename default-directory)) (save-dir default-directory))
-    (start-killable-shell)
-    (if running-windows
-	(let ( (drive (get-filename-drive new-dir)) )
-	  (if drive
-	      (run-command-in-shell (concat drive ":")) )
-	  (run-command-in-shell (concat "cd \"" new-dir "\"")) )
-      (run-command-in-shell (concat "cd " new-dir)) ) )
-    (setq default-directory save-dir) )
-
-
-(defun show-file-and-shell-this-dir ()
-  "Find file at point and bring up shell and set to same directory"
-  (interactive)
-  (find-file-at-point)
-  (show-shell-this-dir) )
-
 (setq shell-mode-hook '(shell-hook))
 
-(setq *shell-dirtrack-regexp*
-      (if running-windows
-	  (make-regexp '(seq start (paren (set "a-zA-Z") ":" (repeated any)) ">"))
-	 "\\(?:\\[[^]]*\\] \\)*\\(.+\\)> $") )
+(defconst *shell-dirtrack-regexp* "\\(?:\\[[^]]*\\] \\)*\\(.+\\)> $" "regex used for dirtrack-list & shell-dirtrack-mode")
 
 (setq shell-filter-regexp
       (make-regexp '(seq (set "a-zA-Z") ":" (repeated (set "-a-zA-Z0-9_.\\")) ">" )

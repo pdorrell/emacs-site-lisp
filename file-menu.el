@@ -16,13 +16,15 @@
   "Open file name at point, with special case - if it's a directory ending in '/',
    open the file menu in that directory, if it exists"
   (interactive)
-  (let* ( (filename-at-point (file-menu-filename-at-point))
-          (file-menu-file-name 
-           (if (string-ends-with filename-at-point "/")
-               (expand-file-name "_" filename-at-point) ) ) )
-    (if (and file-menu-file-name (file-exists-p file-menu-file-name))
-        (find-file file-menu-file-name)
-      (find-file filename-at-point) ) ) )
+  (let ( (filename-at-point (file-menu-filename-at-point)) )
+    (if filename-at-point
+        (let ( (file-menu-file-name 
+                (if (string-ends-with filename-at-point "/")
+                    (expand-file-name "_" filename-at-point) ) ) )
+          (if (and file-menu-file-name (file-exists-p file-menu-file-name))
+              (find-file file-menu-file-name)
+            (find-file filename-at-point) ) ) )
+    (message "No file name found at point") ) )
                                        
 (defun file-menu-mode ()
   "Mode for file menus, ie text files with file names, written optionally in a hierarchical mode"

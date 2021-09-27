@@ -6,11 +6,12 @@
   "~/_" "The base file menu")
 
 (defun messaged-find-file (filename)
+  "Find FILENAME, and message its name."
   (find-file filename)
   (message "%s" (buffer-file-name)) )
 
 (defun open-base-file-menu ()
-  "Open base file menu"
+  "Open 'home' file menu"
   (interactive)
   (messaged-find-file *base-file-menu*) )
 

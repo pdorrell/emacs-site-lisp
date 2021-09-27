@@ -11,6 +11,7 @@
 			"_-@$%&*=+,<>?") )
 
 (defun emacs-lisp-insert-message-this ()
+  "Expand preceding variable name into emacs lisp debug statement"
   (interactive)
   (insert-tranformed-word 
    emacs-lisp-word-alpha-table 
@@ -18,6 +19,7 @@
   "variable name") )
 
 (defun emacs-lisp-hook()
+  "Hook function to run in emacs-lisp-mode"
   (setq programming-language 'lisp)
   (local-set-key [?\C-m] 'return-and-indent)
   (local-set-key [?\C-\S-p] 'emacs-lisp-insert-message-this)
@@ -31,6 +33,7 @@
   )
 
 (defun buffer-for-name (name)
+  "Get buffer with NAME"
   (block nil
     (let ( (buffers (buffer-list)) )
       (dolist (buffer buffers)
@@ -38,6 +41,7 @@
 	    (return buffer) ) ) ) ) )
 
 (defun messaged (var value)
+  "Log a value to messages as VAR=VALUEand return the same value"
   (message "%s=%s" var value)
   value)
 
@@ -70,6 +74,6 @@
   "File to visit in order to alter your own emacs customisations")
 
 (defun edit-emacs-customisation()
-  "Edit emacs-customisation"
+  "Go to menu file for emacs customisations"
   (interactive)
   (find-file (expand-file-name file-menu-file-name emacs-customisation-dir)) )

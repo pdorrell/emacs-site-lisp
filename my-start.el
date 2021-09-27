@@ -2,10 +2,8 @@
 
 (setq kmacro-call-mouse-event nil) ;; to stop it hijacking S-mouse-3
 
-(setq running-windows-9x (and (fboundp 'w32-using-nt) (not (w32-using-nt))))
-
 (if (boundp 'w32-fixed-font-alist)	
-	(set-frame-font "Consolas-11")
+    (set-frame-font "Consolas-11")
   (set-frame-font "Liberation Mono-13") )
 
 (setq-default indent-tabs-mode nil)
@@ -16,8 +14,6 @@
 
 (require 'package)
 (package-initialize)
-
-(setq running-windows (fboundp 'w32-using-nt))
 
 (setq locale-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
