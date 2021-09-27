@@ -4,6 +4,8 @@
     (apply 'global-set-key shortcut) )
     (message "Set %S %S keyboard shortcuts" (length shortcuts) label) )
 
+;; most occurrences of global-set-key should occur in this file
+
 (set-keyboard-shortcuts 'alphabetic-key
   '( ([?\C-B] project-buffers-menu)
      ([?\M-B] buffer-menu)

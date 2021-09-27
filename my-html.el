@@ -4,25 +4,35 @@
 
 (setq web-mode-markup-indent-offset 2)
 
+;; Note - this abbreviation system is not very compatible with rjsx-mode 
+;; (which has its own dynamic system of tag opening and closing).
+
 (defun def-html-abbrev (abbrev expansion)
+  "Define ABBREV as an abbreviation that expands to EXPANSION for html-mode"
   (put 'html-abbreviation-expansion (intern abbrev) expansion) )
 
 (defun def-html-abbrevs(abbrev-expansions)
+  "Define a sequence of abbreviations where ABBREV-EXPANSIONS is a list of
+  abbrev/expansion pairs, ie argument lists to def-html-abbrev"
   (dolist (abbrev-expansion abbrev-expansions)
     (cl-destructuring-bind (abbrev expansion) abbrev-expansion
       (def-html-abbrev abbrev expansion) ) ) )
 
-(defun def-html-pair-abbrev (abbrev part1 part2)
-  (let ( (expansion (list part1 'mark part2 'goto-mark) ) )
+(defun def-html-pair-abbrev (abbrev before-part after-part)
+  "Define ABBREV to expand to BEFORE-PART before the point and AFTER-PART after the point"
+  (let ( (expansion (list before-part 'mark after-part 'goto-mark) ) )
     (def-html-abbrev abbrev expansion) ) )
 
-(defun def-html-pair-abbrevs(abbrev-part1-part2-s)
-  (dolist (abbrev-part1-part2 abbrev-part1-part2-s)
-    (cl-destructuring-bind (abbrev part1 part2) abbrev-part1-part2
-      (def-html-pair-abbrev abbrev part1 part2) ) ) )
+(defun def-html-pair-abbrevs(abbrev-before-part-after-part-s)
+  "Define a list of abbreviations that expand to before and after parts,
+ie ABBREV-BEFORE-PART-AFTER-PART-S is a list of argument lists to def-html-pair-abbrev "
+  (dolist (abbrev-before-part-after-part abbrev-before-part-after-part-s)
+    (cl-destructuring-bind (abbrev before-part after-part) abbrev-before-part-after-part
+      (def-html-pair-abbrev abbrev before-part after-part) ) ) )
 
 (defun get-html-abbrev-before()
-   (let ((start (1- (point))) (end (point)) )
+  "Get abbreviation for html before point."
+  (let ((start (1- (point))) (end (point)) )
     (while (buffer-char-in-table abbrev-word-table start)
       (setq start (1- start)) )
     (setq start (1+ start))
@@ -31,6 +41,7 @@
       nil) ) )
 
 (defun html-wrap-selection-with-tags (before-tag after-tag)
+  "Wrap selected text with BEFORE-TAG and AFTER-TAG"
   (let ( (start (region-beginning))
 	 (end (region-end)) )
     (if (and start end)
@@ -41,19 +52,22 @@
 	  (insert after-tag)) ) ) )
 
 (defun html-make-bold ()
+  "Wrap selected text in <b> </b> tags"
   (interactive)
   (html-wrap-selection-with-tags "<b>" "</b>") )
 
 (defun html-make-italic ()
+  "Wrap selected text in <i> </i> tags"
   (interactive)
   (html-wrap-selection-with-tags "<i>" "</i>") )
 
 (defun html-make-ahref ()
+  "Turn selected text into a link"
   (interactive)
   (html-wrap-selection-with-tags "<a href=\"\">" "</a>") )
 
 (defun expand-html-abbrev ()
-  "Expand abbreviation defined using set-html-abbrev"
+  "Expand abbreviation before point defined using set-html-abbrev"
   (interactive)
   (let ( (abbrev (get-html-abbrev-before)) expansion)
     (if abbrev
@@ -77,18 +91,20 @@
 	  (insert "<a href=\"" name ".html\">" name "</a>") )
       (message "No word before cursor") ) ) )
 
-(defvar html-mode-keymap (make-sparse-keymap))
+(defconst html-mode-keymap (make-sparse-keymap) "Keymap for html-mode")
 
-(defvar html-abbrev-word-table 
+(defconst html-abbrev-word-table 
   (make-alpha-table "@#abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"))
 
-(defvar html-alpha-table
+(defconst html-alpha-table
   (make-alpha-table "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_") )
 
-(setq xml-filter-regexp
-      (make-regexp '(seq (repeated (set " \t")) "<" (at-least-once (not-set "/>")) ">")) )
+(defconst xml-filter-regexp
+  (make-regexp '(seq (repeated (set " \t")) "<" (at-least-once (not-set "/>")) ">")) 
+  "Default filter for html/xml mode - any line where first non-whitespace is an opening (of self-closing) tag")
 
 (defun web-mode-hook-function ()
+  "Hook function for web-mode"
   (setq indent-tabs-mode nil)
   (use-local-map html-mode-keymap)
   (setq abbrev-word-table html-abbrev-word-table)
@@ -107,7 +123,7 @@
   )
 
 (defun open-file-in-web-browser (file)
-  "Show this file in chosen web-browser as specified by variable *web-browser-executable*"
+  "Show FILE in chosen web-browser as specified by variable *web-browser-executable*"
   (interactive)
   (start-process "*web-browser*" "*web-browser*" 
 		 *web-browser-executable* (concat "file:///" (expand-file-name file)))
