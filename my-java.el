@@ -157,11 +157,11 @@
 (defun dots-to-slashes (dotted-name)
   (replace-char dotted-name ?. ?/) )
 
-(defun class-name-to-url (class-name)
+(defun java-class-name-to-url (class-name)
   (concat (dots-to-slashes class-name) ".html") )
 
 (defun find-javadoc-url (packages base-name)
-  (let ( (url-names (mapcar #'class-name-to-url (get-java-class-names packages base-name)))
+  (let ( (url-names (mapcar #'java-class-name-to-url (get-java-class-names packages base-name)))
 	 (java-javadoc-path (get-java-javadoc-path)) )
     (block loop
       (dolist (dir java-javadoc-path)
@@ -170,11 +170,11 @@
 	    (if (file-exists-p full-url)
 		(return-from loop full-url) ) ) ) ) ) ) )
 
-(defun class-name-to-source-file (class-name)
+(defun java-class-name-to-source-file (class-name)
   (concat (dots-to-slashes class-name) ".java") )
 
 (defun find-java-source-file (packages base-name)
-  (let ( (source-file-names (mapcar #'class-name-to-source-file 
+  (let ( (source-file-names (mapcar #'java-class-name-to-source-file 
 				    (get-java-class-names packages base-name)))
 	 (java-source-path (get-java-source-path)) )
     (block loop
@@ -353,7 +353,7 @@
 (defvar java-extra-class-loading-args nil 
   "Extra args that might be needed to prevent static initializer errors loading Java classes")
 
-(defun get-list-methods-input-line (packages class-name method-start is-static)
+(defun java-get-list-methods-input-line (packages class-name method-start is-static)
   (concat (if is-static "list_static_members#" "list_instance_members#")
 	  (separated-values
 	   (list class-name method-start
@@ -369,11 +369,7 @@
 (setq java-var-and-method-regexp-list
       (list java-var-and-method-regexp 1 2) )
 
-(defun test() 
-  (interactive)
-  (message (format "result=#%S#" (get-var-and-method-before-point))))
-
-(defun get-var-and-method-before-point ()
+(defun java-get-var-and-method-before-point ()
   (let ( (here (point)) method-name method-start var-start var-end var-name)
     (save-excursion
       (setq method-start (point))
@@ -518,4 +514,35 @@
    #'(lambda (path)
        (cons (car path) (prefixed prefix (cdr path))) )
    paths) )
+
+(def-abbrev-fun java-before-package ())
+(def-abbrev-fun java-after-package ())
+
+(def-abbrev-fun java-package ()
+  (insert "package " (java-get-package) ";\n") )
+
+;;--------------------------------------------------------------------------------
+(setq java-exception-line-matcher
+      (list (make-regexp '(seq (maybe "+") (at-least-once (set " \t")) "at " 
+			       (paren (at-least-once (set "a-zA-Z0-9._$<>")))
+			       "(" (paren (at-least-once (set "a-zA-Z0-9_"))) ".java:"
+			       (paren (at-least-once (set "0-9"))) ")"))
+	    1 2 3) )
+
+(defun java-package-from-method-name (method-name)
+  (let ( (package-end (nth-last-pos method-name ?. 2)) )
+    (if package-end
+	(substring method-name 0 package-end)
+      "") ) )
+
+(defun visit-java-exception-line (method-name class-name line-number-string)
+  (let* ( (line-number (string-to-number line-number-string)) 
+	  (package-name (java-package-from-method-name method-name))
+	  (source-file (find-java-source-file (list package-name) class-name)) )
+    (if source-file
+	(progn
+	  (find-file source-file)
+	  (goto-line line-number) )
+      (message "Cannot find java file %s.java in package %s" class-name package-name) ) ) )
+	  
 

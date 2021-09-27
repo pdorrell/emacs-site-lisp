@@ -33,37 +33,13 @@
 (setq node-exception-line-matcher
       (list "[ \t]*at [^(]*(\\([^:]+\\):\\([0-9]+\\)" 1 2) )
 
-(setq java-exception-line-matcher
-      (list (make-regexp '(seq (maybe "+") (at-least-once (set " \t")) "at " 
-			       (paren (at-least-once (set "a-zA-Z0-9._$<>")))
-			       "(" (paren (at-least-once (set "a-zA-Z0-9_"))) ".java:"
-			       (paren (at-least-once (set "0-9"))) ")"))
-	    1 2 3) )
-
-(defun visit-java-exception-line (method-name class-name line-number-string)
-  (let* ( (line-number (string-to-number line-number-string)) 
-	  (package-name (package-from-method-name method-name))
-	  (source-file (find-java-source-file (list package-name) class-name)) )
-    (if source-file
-	(progn
-	  (find-file source-file)
-	  (goto-line line-number) )
-      (message "Cannot find java file %s.java in package %s" class-name package-name) ) ) )
-	  
-
-(defun package-from-method-name (method-name)
-  (let ( (package-end (nth-last-pos method-name ?. 2)) )
-    (if package-end
-	(substring method-name 0 package-end)
-      "") ) )
-
 (defvar file-line-matchers
   '(
 ;;    (visit-grep-n-line electron-exception-line-matcher)
 ;;    (visit-grep-n-line rspec-line-matcher)
     (visit-grep-n-line grep-n-matcher)
     (visit-grep-n-line python-line-matcher)
-    (visit-java-exception-line java-exception-line-matcher)
+;;    (visit-java-exception-line java-exception-line-matcher)
     ) )
 
 (make-variable-buffer-local 'file-line-matchers)

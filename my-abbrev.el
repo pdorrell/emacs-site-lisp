@@ -121,12 +121,6 @@
 	(insert default-value)
       (insert (concat comment-start " No file " name " " comment-end "\n")) ) ) )
 
-(def-abbrev-fun java-before-package ())
-(def-abbrev-fun java-after-package ())
-
-(def-abbrev-fun java-package ()
-  (insert "package " (java-get-package) ";\n") )
-
 (def-abbrev-fun new-line-before ()
   "Insert a new line before this line"
   (let ( empty-line )
