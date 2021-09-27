@@ -41,7 +41,7 @@
   "Toggle the case of the first character in the word at point."
   (interactive)
   (let* ( (pos (point))
-          (word (word-before java-word-table pos))
+          (word (word-before word-alpha-table pos))
           (letter-pos 0) ch)
     (if word
         (progn
