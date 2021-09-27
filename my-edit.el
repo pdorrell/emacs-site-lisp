@@ -9,23 +9,6 @@
 (setq text-mode-hook '(text-hook))
 
 ;;-----------------------------------------------------------------
-(defun describe-function-at-pos ()
-  "Describe function with name at point, otherwise call normal describe-function (which prompts for function name)"
-  (interactive)
-  (let ( (word (word-at emacs-lisp-word-alpha-table (point))) )
-    (if word
-        (describe-function (intern word))
-      (call-interactively 'describe-function) ) ) )
-
-(defun describe-variable-at-pos ()
-  "Describe variable with name at point, otherwise call normal describe-variable (which prompts for variable name)"
-  (interactive)
-  (let ( (word (word-at emacs-lisp-word-alpha-table (point))) )
-    (if word
-        (describe-variable (intern word))
-      (call-interactively 'describe-variable) ) ) )
-
-;;-----------------------------------------------------------------
 (defun start-or-end-kbd-macro ()
   "If defining a keyboard macro, finish it, else start one"
   (interactive)
@@ -100,4 +83,3 @@
   (interactive)
   (setq *large-frame-font* (not *large-frame-font*))
   (set-frame-font (if *large-frame-font* "Liberation Mono-15" "Liberation Mono-13")) )
-

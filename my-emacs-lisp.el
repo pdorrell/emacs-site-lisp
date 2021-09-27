@@ -77,3 +77,20 @@
   "Go to menu file for emacs customisations"
   (interactive)
   (find-file (expand-file-name file-menu-file-name emacs-customisation-dir)) )
+
+;;-----------------------------------------------------------------
+(defun describe-function-at-pos ()
+  "Describe function with name at point, otherwise call normal describe-function (which prompts for function name)"
+  (interactive)
+  (let ( (word (word-at emacs-lisp-word-alpha-table (point))) )
+    (if word
+        (describe-function (intern word))
+      (call-interactively 'describe-function) ) ) )
+
+(defun describe-variable-at-pos ()
+  "Describe variable with name at point, otherwise call normal describe-variable (which prompts for variable name)"
+  (interactive)
+  (let ( (word (word-at emacs-lisp-word-alpha-table (point))) )
+    (if word
+        (describe-variable (intern word))
+      (call-interactively 'describe-variable) ) ) )
