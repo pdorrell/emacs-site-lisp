@@ -1,5 +1,23 @@
 ;; Copyright (C) 2000,2001 Philip Dorrell
 
+(defvar run-my-tests t
+  "When t, run tests")
+
+(defmacro run-test-check-expected-result (expression expected-result-expression)
+  (declare (indent defun))
+  `(if run-my-tests
+       (let ( (test-result ,expression)
+              (expected-result ,expected-result-expression) )
+         (if (equal test-result expected-result)
+             (message "Test passed %S = %S" ',expression ',expected-result-expression)
+           (error "Test failure %S != expected %S" test-result expected-result) ) ) ) )
+
+(defmacro cons-bind (var1 var2 expression &rest statements)
+  "Bind car and cdr of EXPRESSION to VAR1 and VAR2 in STATEMENTS"
+  (declare (indent defun))
+  `(cl-destructuring-bind (,var1 . ,var2) ,expression
+     ,@statements) )
+
 ;  Possibly not useful ...
 (defun apply-to-list-of-arg-lists (fun arg-lists)
   (declare (indent defun))
@@ -57,6 +75,7 @@
     (if (looking-at regexp)
 	(let ( (result nil) )
 	  (setq matchdata (match-data t))
+          (message "matchdata = %S" matchdata)
 	  (dolist (position positions)
 	    (let* ( (startpos (* position 2))
 		    (endpos (1+ startpos)) )
@@ -65,6 +84,42 @@
 				 result)) ) )
 	  (reverse result) ) ) ) )
 
+(defun match-regexp-list-in-string (regexp-list string)
+  "Like match-regexp, but works against strings"
+  (let ( (regexp (concat "^" (car regexp-list)))
+	 (positions (cdr regexp-list)) matchdata)
+    (if (string-match regexp string)
+        (let ( (matchdata (match-data t)) (result nil) )
+          (message "matchdata = %S" matchdata)
+	  (dolist (position positions)
+	    (let* ( (startpos (* position 2))
+		    (endpos (1+ startpos)) )
+	      (setq result (cons (substring string (elt matchdata startpos)
+						   (elt matchdata endpos))
+				 result)) ) )
+	  (reverse result) ) ) ) )
+
+(defun test-regexp-list (regexp-list &rest string-result-pairs)
+  (dolist (string-result string-result-pairs)
+    (cons-bind string result string-result
+      (run-test-check-expected-result
+        (match-regexp-list-in-string regexp-list string)
+        result) ) )
+  (message "test-regexp-list all passed") )
+
+(test-regexp-list
+ '("\\([0-9]+\\)jim\\([a-z]*\\)" 1 2)
+ '("1235jimmy" . ("1235" "my"))
+ '(" 1234jimmy" . nil) )
+
+(run-test-check-expected-result
+ (match-regexp-list-in-string '("\\([0-9]+\\)jim\\([a-z]*\\)" 1 2) "1235jimmy")
+ '("1235" "my"))
+         
+(run-test-check-expected-result
+ (match-regexp-list-in-string '("\\([0-9]+\\)jim\\([a-z]*\\)" 1 2) " 1235jimmy")
+ nil)
+         
 (defun nth-last-pos (string ch n)
   (let* ( (len (length string)) 
 	  (pos (1- len))
@@ -187,34 +242,19 @@
   (if (listp value) (car value) value) )
 
 (defmacro getting-value (&rest statements)
+  "A block of STATEMENTS from which a value is returned using return-value"
   (declare (indent defun))
   `(block 'value ,@statements) )
 
 (defmacro return-value (expression)
+  "Python-style 'return': Return EXPRESSION as a value to a block tagged with 'value, eg using getting-value or defun-getting-value"
   `(cl-return-from 'value ,expression) )
 
 (defmacro defun-getting-value (name args &rest body)
+  "Define function NAME with ARGS and BODY that returns a value using return-value"
   (declare (indent defun))
   `(defun ,name ,args
      (getting-value ,@body) ) )
-
-(defmacro cons-bind (var1 var2 expression &rest statements)
-  "Bind car and cdr of EXPRESSION to VAR1 and VAR2 in STATEMENTS"
-  (declare (indent defun))
-  `(cl-destructuring-bind (,var1 . ,var2) ,expression
-     ,@statements) )
-
-(defvar run-my-tests t
-  "When t, run tests")
-
-(defmacro run-test-check-expected-result (expression expected-result-expression)
-  (declare (indent defun))
-  `(if run-my-tests
-       (let ( (test-result ,expression)
-              (expected-result ,expected-result-expression) )
-         (if (equal test-result expected-result)
-             (message "Test passed %S = %S" ',expression ',expected-result-expression)
-           (error "Test failure %S != expected %S" test-result expected-result) ) ) ) )
 
 (setq *test-files-directory* (expand-file-name "test" emacs-customisation-dir))
 
