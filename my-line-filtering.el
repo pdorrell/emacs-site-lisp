@@ -19,11 +19,13 @@
     (setq filtering-minor-mode (not filtering-minor-mode)) ) )
 
 (defun filter-set-window-start ()
+  "Attempt to place the current line in the buffer in the center of the window."
   (let ( (w (get-buffer-window (current-buffer))) 
          (p (save-excursion (beginning-of-line) (point))) )
     (recenter (- (window-height w) 2)) ) )
 
 (defun filter-on-line-match (line-match-regexp)
+  "Filter lines in the current buffer so that only those matching LINE-MATCH-REGEXP are visible"
   (let ( (buffer-read-only nil) 
          (saved-modified (buffer-modified-p)) )
     (save-excursion
@@ -46,6 +48,7 @@
     (set-buffer-modified-p saved-modified ) ) ) 
 
 (defun filter-on-word-at-point ()
+  "Filter on the current 'word' at point (ie as defined by buffer local variable word-alpha-table)"
   (interactive)
   (let ( (word (word-at word-alpha-table (point))) )
     (if word
@@ -53,6 +56,7 @@
       (call-interactively 'filter-on-word) ) ) )
 
 (defun set-filter-on-line-match (regex)
+  "Set line filter to REGEX with filtering-minor-mode on."
   (message "Setting line filter to %s" regex)
   (let ( (buffer-read-only nil)
          (saved-modified (buffer-modified-p)) )
@@ -63,10 +67,12 @@
     (set-buffer-modified-p saved-modified ) ) )
 
 (defun filter-on-word (word)
+  "Filter on a word to be entered by the user"
   (interactive "sMatch word: ")
   (set-filter-on-line-match (regexp-quote word) ) )
 
 (defun filter-on-indent()
+  "Filter on indents based on indent of the current line, ie show only lines with same or less indentation"
   (interactive)
   (let (indent-string)
     (save-excursion
@@ -83,6 +89,7 @@
 (setq filtering-minor-mode-map (make-sparse-keymap))
 
 (defun previous-visible-line ()
+  "Go to the next visible line going backwards from current line."
   (interactive)
   (let ( (n 1) found)
     (while (not found)
@@ -94,6 +101,7 @@
     (previous-line n) ) )
 
 (defun next-visible-line ()
+  "Go to the next visible line going forwards from current line."
   (interactive)
   (let ( (n 1) found)
     (while (not found)
@@ -105,17 +113,21 @@
     (next-line n) ) )
 
 (defun next-visible-char ()
+  "Go to the first visible character going forwards from current position."
   (interactive)
   (forward-char)
   (while (get-char-property (point) 'invisible)
     (forward-char) ) )
 
 (defun previous-visible-char ()
+  "Go to the first visible character going backwards from current position."
   (interactive)
   (backward-char)
   (while (get-char-property (point) 'invisible)
     (backward-char) ) )
 
+;; Replacement for normal arrow key mappings - because we only want to 
+;; move around the visible characters in the buffer, which the normal ones don't.
 (define-key filtering-minor-mode-map [up] 'previous-visible-line)
 (define-key filtering-minor-mode-map [down] 'next-visible-line)
 (define-key filtering-minor-mode-map [right] 'next-visible-char)
