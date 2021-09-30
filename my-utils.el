@@ -69,28 +69,13 @@
        (any ".")
        (t (symbol-value expr)) ) ) ) )
 
-(defun match-regexp (regexp-list)
-  (let ( (regexp (car regexp-list))
-	 (positions (cdr regexp-list)) matchdata)
-    (if (looking-at regexp)
-	(let ( (result nil) )
-	  (setq matchdata (match-data t))
-          (message "matchdata = %S" matchdata)
-	  (dolist (position positions)
-	    (let* ( (startpos (* position 2))
-		    (endpos (1+ startpos)) )
-	      (setq result (cons (buffer-substring (elt matchdata startpos)
-						   (elt matchdata endpos))
-				 result)) ) )
-	  (reverse result) ) ) ) )
-
 (defun match-regexp-list-in-string (regexp-list string)
-  "Like match-regexp, but works against strings"
-  (let ( (regexp (concat "^" (car regexp-list)))
+  "Match REGEXP-LIST consisting of a regex and then a list of group numbers, 
+  against STRING, return nil if no match, else the list of matched substrings for the group numbers"
+  (let ( (regexp (car regexp-list))
 	 (positions (cdr regexp-list)) matchdata)
     (if (string-match regexp string)
         (let ( (matchdata (match-data t)) (result nil) )
-          (message "matchdata = %S" matchdata)
 	  (dolist (position positions)
 	    (let* ( (startpos (* position 2))
 		    (endpos (1+ startpos)) )
@@ -98,6 +83,11 @@
 						   (elt matchdata endpos))
 				 result)) ) )
 	  (reverse result) ) ) ) )
+
+(defun match-regexp (regexp-list)
+  "Match REGEXP-LIST consisting of a regex and then a list of group numbers, 
+   against current buffer line, return nil if no match, else the list of matched substrings for the group numbers"
+  (match-regexp-list-in-string regexp-list (buffer-line (point))) )
 
 (defun test-regexp-list (regexp-list &rest string-result-pairs)
   (dolist (string-result string-result-pairs)
@@ -108,18 +98,10 @@
   (message "test-regexp-list all passed") )
 
 (test-regexp-list
- '("\\([0-9]+\\)jim\\([a-z]*\\)" 1 2)
+ '("^\\([0-9]+\\)jim\\([a-z]*\\)$" 1 2)
  '("1235jimmy" . ("1235" "my"))
  '(" 1234jimmy" . nil) )
 
-(run-test-check-expected-result
- (match-regexp-list-in-string '("\\([0-9]+\\)jim\\([a-z]*\\)" 1 2) "1235jimmy")
- '("1235" "my"))
-         
-(run-test-check-expected-result
- (match-regexp-list-in-string '("\\([0-9]+\\)jim\\([a-z]*\\)" 1 2) " 1235jimmy")
- nil)
-         
 (defun nth-last-pos (string ch n)
   (let* ( (len (length string)) 
 	  (pos (1- len))
@@ -212,28 +194,18 @@
 	  (setq pos (1- pos)) ) ) )
     file-name) )
 
-(defun char-not-eoln (ch)
-  (and ch (/= ch 10)) )
-
-(defun line-start (pos)
-  "Start of line that pos is in"
-  (let ( (start (1- pos)) )
-    (while (char-not-eoln (char-after start))
-      (setq start (1- start)) )
-    (setq start (1+ start)) 
-    start) )
-
-(defun line-end (pos)
-  "End of line that pos is in"
-  (let ( (end pos) )
-    (while (char-not-eoln (char-after end))
-      (setq end (1+ end)) )
-    end) )
-
 (defun buffer-line (pos)
   "Get contents of line in current buffer at specified position POS"
-  (buffer-substring-no-properties 
-   (line-start pos) (line-end pos) ) )
+  (save-excursion
+    (goto-char pos)
+    (let ( start-pos end-pos)
+      (beginning-of-line)
+      (setq start-pos (point))
+      (end-of-line)
+      (setq end-pos (point))
+      (buffer-substring-no-properties start-pos end-pos) ) ) )
+
+;;(buffer-line (point))
 
 (defun listify-if-not-list (value)
   (if (listp value) value (list value)) )
