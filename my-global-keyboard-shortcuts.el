@@ -121,7 +121,8 @@
      ([f12]   repeat-complex-command)
      ([C-f12] project-search-for-definition-at-point)
      ([M-f12] project-search-for-identifier-at-point)
-     ([C-S-f12] project-search-census)
+     ([S-M-f12] project-search-census)
+     ([C-S-f12] project-search-for-identifier-part-at-point)
      ) )
 
 (set-keyboard-shortcuts 'directional-key

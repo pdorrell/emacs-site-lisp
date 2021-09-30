@@ -17,12 +17,20 @@
   (save-this-buffer-and-others)
   (project-search-for-definition) )
 
+(defun project-search-for-identifier-part-at-point ()
+  (interactive)
+  (save-this-buffer-and-others)
+  (project-search-for-identifier-part) )
+
 (defun search-this-directory()
   (interactive)
   (run-project-command 'other-window-show-top 'current-dir "search" 'search-string-for-general-search) )
 
 (defun project-search-for-identifier()
   (run-project-command 'other-window-show-top 'base-dir "search" 'search-for-identifier) )
+
+(defun project-search-for-identifier-part()
+  (run-project-command 'other-window-show-top 'base-dir "search" 'search-for-identifier-part) )
 
 (defun project-search-for-definition()
   (run-project-command 'other-window-show-top 'base-dir "search" 'search-for-definition) )
@@ -62,6 +70,14 @@
                (let ( (search-string (or identifier-at-point
                                          (read-from-minibuffer "Search for: ") )) )
                  (list (concat "--value=" search-string)) ) ) ) )
+      (append (get-base-search-args) search-pattern-args) ) ) )
+
+(def-run-project-fun 'command-args-getter 'search-for-identifier-part
+  (defun get-identifier-part-for-search-args()
+    (let* ( (search-string 
+             (or (project-identifier-at-point)
+                 (read-from-minibuffer "Search for: ") ) )
+            (search-pattern-args (list (concat "--value=" search-string))) )
       (append (get-base-search-args) search-pattern-args) ) ) )
 
 (def-run-project-fun 'command-args-getter 'search-for-definition
