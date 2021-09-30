@@ -39,6 +39,69 @@
 (defun make-seq-regexp (args)
   (apply #'concat (mapcar #'make-regexp args)) )
 
+;;--------------------------------------------------------------------------------
+(defun make-interpreter (name)
+  (let ( (interpreter (make-hash-table :test 'eq)) )
+    (puthash :name name interpreter)
+    interpreter) )
+
+(defmacro def-interpreter-fun (interpreter name args &rest body)
+  `(puthash ',name
+            (lambda ,args ,@body)
+            ,interpreter) )
+
+(defmacro def-interpreter-value (interpreter name value)
+  `(puthash ',name ,value ,interpreter) )
+
+(defun interpreter-error (interpreter message expression)
+  (error "%s: ERROR %s in expression %S" 
+         (gethash :name interpreter)
+         message expression) )
+
+(defun interpret (interpreter expr)
+  (cond
+   ((null expr)
+    (gethash :nil interpreter nil))
+   ((listp expr)
+    (cons-bind function-name args expr
+      (if (eq function-name 'quote)
+          (if (eq (length args) 1)
+              (first args)
+            (interpreter-error interpreter "quote requires 1 argument" expr) )
+        (let ( (fun (gethash function-name interpreter)) )
+          (if (null fun)
+              (interpreter-error interpreter (format "function %s not defined" function-name) expr) )
+          (apply fun (mapcar (lambda (arg) (interpret interpreter arg)) args)) ) ) ) )
+   ((symbolp expr)
+    (let ( (value (gethash expr interpreter)) )
+      (if (null value)
+          (interpreter-error interpreter "symbol not defined" expr) )
+      value))
+   ((stringp expr)
+    (let ( (string-function (gethash :string interpreter)) )
+      (if string-function
+          (funcall string-function expr)
+        expr) ) )
+   expr) )
+           
+;;--------------------------------------------------------------------------------
+(setq *make-regexp-interpreter* (make-interpreter "make-regexp"))
+
+(def-interpreter-fun *make-regexp-interpreter*
+  group (regex)
+  (concat "\\(" regex "\\)") )
+
+(def-interpreter-fun *make-regexp-interpreter*
+  seq (&rest regexes)
+  (apply 'concat regexes) )
+
+(defun make-regexp-2 (expr)
+  (interpret *make-regexp-interpreter* expr) )
+
+(make-regexp-2 '(group (seq "abc" "[a-z]" '"def")))
+
+;;--------------------------------------------------------------------------------
+
 (defun make-regexp (expr)
   (cond
     ((stringp expr) (regexp-quote expr))
