@@ -103,7 +103,7 @@ is found at all, the definition file is nil if the project is defined by a sub-d
       (setq dir-to-check (file-name-directory (directory-file-name dir-to-check))) ) )
   (return-value (cons nil nil)) )
 
-(run-test-check-expected-result
+(run-test
  (find-project-directory-and-definition-file (test-file "test-project/src/subdir/"))
  (cons (test-file "test-project/") (test-file "test-project/_project.el")) )
 

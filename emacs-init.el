@@ -23,7 +23,10 @@
 
 (setq mouse-1-click-follows-link nil)
 
-(try-to-load "my-start.el")
+(try-to-load "my-testing")
+
+(running-tests "Loading my-start.el"
+               (try-to-load "my-start.el") )
 
 (setq sql-file "~/test.sql")
 

@@ -93,7 +93,7 @@
       (setq start (1+ start)))
     start) )
 
-(run-test-check-expected-result (first-non-space-pos-in-line "   jim") 3)
+(run-test (first-non-space-pos-in-line "   jim") 3)
 
 ;; 'Treed' file-menu format:
 ;;

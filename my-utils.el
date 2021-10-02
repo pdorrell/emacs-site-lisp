@@ -1,17 +1,5 @@
 ;; Copyright (C) 2000,2001 Philip Dorrell
 
-(defvar run-my-tests t
-  "When t, run tests")
-
-(defmacro run-test-check-expected-result (expression expected-result-expression)
-  (declare (indent defun))
-  `(if run-my-tests
-       (let ( (test-result ,expression)
-              (expected-result ,expected-result-expression) )
-         (if (equal test-result expected-result)
-             (message "Test passed %S = %S" ',expression ',expected-result-expression)
-           (error "Test failure %S != expected %S" test-result expected-result) ) ) ) )
-
 (defmacro cons-bind (var1 var2 expression &rest statements)
   "Bind car and cdr of EXPRESSION to VAR1 and VAR2 in STATEMENTS"
   (declare (indent defun))
@@ -40,65 +28,56 @@
   (apply #'concat (mapcar #'make-regexp args)) )
 
 ;;--------------------------------------------------------------------------------
-(defun make-interpreter (name)
-  (let ( (interpreter (make-hash-table :test 'eq)) )
-    (puthash :name name interpreter)
-    interpreter) )
-
-(defmacro def-interpreter-fun (interpreter name args &rest body)
-  `(puthash ',name
-            (lambda ,args ,@body)
-            ,interpreter) )
-
-(defmacro def-interpreter-value (interpreter name value)
-  `(puthash ',name ,value ,interpreter) )
-
-(defun interpreter-error (interpreter message expression)
+(defun interpreter-error (lookup message expression)
   (error "%s: ERROR %s in expression %S" 
-         (gethash :name interpreter)
+         (lookup :name interpreter)
          message expression) )
 
-(defun interpret (interpreter expr)
+(defun interpret (lookup expr)
   (cond
    ((null expr)
-    (gethash :nil interpreter nil))
+    (lookup :nil nil))
    ((listp expr)
     (cons-bind function-name args expr
       (if (eq function-name 'quote)
           (if (eq (length args) 1)
               (first args)
-            (interpreter-error interpreter "quote requires 1 argument" expr) )
-        (let ( (fun (gethash function-name interpreter)) )
+            (interpreter-error lookup "quote requires 1 argument" expr) )
+        (let ( (fun (funcall lookup function-name)) )
           (if (null fun)
-              (interpreter-error interpreter (format "function %s not defined" function-name) expr) )
-          (apply fun (mapcar (lambda (arg) (interpret interpreter arg)) args)) ) ) ) )
+              (interpreter-error lookup (format "function %s not defined" function-name) expr) )
+          (apply fun (mapcar (lambda (arg) (interpret lookup arg)) args)) ) ) ) )
    ((symbolp expr)
-    (let ( (value (gethash expr interpreter)) )
+    (let ( (value (funcall lookup expr)) )
       (if (null value)
-          (interpreter-error interpreter "symbol not defined" expr) )
+          (interpreter-error lookup "symbol not defined" expr) )
       value))
-   ((stringp expr)
-    (let ( (string-function (gethash :string interpreter)) )
-      (if string-function
-          (funcall string-function expr)
-        expr) ) )
-   expr) )
+   (t expr) ) )
            
 ;;--------------------------------------------------------------------------------
-(setq *make-regexp-interpreter* (make-interpreter "make-regexp"))
 
-(def-interpreter-fun *make-regexp-interpreter*
-  group (regex)
-  (concat "\\(" regex "\\)") )
+(defconst *make-regexp-interpreter-lookups-alist*
+  (list
+   (cons :name "make-regexp")
+   (cons 'seq #'concat)
+   (cons 'group #'(lambda (&rest values) (concat "\\(" (string-join values "\\|") "\\)")))
+   (cons 'shy-group #'(lambda (&rest values) (concat "\\(?:" (string-join values "\\|") "\\)")))
 
-(def-interpreter-fun *make-regexp-interpreter*
-  seq (&rest regexes)
-  (apply 'concat regexes) )
+   (cons 'int "[0-9]+")
+   ) )
+
+(defun make-regexp-interpreter-lookup (symbol &optional default)
+  (let ( (item (assoc symbol *make-regexp-interpreter-lookups-alist*)) )
+    (if item (cdr item)) ) )
+
+(funcall (make-regexp-interpreter-lookup 'group) "jim" "tom")
 
 (defun make-regexp-2 (expr)
-  (interpret *make-regexp-interpreter* expr) )
+  (interpret #'make-regexp-interpreter-lookup expr) )
 
-(make-regexp-2 '(group (seq "abc" "[a-z]" '"def")))
+(run-test (make-regexp-2 '(seq "jim" "tom")) "jimtom")
+
+(make-regexp-2 '(group (seq "abc" "[a-z]" "def" int) "something"))
 
 ;;--------------------------------------------------------------------------------
 
@@ -155,7 +134,7 @@
 (defun test-regexp-list (regexp-list &rest string-result-pairs)
   (dolist (string-result string-result-pairs)
     (cons-bind string result string-result
-      (run-test-check-expected-result
+      (run-test
         (match-regexp-list-in-string regexp-list string)
         result) ) )
   (message "test-regexp-list all passed") )

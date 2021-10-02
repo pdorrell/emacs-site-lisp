@@ -23,7 +23,7 @@
   (setq programming-language 'lisp)
   (local-set-key [?\C-m] 'return-and-indent)
   (local-set-key [?\C-\S-p] 'emacs-lisp-insert-message-this)
-  (setq run-file-function #'load)
+  (setq run-file-function #'load-running-tests)
   (setq filter-regexp emacs-lisp-filter-regexp)
   (local-set-key [f2] 'my-expand-abbrev)
   (setq comment-start ";;") ; Single semi-colon not for comment on new line
@@ -31,6 +31,10 @@
   (setq word-alpha-table emacs-lisp-word-alpha-table)
   (font-lock-mode 1)
   )
+
+(defun load-running-tests (file)
+  (save-this-buffer-and-others)
+  (running-tests (format "Loaded %s" file) (load file)) )
 
 (defun buffer-for-name (name)
   "Get buffer with NAME"
