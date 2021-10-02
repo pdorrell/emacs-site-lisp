@@ -5,13 +5,13 @@
  '(
 
    ("class"
-    ((java-before-package) (java-package) (java-after-package)
+    ((java-package)
      "\npublic class " base-name " {\n\n"
      indent mark 
      "\n}\n" goto-mark) )
 
    ("xclass" 
-    ((java-before-package) (java-package) (java-after-package)
+    ((java-package)
      "\npublic class " base-name " extends Exception {\n\n"
      "public " base-name " (String message) {" indent return
      "super (message);" indent return
@@ -22,7 +22,7 @@
      "}" indent return))
 
    ("iclass" 
-    ((java-before-package) (java-package) (java-after-package)
+    ((java-package)
      "\npublic interface " base-name " {\n\n"
      indent mark 
      "\n}\n" goto-mark) )
