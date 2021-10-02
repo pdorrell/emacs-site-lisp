@@ -14,6 +14,12 @@
 
 (setq gc-cons-threshold 20000000)
 
+(setq print-length 20)
+(setq print-level 6)
+(setq eval-expression-print-length 20)
+(setq eval-expression-print-level 6)
+(setq print-circle t)
+
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 
