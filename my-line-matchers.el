@@ -9,7 +9,8 @@
    (make-regex 
     '(seq any-spaces "File" any-spaces "\"" (group "[^\"]*") "\"," any-spaces "line" any-spaces (group int))
     "[ ]*File[ ]*\"\\([^\"]*\\)\",[ ]*line[ ]*\\([0-9]+\\)")
-   1 2) )
+   1 2)
+  "Line matcher for output of Python stack traces")
 
 (defun visit-file-at-line-number (file-name line-number-string)
   "Visit file with name FILE-NAME and go to line with number LINE-NUMBER-STRING.
@@ -40,7 +41,11 @@
   '(
     (visit-file-at-line-number grep-n-line-matcher)
     (visit-file-at-line-number python-line-matcher)
-    ) )
+    )
+  "List of file line-matchers to use for current buffer, being a list
+   of pairs of name of function to act on parsed location and name of variable holding 
+   list of regex and group numbers to parse current buffer line for args to pass to the function."
+  )
 
 (make-variable-buffer-local 'file-line-matchers)
 
