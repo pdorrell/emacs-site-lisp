@@ -31,8 +31,8 @@
 (defconst grep-n-line-matcher 
   (list 
    (make-regex
-    '(seq start (group "[^: ]+") ":" (group int) ":?")
-    "^\\([^: ]+\\):\\([0-9]+\\):?")
+    '(seq start (group "[^:]+") ":" (group int) ":?")
+    "^\\([^:]+\\):\\([0-9]+\\):?")
 	1 2)
   "Line matcher for output lines in style of 'grep -n'")
 
@@ -59,4 +59,5 @@
     (if fun-and-args
 	(let ( (fun (car fun-and-args))
 	       (args (cdr fun-and-args)) )
-	  (apply fun args) ) ) ) )
+	  (apply fun args) )
+      (message "Failed to match on any of %S" file-line-matchers) ) ) )
