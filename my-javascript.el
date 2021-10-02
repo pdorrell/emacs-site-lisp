@@ -24,6 +24,9 @@
 
 (defvar *nodejs-process* nil)
 
+(defconst node-exception-line-matcher
+  (list "[ \t]*at [^(]*(\\([^:]+\\):\\([0-9]+\\)" 1 2) )
+
 (defun nodejs-run-file (file &rest args)
   "Run javascript FILE in node with ARGS"
   (let ( (filename (windowize-filename (expand-file-name file))) 
@@ -31,8 +34,8 @@
     (let ( (javascript-executable (project-file :javascript-executable "/usr/bin/nodejs")) )
       (switch-to-buffer-other-window "*nodejs*")
       (setq file-line-matchers
-	    '((visit-grep-n-line unprefixed-grep-n-matcher)
-	      (visit-grep-n-line node-exception-line-matcher)))
+	    '((visit-file-at-line-number unprefixed-grep-n-line-matcher)
+	      (visit-file-at-line-number node-exception-line-matcher)))
       (setq default-directory current-directory)
       (clear-buffer)
       (stop-then-start-process "nodejs" '*nodejs-process* "*nodejs*" 
