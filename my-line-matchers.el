@@ -21,12 +21,18 @@
     ) )
 
 (defconst prefixed-grep-n-line-matcher 
-  (list "[ \t]*\\(?:from \\|\\)\\([^:]+\\):\\([0-9]+\\):?"
-	1 2) 
+  (list
+   (make-regex
+    '(seq start any-whitespace (shy-group (one-of "from " "")) (group "[^:]+") ":" (group int) ":?")
+    "^[ \t]*\\(?:from \\|\\)\\([^:]+\\):\\([0-9]+\\):?")
+   1 2) 
   "Line matcher for output lines in style of 'grep -n' but with extra optional prefix")
 
 (defconst grep-n-line-matcher 
-  (list "^\\([^: ]+\\):\\([0-9]+\\):?"
+  (list 
+   (make-regex
+    '(seq start (group "[^: ]+") ":" (group int) ":?")
+    "^\\([^: ]+\\):\\([0-9]+\\):?")
 	1 2)
   "Line matcher for output lines in style of 'grep -n'")
 
