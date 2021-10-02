@@ -25,7 +25,10 @@
 (defvar *nodejs-process* nil)
 
 (defconst node-exception-line-matcher
-  (list "[ \t]*at [^(]*(\\([^:]+\\):\\([0-9]+\\)" 1 2) )
+  (list (make-regex
+         '(seq any-whitespace "at " "[^(]*" "(" (group "[^:]+") ":" (group int))
+         "[ \t]*at [^(]*(\\([^:]+\\):\\([0-9]+\\)")
+        1 2) )
 
 (defun nodejs-run-file (file &rest args)
   "Run javascript FILE in node with ARGS"
