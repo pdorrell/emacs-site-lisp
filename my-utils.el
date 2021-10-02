@@ -114,6 +114,15 @@
        (any ".")
        (t (symbol-value expr)) ) ) ) )
 
+(defun make-regexp-new-and-old (expr-new expr-old)
+  (let ( (old-regexp (make-regexp-old expr-old))
+         (new-regexp (make-regexp-new expr-new)) )
+    (if (not (equal old-regexp new-regexp))
+      (error "New regex %S from %S != Old regex %S from %S"
+             new-regexp expr-new old-regexp expr-old))
+    new-regexp) )
+
+;;--------------------------------------------------------------------------------
 (defun match-regexp-list-in-string (regexp-list string)
   "Match REGEXP-LIST consisting of a regex and then a list of group numbers, 
   against STRING, return nil if no match, else the list of matched substrings for the group numbers"

@@ -4,7 +4,7 @@
 (setq emacs-lisp-mode-hook '(emacs-lisp-hook))
 
 (setq emacs-lisp-filter-regexp
-      (make-regexp-old '(at-least-once (set "("))) )
+      (make-regexp-new-and-old "[(]+" '(at-least-once (set "("))) )
 
 (setq emacs-lisp-word-alpha-table 
       (make-alpha-table letters-digits-string
