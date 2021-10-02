@@ -1,21 +1,22 @@
 ;;-----------------------------------------------------------------
 ;;Line filtering
 
-(setq filter-regexp (make-regex '(seq start some-non-whitespace)))
-(make-variable-buffer-local 'filter-regexp)
+(defvar default-line-filtering-regex (make-regex '(seq start some-non-whitespace))
+  "Default regex to for line filtering in a buffer")
+(make-variable-buffer-local 'default-line-filtering-regex)
 (make-variable-buffer-local 'filtering-minor-mode)
 
 (add-to-list 'minor-mode-alist '(filtering-minor-mode " Filt"))
 
 (defun toggle-filtering ()
-  "If alreading filtering, turn it off, if not, then filter on FILTER-REGEXP"
+  "If alreading filtering, turn it off, if not, then filter on DEFAULT-LINE-FILTERING-REGEX"
   (interactive)
   (let ( (buffer-read-only nil) )
     (if filtering-minor-mode
         (let ( (saved-modified (buffer-modified-p)) )
           (put-text-property (point-min) (point-max) 'invisible nil)
           (set-buffer-modified-p saved-modified ) ) 
-      (filter-on-line-match filter-regexp) )
+      (filter-on-line-match default-line-filtering-regex) )
     (setq filtering-minor-mode (not filtering-minor-mode)) ) )
 
 (defun filter-set-window-start ()

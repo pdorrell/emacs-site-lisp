@@ -3,7 +3,7 @@
 ;;========================================================================
 (setq emacs-lisp-mode-hook '(emacs-lisp-hook))
 
-(setq emacs-lisp-filter-regexp "^[(]+")
+(setq emacs-lisp-default-line-filtering-regex "^[(]+")
 
 (setq emacs-lisp-word-alpha-table 
       (make-alpha-table letters-digits-string
@@ -23,7 +23,7 @@
   (local-set-key [?\C-m] 'return-and-indent)
   (local-set-key [?\C-\S-p] 'emacs-lisp-insert-message-this)
   (setq run-file-function #'load-running-tests)
-  (setq filter-regexp emacs-lisp-filter-regexp)
+  (setq default-line-filtering-regex emacs-lisp-default-line-filtering-regex)
   (local-set-key [f2] 'my-expand-abbrev)
   (setq comment-start ";;") ; Single semi-colon not for comment on new line
   (setq comment-end "")
