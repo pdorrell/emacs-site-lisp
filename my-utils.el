@@ -25,7 +25,7 @@
   (concat regexp suffix) )
 
 (defun make-seq-regexp (args)
-  (apply #'concat (mapcar #'make-regexp args)) )
+  (apply #'concat (mapcar #'make-regexp-old args)) )
 
 ;;--------------------------------------------------------------------------------
 (defun interpreter-error (lookup message expression)
@@ -64,6 +64,7 @@
    (cons 'shy-group #'(lambda (&rest values) (concat "\\(?:" (string-join values "\\|") "\\)")))
 
    (cons 'int "[0-9]+")
+   (cons 'any-whitespace "[ \t]*")
    ) )
 
 (defun make-regexp-interpreter-lookup (symbol &optional default)
@@ -72,16 +73,18 @@
 
 (funcall (make-regexp-interpreter-lookup 'group) "jim" "tom")
 
-(defun make-regexp-2 (expr)
+(defun make-regexp-new (expr)
   (interpret #'make-regexp-interpreter-lookup expr) )
 
-(run-test (make-regexp-2 '(seq "jim" "tom")) "jimtom")
+(run-test (make-regexp-new '(seq "jim" "tom")) "jimtom")
 
-(make-regexp-2 '(group (seq "abc" "[a-z]" "def" int) "something"))
+(run-test 
+  (make-regexp-new '(group (seq "abc" "[a-z]" "def" int) "something"))
+  "\\(abc[a-z]def[0-9]+\\|something\\)")
 
 ;;--------------------------------------------------------------------------------
 
-(defun make-regexp (expr)
+(defun make-regexp-old (expr)
   (cond
     ((stringp expr) (regexp-quote expr))
     ((listp expr)
@@ -92,14 +95,14 @@
 	 (seq (make-seq-regexp args))
 	 (set (concat "[" (only-arg args) "]"))
 	 (quote (only-arg args))
-	 (repeated (make-postfix-regexp (make-regexp (only-arg args)) "*"))
-	 (at-least-once (make-postfix-regexp (make-regexp (only-arg args)) "+"))
-	 (maybe (make-postfix-regexp (make-regexp (only-arg args)) "?"))
+	 (repeated (make-postfix-regexp (make-regexp-old (only-arg args)) "*"))
+	 (at-least-once (make-postfix-regexp (make-regexp-old (only-arg args)) "+"))
+	 (maybe (make-postfix-regexp (make-regexp-old (only-arg args)) "?"))
 	 (not-set (concat "[^" (only-arg args) "]"))
 	 (or (if (< (length args) 1) (error "Expect at least one argument"))
-	     (let ( (result (make-regexp (car args))) )
+	     (let ( (result (make-regexp-old (car args))) )
 	       (dolist (arg (cdr args))
-		 (setq result (concat result "\\|" (make-regexp arg))) )
+		 (setq result (concat result "\\|" (make-regexp-old arg))) )
 	       result) )
 	 (otherwise (error "Unknown regexp function %S" fun)) ) ) )
     ((symbolp expr)

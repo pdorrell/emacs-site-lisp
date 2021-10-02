@@ -36,14 +36,14 @@
 	  (forward-line) )
       (error "Nothing to toggle private on") ) )
 
-(setq java-type-regexp (make-regexp '(at-least-once (set "][a-zA-Z0-9_."))))
-(setq java-variable-regexp (make-regexp '(at-least-once (set "a-zA-Z0-9_"))))
-(setq java-some-whitespace-regexp (make-regexp '(at-least-once (set " \t"))))
-(setq java-maybe-whitespace-regexp (make-regexp '(repeated (set " \t"))))
-(setq java-array-regexp (make-regexp '(repeated (set "]["))))
+(defconst java-type-regexp (make-regexp-old '(at-least-once (set "][a-zA-Z0-9_."))))
+(defconst java-variable-regexp (make-regexp-old '(at-least-once (set "a-zA-Z0-9_"))))
+(defconst java-some-whitespace-regexp (make-regexp-old '(at-least-once (set " \t"))))
+(defconst java-maybe-whitespace-regexp (make-regexp-old '(repeated (set " \t"))))
+(defconst java-array-regexp (make-regexp-old '(repeated (set "]["))))
 
-(setq java-var-declaration-matcher
-      (list (make-regexp '(seq java-maybe-whitespace-regexp
+(defconst java-var-declaration-matcher
+  (list (make-regexp-old '(seq java-maybe-whitespace-regexp
 			       (paren (or (seq '"\\b" "private" '"\\b" java-some-whitespace-regexp) ""))
 			       (paren java-type-regexp)
 			       java-some-whitespace-regexp
@@ -105,7 +105,7 @@
 	  (apply #'java-insert-getter var-data) )
       (message "No match") ) ) )
 
-(setq java-comment-block-line-regexp (make-regexp '(or "/**" "* ")))
+(defconst java-comment-block-line-regexp (make-regexp-old '(or "/**" "* ")))
 
 (defun java-return ()
   "Return and indent, if inside big comment, insert a '* ' sequence"
@@ -125,13 +125,13 @@
       
 ;;-----------------------------------------------------------------
 
-(setq java-filter-regexp
-      (make-regexp '(or (paren (at-least-once (set "a-zA-Z")))
+(defconst java-filter-regexp
+  (make-regexp-old '(or (paren (at-least-once (set "a-zA-Z")))
 			(paren (seq (set " \t") (maybe (set " "))
 				    (paren (or (paren (at-least-once (set "a-oq-zA-Z")))
 					       (seq (repeated (set " \t")) "p" (paren (or "ublic " 
-								   (paren (seq "r" 
-									       (paren (or "otected " "ivate")) )) ) ) )
+								                          (paren (seq "r" 
+									                              (paren (or "otected " "ivate")) )) ) ) )
 					       )) )) )) )
 
 (defun get-java-path (tag)
@@ -185,20 +185,23 @@
 		(return-from loop full-source-file-name) ) ) ) ) ) ) )
 
 ;;-----------------------------------------------------------------
-(setq java-package-regexp-list (list 
-				(make-regexp '(seq (repeated (set " \t")) "package"
-						   (repeated (set " \t")) (paren (repeated (set "A-Za-z0-9_.")))
-						   (repeated (set " \t")) ";") )
-				1))
+(defconst java-package-regexp-list 
+  (list 
+   (make-regexp-old '(seq (repeated (set " \t")) "package"
+			  (repeated (set " \t")) (paren (repeated (set "A-Za-z0-9_.")))
+			  (repeated (set " \t")) ";") )
+   1))
 									  
-(setq java-import-regexp-list (list 
-			       (make-regexp '(seq (repeated (set " \t")) "import"
-						  (repeated (set " \t")) (paren (repeated (set "A-Za-z0-9_.*")))
-						  (repeated (set " \t")) ";") )
-			       1))
+(defconst java-import-regexp-list 
+  (list 
+   (make-regexp-old '(seq (repeated (set " \t")) "import"
+			  (repeated (set " \t")) (paren (repeated (set "A-Za-z0-9_.*")))
+			  (repeated (set " \t")) ";") )
+   1))
 
-(setq java-class-start-regexp (make-regexp '(seq (repeated (set " \t")) "public"
-						  (at-least-once (set " \t")) ) ) )
+(defconst java-class-start-regexp 
+  (make-regexp-old '(seq (repeated (set " \t")) "public"
+			 (at-least-once (set " \t")) ) ) )
 
 (defun java-packages-for-class (class-name)
   (block nil
@@ -227,14 +230,15 @@
 	(message "Packages are %S" (java-packages-for-class class-name))
       (message "No class name at point") ) ) )
 
-(setq java-end-of-identifier-regexp (make-regexp '(at-least-once (not-set "A-Za-z0-9_$"))))
+(defconst java-end-of-identifier-regexp 
+  (make-regexp-old '(at-least-once (not-set "A-Za-z0-9_$"))))
 
 (defun java-type-for-variable (var-name)
   (if (or (not var-name) (equal var-name "this")) 
       (file-name-minus-extension (buffer-name))
     (save-excursion
       (let* ( (decl-regexp
-	       (make-regexp `(seq (at-least-once (set "(,{ \t"))
+	       (make-regexp-old `(seq (at-least-once (set "(,{ \t"))
 				  (paren (seq (at-least-once (set "A-Za-z_"))
 					      (repeated (set "A-Za-z0-9._"))) )
 				  (paren (at-least-once (set "][ \t")))
@@ -360,14 +364,14 @@
 		 (separated-values packages ",") )
 	   ":") ) )
 
-(setq java-var-and-method-regexp
-      (make-regexp '(seq (at-least-once (not-set "A-Za-Z0-9_"))
+(defconst java-var-and-method-regexp
+  (make-regexp-old '(seq (at-least-once (not-set "A-Za-Z0-9_"))
 			 (paren (at-least-once (set "A-Za-Z0-9_")))
 			 "."
 			 (paren (repeated (set "A-Za-z0-9_")) ) ) ))
 
-(setq java-var-and-method-regexp-list
-      (list java-var-and-method-regexp 1 2) )
+(defconst java-var-and-method-regexp-list
+  (list java-var-and-method-regexp 1 2) )
 
 (defun java-get-var-and-method-before-point ()
   (let ( (here (point)) method-name method-start var-start var-end var-name)
@@ -389,7 +393,7 @@
 	    (setq var-name (buffer-substring-no-properties var-start var-end)) ) )
       (list var-name method-name) ) ) )
 
-(setq java-method-call-regexp (make-regexp '(or "." start)))
+(defconst java-method-call-regexp (make-regexp-old '(or "." start)))
 
 (defun visit-java-source-file-for-class ()
   (interactive)
@@ -522,12 +526,12 @@
   (insert "package " (java-get-package) ";\n") )
 
 ;;--------------------------------------------------------------------------------
-(setq java-exception-line-matcher
-      (list (make-regexp '(seq (maybe "+") (at-least-once (set " \t")) "at " 
+(defconst java-exception-line-matcher
+  (list (make-regexp-old '(seq (maybe "+") (at-least-once (set " \t")) "at " 
 			       (paren (at-least-once (set "a-zA-Z0-9._$<>")))
 			       "(" (paren (at-least-once (set "a-zA-Z0-9_"))) ".java:"
 			       (paren (at-least-once (set "0-9"))) ")"))
-	    1 2 3) )
+	1 2 3) )
 
 (defun java-package-from-method-name (method-name)
   (let ( (package-end (nth-last-pos method-name ?. 2)) )

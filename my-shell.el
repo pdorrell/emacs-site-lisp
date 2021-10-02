@@ -38,7 +38,7 @@
 (defconst *shell-dirtrack-regexp* "\\(?:\\[[^]]*\\] \\)*\\(.+\\)> $" "regex used for dirtrack-list & shell-dirtrack-mode")
 
 (setq shell-filter-regexp
-      (make-regexp '(seq (set "a-zA-Z") ":" (repeated (set "-a-zA-Z0-9_.\\")) ">" )
+      (make-regexp-old '(seq (set "a-zA-Z") ":" (repeated (set "-a-zA-Z0-9_.\\")) ">" )
 		   ) )
 
 (defun shell-history ()
