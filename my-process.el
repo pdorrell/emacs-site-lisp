@@ -37,7 +37,7 @@
     process) )
 
 (defconst line-starting-with-non-whitespace-regex 
-  (make-regex '(seq "^" some-non-whitespace))
+  (make-regex '(seq "^" some-non-whitespace) "^[^ \t]+")
   "A regex matching start of a line that begins with a non-whitespace character")
 
 (defun goto-first-unindented-line ()

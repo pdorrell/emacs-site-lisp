@@ -65,8 +65,13 @@
   (let ( (item (assoc symbol *make-regexp-interpreter-lookups-alist*)) )
     (if item (cdr item)) ) )
 
-(defun make-regex (expr)
-  (interpret #'make-regexp-interpreter-lookup expr) )
+(defun make-regex (expr &optional check-value)
+  (let ( (regex (interpret #'make-regexp-interpreter-lookup expr)) )
+    (if check-value
+        (if (not (equal regex check-value))
+            (error "Regex %S from %S != %S"
+                   regex expr check-value)) )
+    regex) )
 
 (run-test (make-regex '(seq "jim" "tom")) "jimtom")
 
