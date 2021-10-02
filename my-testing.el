@@ -18,7 +18,7 @@
                (setq *test-results* (cons test-report *test-results*)) )
            (if passed
              (message "Test passed %S = %S" ',expression expected-value)
-             (error "Test failure %S != expected %S" calculated-value expected-value) ) ) ) ) )
+             (message "Test failure %S != expected %S" calculated-value expected-value) ) ) ) ) )
 
 (defun show-test-results (label test-results)
   (let ( (pass-count 0)

@@ -4,7 +4,8 @@
 (setq java-word-table
       (make-alpha-table letters-digits-string "_") )
 
-(defconst java-comment-block-line-regexp (make-regexp-old '(or "/**" "* ")))
+(defconst java-comment-block-line-regexp 
+  (make-regexp-new-and-old '(group (exact "/**") (exact "* ")) '(paren (or "/**" "* "))))
 
 (defun java-return ()
   "Return and indent, if inside big comment, insert a '* ' sequence"

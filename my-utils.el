@@ -30,7 +30,7 @@
 ;;--------------------------------------------------------------------------------
 (defun interpreter-error (lookup message expression)
   (error "%s: ERROR %s in expression %S" 
-         (lookup :name interpreter)
+         (funcall lookup :name)
          message expression) )
 
 (defun interpret (lookup expr)
@@ -59,12 +59,15 @@
 (defconst *make-regexp-interpreter-lookups-alist*
   (list
    (cons :name "make-regexp")
+   (cons 'exact #'(lambda (value) (regexp-quote value)))
    (cons 'seq #'concat)
    (cons 'group #'(lambda (&rest values) (concat "\\(" (string-join values "\\|") "\\)")))
    (cons 'shy-group #'(lambda (&rest values) (concat "\\(?:" (string-join values "\\|") "\\)")))
 
    (cons 'int "[0-9]+")
    (cons 'any-whitespace "[ \t]*")
+   (cons 'some-whitespace "[ \t]+")
+   (cons 'some-non-whitespace "[^ \t]+")
    ) )
 
 (defun make-regexp-interpreter-lookup (symbol &optional default)

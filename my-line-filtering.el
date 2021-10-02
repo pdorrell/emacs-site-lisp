@@ -1,7 +1,7 @@
 ;;-----------------------------------------------------------------
 ;;Line filtering
 
-(setq filter-regexp (make-regexp-old '(seq (at-least-once (not-set " \t\n")))))
+(setq filter-regexp (make-regexp-new-and-old 'some-non-whitespace '(seq (at-least-once (not-set " \t")))))
 (make-variable-buffer-local 'filter-regexp)
 (make-variable-buffer-local 'filtering-minor-mode)
 
