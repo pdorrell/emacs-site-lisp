@@ -56,6 +56,7 @@
    (cons 'buffer-end "\\'")
    (cons 'int "[0-9]+")
    (cons 'any-whitespace "[ \t]*")
+   (cons 'any-spaces "[ ]*")
    (cons 'some-whitespace "[ \t]+")
    (cons 'some-non-whitespace "[^ \t]+")
    (cons 'blank-line "^[ \t]*$")

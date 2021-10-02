@@ -5,8 +5,11 @@
 
 
 (defconst python-line-matcher 
-  (list "[ ]*File[ ]*\"\\([^\"]*\\)\",[ ]*line[ ]*\\([0-9]+\\)"
-	1 2) )
+  (list 
+   (make-regex 
+    '(seq any-spaces "File" any-spaces "\"" (group "[^\"]*") "\"," any-spaces "line" any-spaces (group int))
+    "[ ]*File[ ]*\"\\([^\"]*\\)\",[ ]*line[ ]*\\([0-9]+\\)")
+   1 2) )
 
 (defun visit-file-at-line-number (file-name line-number-string)
   "Visit file with name FILE-NAME and go to line with number LINE-NUMBER-STRING.
