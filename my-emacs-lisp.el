@@ -3,7 +3,7 @@
 ;;========================================================================
 (setq emacs-lisp-mode-hook '(emacs-lisp-hook))
 
-(setq emacs-lisp-filter-regexp "[(]+")
+(setq emacs-lisp-filter-regexp "^[(]+")
 
 (setq emacs-lisp-word-alpha-table 
       (make-alpha-table letters-digits-string

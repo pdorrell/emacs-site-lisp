@@ -17,6 +17,8 @@
 	  (insert "self." member-var " = " var) )
       (message "No variable name given") ) ) )
 
+(defconst python-filter-regexp (make-regex '(seq start (group (one-of "def" "class")))))
+
 (defun python-mode-hook-function ()
   (setq programming-language 'python)
   (local-set-key "," 'insert-spaced-comma)
@@ -31,7 +33,7 @@
   (local-set-key [?\C-P] 'python-expand-to-print)
   (setq word-alpha-table python-word-table)
   (font-lock-mode 1)
-  (setq filter-regexp "def\\|class")
+  (setq filter-regexp python-filter-regexp)
   (setq *trim-trailing-whitespace-on-save* t)
   (setq require-final-newline t) )
 

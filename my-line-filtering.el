@@ -1,7 +1,7 @@
 ;;-----------------------------------------------------------------
 ;;Line filtering
 
-(setq filter-regexp (make-regex 'some-non-whitespace))
+(setq filter-regexp (make-regex '(seq start some-non-whitespace)))
 (make-variable-buffer-local 'filter-regexp)
 (make-variable-buffer-local 'filtering-minor-mode)
 
@@ -15,7 +15,7 @@
         (let ( (saved-modified (buffer-modified-p)) )
           (put-text-property (point-min) (point-max) 'invisible nil)
           (set-buffer-modified-p saved-modified ) ) 
-      (filter-on-line-match (concat "^\\(" filter-regexp "\\)") ) )
+      (filter-on-line-match filter-regexp) )
     (setq filtering-minor-mode (not filtering-minor-mode)) ) )
 
 (defun filter-set-window-start ()
