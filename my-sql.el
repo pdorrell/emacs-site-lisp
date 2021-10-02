@@ -49,13 +49,11 @@
 (defvar sql-start-regexp
   (make-regexp-old '(or buffer-start (seq ";" end) 
 		        (seq start (paren (repeated (set " \t")))
-			     (paren (or (paren (seq (set "gG") (set "oO"))) (paren "")))
 			     (paren (repeated (set " \t"))) end) ) ) )
 
 (defvar sql-end-regexp
   (make-regexp-old '(or buffer-end (seq ";" end) 
 		        (seq start (paren (repeated (set " \t")))
-			     (paren (or (paren (seq (set "gG") (set "oO"))) (paren "")))
 			     (paren (repeated (set " \t"))) end) ) ) )
 
 
