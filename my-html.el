@@ -100,7 +100,7 @@ ie ABBREV-BEFORE-PART-AFTER-PART-S is a list of argument lists to def-html-pair-
   (make-alpha-table "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_") )
 
 (defconst xml-filter-regexp
-  (make-regexp-new '(seq any-whitespace "<" "[^/>]+" ">"))
+  (make-regex '(seq any-whitespace "<" "[^/>]+" ">"))
   "Default filter for html/xml mode - any line where first non-whitespace is an opening (of self-closing) tag")
 
 (run-test xml-filter-regexp "[ \t]*<[^/>]+>")

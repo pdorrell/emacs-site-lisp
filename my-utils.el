@@ -65,13 +65,13 @@
   (let ( (item (assoc symbol *make-regexp-interpreter-lookups-alist*)) )
     (if item (cdr item)) ) )
 
-(defun make-regexp-new (expr)
+(defun make-regex (expr)
   (interpret #'make-regexp-interpreter-lookup expr) )
 
-(run-test (make-regexp-new '(seq "jim" "tom")) "jimtom")
+(run-test (make-regex '(seq "jim" "tom")) "jimtom")
 
 (run-test 
-  (make-regexp-new '(group (one-of (seq "abc" "[a-z]" "def" int) "something")))
+  (make-regex '(group (one-of (seq "abc" "[a-z]" "def" int) "something")))
   "\\(abc[a-z]def[0-9]+\\|something\\)")
 
 ;;--------------------------------------------------------------------------------

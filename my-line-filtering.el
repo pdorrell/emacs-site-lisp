@@ -1,7 +1,7 @@
 ;;-----------------------------------------------------------------
 ;;Line filtering
 
-(setq filter-regexp (make-regexp-new 'some-non-whitespace))
+(setq filter-regexp (make-regex 'some-non-whitespace))
 (make-variable-buffer-local 'filter-regexp)
 (make-variable-buffer-local 'filtering-minor-mode)
 

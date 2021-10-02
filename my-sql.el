@@ -47,11 +47,11 @@
    (list "executeQuery" query) ) )
 
 (defvar sql-start-regexp
-  (make-regexp-new
+  (make-regex
    '(group (one-of buffer-start (seq ";" end) blank-line)) ) )
 
 (defvar sql-end-regexp
-  (make-regexp-new
+  (make-regex
    '(group (one-of buffer-end (seq ";" end) blank-line)) ) )
 
 
