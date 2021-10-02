@@ -61,20 +61,24 @@
    (cons :name "make-regexp")
    (cons 'exact #'(lambda (value) (regexp-quote value)))
    (cons 'seq #'concat)
-   (cons 'group #'(lambda (&rest values) (concat "\\(" (string-join values "\\|") "\\)")))
-   (cons 'shy-group #'(lambda (&rest values) (concat "\\(?:" (string-join values "\\|") "\\)")))
+   (cons 'group #'(lambda (value) (concat "\\(" value "\\)")))
+   (cons 'one-of #'(lambda (&rest values) (string-join values "\\|")))
+   (cons 'shy-group #'(lambda (value) (concat "\\(?:" value "\\)")))
 
+   (cons 'start "^")
+   (cons 'end "$")
+   (cons 'buffer-start "\\`")
+   (cons 'buffer-end "\\'")
    (cons 'int "[0-9]+")
    (cons 'any-whitespace "[ \t]*")
    (cons 'some-whitespace "[ \t]+")
    (cons 'some-non-whitespace "[^ \t]+")
+   (cons 'blank-line "^[ \t]*$")
    ) )
 
 (defun make-regexp-interpreter-lookup (symbol &optional default)
   (let ( (item (assoc symbol *make-regexp-interpreter-lookups-alist*)) )
     (if item (cdr item)) ) )
-
-(funcall (make-regexp-interpreter-lookup 'group) "jim" "tom")
 
 (defun make-regexp-new (expr)
   (interpret #'make-regexp-interpreter-lookup expr) )
@@ -82,7 +86,7 @@
 (run-test (make-regexp-new '(seq "jim" "tom")) "jimtom")
 
 (run-test 
-  (make-regexp-new '(group (seq "abc" "[a-z]" "def" int) "something"))
+  (make-regexp-new '(group (one-of (seq "abc" "[a-z]" "def" int) "something")))
   "\\(abc[a-z]def[0-9]+\\|something\\)")
 
 ;;--------------------------------------------------------------------------------
