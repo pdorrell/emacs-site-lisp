@@ -47,18 +47,12 @@
    (list "executeQuery" query) ) )
 
 (defvar sql-start-regexp
-  (make-regexp-new-and-old 
-   '(group (one-of buffer-start (seq ";" end) blank-line))
-   '(paren (or buffer-start (seq ";" end) 
-	       (seq start (repeated (set " \t")) end) ) )
-   ) )
+  (make-regexp-new
+   '(group (one-of buffer-start (seq ";" end) blank-line)) ) )
 
 (defvar sql-end-regexp
-  (make-regexp-new-and-old
-   '(group (one-of buffer-end (seq ";" end) blank-line))
-   '(paren (or buffer-end (seq ";" end) 
-	       (seq start (repeated (set " \t")) end) ) ) 
-   ) )
+  (make-regexp-new
+   '(group (one-of buffer-end (seq ";" end) blank-line)) ) )
 
 
 (defun sql-get-delimited-query ()

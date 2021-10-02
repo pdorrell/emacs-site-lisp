@@ -13,20 +13,6 @@
            arg-lists)
     (apply fun arg-list) ) )
   
-(defun check-count (args n)
-  (if (not (eql (length args) 1))
-      (error "Expecting %s arguments" n) ) )
-
-(defun only-arg (args)
-  (check-count args 1)
-  (car args) )
-
-(defun make-postfix-regexp (regexp suffix)
-  (concat regexp suffix) )
-
-(defun make-seq-regexp (args)
-  (apply #'concat (mapcar #'make-regexp-old args)) )
-
 ;;--------------------------------------------------------------------------------
 (defun interpreter-error (lookup message expression)
   (error "%s: ERROR %s in expression %S" 
@@ -55,7 +41,6 @@
    (t expr) ) )
            
 ;;--------------------------------------------------------------------------------
-
 (defconst *make-regexp-interpreter-lookups-alist*
   (list
    (cons :name "make-regexp")
@@ -88,46 +73,6 @@
 (run-test 
   (make-regexp-new '(group (one-of (seq "abc" "[a-z]" "def" int) "something")))
   "\\(abc[a-z]def[0-9]+\\|something\\)")
-
-;;--------------------------------------------------------------------------------
-
-(defun make-regexp-old (expr)
-  (cond
-    ((stringp expr) (regexp-quote expr))
-    ((listp expr)
-     (let ( (fun (car expr))
-	    (args (cdr expr)) )
-       (case fun
-	 (paren (concat "\\(" (make-seq-regexp args) "\\)"))
-	 (seq (make-seq-regexp args))
-	 (set (concat "[" (only-arg args) "]"))
-	 (quote (only-arg args))
-	 (repeated (make-postfix-regexp (make-regexp-old (only-arg args)) "*"))
-	 (at-least-once (make-postfix-regexp (make-regexp-old (only-arg args)) "+"))
-	 (maybe (make-postfix-regexp (make-regexp-old (only-arg args)) "?"))
-	 (not-set (concat "[^" (only-arg args) "]"))
-	 (or (if (< (length args) 1) (error "Expect at least one argument"))
-	     (let ( (result (make-regexp-old (car args))) )
-	       (dolist (arg (cdr args))
-		 (setq result (concat result "\\|" (make-regexp-old arg))) )
-	       result) )
-	 (otherwise (error "Unknown regexp function %S" fun)) ) ) )
-    ((symbolp expr)
-     (case expr
-       (start "^")
-       (end "$")
-       (buffer-start "\\`")
-       (buffer-end "\\'")
-       (any ".")
-       (t (symbol-value expr)) ) ) ) )
-
-(defun make-regexp-new-and-old (expr-new expr-old)
-  (let ( (old-regexp (make-regexp-old expr-old))
-         (new-regexp (make-regexp-new expr-new)) )
-    (if (not (equal old-regexp new-regexp))
-      (error "New regex %S from %S != Old regex %S from %S"
-             new-regexp expr-new old-regexp expr-old))
-    new-regexp) )
 
 ;;--------------------------------------------------------------------------------
 (defun match-regexp-list-in-string (regexp-list string)

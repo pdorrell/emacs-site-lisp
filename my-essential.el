@@ -12,6 +12,13 @@
   (setq debug-on-error (not debug-on-error))
   (message "Set debug %s" (if debug-on-error "on" "off")) )
 
+(defun save-some-buffers-and-eval-defun()
+  "For some reason this doesn't work, due to non-standard arguments to eval-defun"
+  (interactive)
+  (if (buffer-file-name) (save-buffer))
+  (save-some-buffers)
+  (eval-defun) )
+
 ;;========================================================================
 (global-set-key [f9] 'eval-defun)
 (global-set-key [S-f9] 'eval-region)
