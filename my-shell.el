@@ -37,10 +37,6 @@
 
 (defconst *shell-dirtrack-regexp* "\\(?:\\[[^]]*\\] \\)*\\(.+\\)> $" "regex used for dirtrack-list & shell-dirtrack-mode")
 
-(setq shell-filter-regexp
-      (make-regexp-old '(seq (set "a-zA-Z") ":" (repeated (set "-a-zA-Z0-9_.\\")) ">" )
-		   ) )
-
 (defun shell-history ()
   (let ( (len (ring-length comint-input-ring)) (history nil) )
     (dotimes (i len)
@@ -64,7 +60,6 @@
 (defun shell-hook ()
   (local-set-key [?\M-H] 'show-history-list)
   (local-set-key [C-pause] 'comint-interrupt-subjob)
-  (setq filter-regexp shell-filter-regexp)
   (setq word-alpha-table filename-word-table)
   (setq shell-dirtrackp nil)
   (setq dirtrack-list (list *shell-dirtrack-regexp* 1 nil))
