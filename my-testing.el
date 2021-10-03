@@ -24,7 +24,8 @@
   (let ( (pass-count 0)
          (fail-count 0)
          (total-count (length test-results))
-         (test-result-buffer (get-buffer-create "*test-results*")) )
+         (test-result-buffer (get-buffer-create "*test-results*"))
+         test-summary)
     (if (equal total-count 0)
         (message label)
       (progn
@@ -35,18 +36,27 @@
               (setq pass-count (+ pass-count 1)))
              ((eq result-type 'fail)
               (setq fail-count (+ fail-count 1)))) ) )
-        (if (equal fail-count 0)
-            (message "%s, %S tests passed" label pass-count)
-          (let ( (test-result-buffer (get-buffer-create "*test-results*")) )
-            (switch-to-buffer-other-window test-result-buffer)
+        (setq *test-failures-count* fail-count)
+        (let ( (test-result-buffer (get-buffer-create "*test-results*")) )
+          (with-current-buffer test-result-buffer
             (delete-region (point-min) (point-max))
-            (dolist (test-result (reverse test-results))
-              (if (eq (first test-result) 'fail)
-                  (cl-destructuring-bind (expression calculated-result expected-result) (cdr test-result)
-                    (insert (format "FAIL %S = %S, not expected %S\n\n"
-                                    expression calculated-result expected-result)) ) ) )
-            (beginning-of-buffer)
-            (message "%s, tests: %S passed, %S failed" label pass-count fail-count) ) ) ) ) ) )
+            (if (equal fail-count 0)
+                (setq test-summary (format "%s, %S tests passed" label pass-count))
+              (dolist (test-result (reverse test-results))
+                (if (eq (first test-result) 'fail)
+                    (cl-destructuring-bind (expression calculated-result expected-result) (cdr test-result)
+                      (insert (format "FAIL %S = %S, not expected %S\n\n"
+                                      expression calculated-result expected-result)) ) ) )
+              (insert "-------------------------------------------------------------------------\n")
+              (setq test-summary 
+                    (format "%s, tests: %S passed, %S failed" 
+                            label pass-count fail-count) ) )
+            (insert (format "%s\n" test-summary) )
+            (beginning-of-buffer) )
+          (if (> fail-count 0)
+            (switch-to-buffer-other-window test-result-buffer) ) ) ) ) ) )
+
+(defvar *test-failures-count* 0 "Number of failures last time the tests ran")
 
 (defmacro running-tests (label &rest body)
   `(let ( (*running-multiple-tests* t) 
@@ -54,4 +64,8 @@
      ,@body
     (if *run-tests*
         (show-test-results ,label *test-results*) ) ) )
+
+(defun show-test-results-if-any-failures()
+  (if (> *test-failures-count* 0)
+      (display-buffer "*test-results*") ) )
 

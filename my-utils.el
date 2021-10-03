@@ -223,3 +223,5 @@
 (defun test-file (file-name)
   (expand-file-name file-name *test-files-directory*) )
 
+(run-test (+ 3 4) 7)
+(run-test (+ 3 4) 7)
