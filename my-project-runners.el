@@ -224,3 +224,7 @@
       (if (not (string-match "^[a-z]+:" project-url))
           (concat "file://" (get-current-project-base-directory) project-url)
         project-url) ) ) )
+
+(defun project-run-url-in-dev-browser()
+  (interactive)
+  (run-project-command 'other-window 'base-dir "run-dev-browser" 'project-url) )
