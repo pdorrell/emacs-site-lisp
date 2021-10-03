@@ -47,7 +47,7 @@
   (beginning-of-line)
   (search-forward-regexp "\\S-.+")
   (let ( (expression (match-string 0)) )
-    (replace-match (concat "print(\"" expression " = %r\" % " expression ")")) ) )
+    (replace-match (concat "print(\"" expression " = %r\" % (" expression ",))")) ) )
 
 (let ( (non-identifier-char-regex "[^A-Za-z0-9_]") )
   (set-language-search-regexes 'python

@@ -46,10 +46,10 @@
   (sql-command
    (list "executeQuery" query) ) )
 
-(defvar sql-start-regexp
+(defconst sql-start-regexp
   (make-regex '(one-of buffer-start (seq ";" end) blank-line)) )
 
-(defvar sql-end-regexp
+(defconst sql-end-regexp
   (make-regex '(one-of buffer-end (seq ";" end) blank-line)) )
 
 
