@@ -9,6 +9,7 @@
 (defvar english-maori-word-table (make-alpha-table english-maori-letters-string))
 
 (defun maori-lookup-word-in-dictionary()
+  "Look up word at point in online maori dictionary"
   (interactive)
   (let ( (word (word-at english-maori-word-table (point))) )
     (if word
@@ -19,3 +20,4 @@
 	      (message " browsing %s ..." url)
 	      (browse-url url) ) ) )
       (message "No word at point") ) ) )
+
