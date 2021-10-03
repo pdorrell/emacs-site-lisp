@@ -215,3 +215,12 @@
   (interactive)
   (let* ( (run-alternate-command (project-required-value :run-alternate-command)) )
     (apply 'run-project-command run-alternate-command) ) )
+
+(def-run-project-fun 'command-args-getter 'project-url
+  (defun get-project-url()
+    (let ( (project-url (project-value :project-url)) )
+      (if (not project-url)
+          (error "Project value :project-url not defined") )
+      (if (not (string-match "^[a-z]+:" project-url))
+          (concat "file://" (get-current-project-base-directory) project-url)
+        project-url) ) ) )
