@@ -107,7 +107,7 @@
 
 (def-abbrev-fun base-name ()
   "Get base name of file"
-  (insert (file-name-minus-extension (buffer-name))) )
+  (insert (file-name-sans-extension (buffer-name))) )
 
 (def-abbrev-fun thick-comment-line ()
   "Insert a thick comment line"

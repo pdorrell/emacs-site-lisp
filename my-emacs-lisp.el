@@ -35,13 +35,12 @@
   (save-this-buffer-and-others)
   (running-tests (format "Loaded %s" file) (load file)) )
 
-(defun buffer-for-name (name)
+(defun-getting-value buffer-for-name (name)
   "Get buffer with NAME"
-  (block nil
-    (let ( (buffers (buffer-list)) )
-      (dolist (buffer buffers)
-	(if (equal (buffer-name buffer) name)
-	    (return buffer) ) ) ) ) )
+  (let ( (buffers (buffer-list)) )
+    (dolist (buffer buffers)
+      (if (equal (buffer-name buffer) name)
+	  (return-value buffer) ) ) ) )
 
 (defun messaged (var value)
   "Log a value to messages as VAR=VALUEand return the same value"
@@ -51,7 +50,7 @@
 (defun show-messages-buffer ()
   "Show the messages buffer"
   (interactive)
-  (if (not (buffer-for-name "*Messages*")) (message ""))
+  (if (not (buffer-for-name "*Messages*")) (message "Dummy message"))
   (display-buffer "*Messages*") )
 
 (let ( (non-identifier-char-regex "[' ()]") )

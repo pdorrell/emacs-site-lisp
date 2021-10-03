@@ -54,14 +54,14 @@
    (eg output from a search utility or stack trace or compiler output)"
   (interactive)
   (let ( (fun-and-args
-	  (block nil
+	  (getting-value
 	    (save-excursion
 	      (beginning-of-line)
 	      (dolist (file-line-matcher file-line-matchers)
 		(let* ( (matcher (symbol-value (second file-line-matcher)))
 			(this-args (match-regexp matcher)) )
 		  (if this-args
-		      (return (cons (first file-line-matcher) this-args)) ) ) ) ) ) ) )
+		      (return-value (cons (first file-line-matcher) this-args)) ) ) ) ) ) ) )
     (if fun-and-args
 	(let ( (fun (car fun-and-args))
 	       (args (cdr fun-and-args)) )

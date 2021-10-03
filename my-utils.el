@@ -114,19 +114,6 @@
  '("1235jimmy" . ("1235" "my"))
  '(" 1234jimmy" . nil) )
 
-(defun nth-last-pos (string ch n)
-  (let* ( (len (length string)) 
-	  (pos (1- len))
-	  (count 0) )
-    (block nil
-      (while (> pos 0)
-	(if (eql ch (aref string pos))
-	    (setq count (1+ count)) )
-	(if (eql count n)
-	    (return pos) )
-	(setq pos (1- pos)) )
-      nil) ) )
-
 (defun replace-char (string old new)
   "In STRING, replace occurrences of OLD character with NEW character"
   (let ( (result (copy-seq string))
@@ -196,15 +183,6 @@
     (if all-values
 	(setq all-values (cdr all-values)) )
     (apply 'concat (reverse all-values)) ) )
-
-(defun file-name-minus-extension (file-name)
-  (block nil 
-    (let ( (pos (1- (length file-name))) )
-      (while (>= pos 0)
-	(if (= (aref file-name pos) ?.)
-	    (return (substring file-name 0 pos))
-	  (setq pos (1- pos)) ) ) )
-    file-name) )
 
 (defun buffer-line (pos)
   "Get contents of line in current buffer at specified position POS"
