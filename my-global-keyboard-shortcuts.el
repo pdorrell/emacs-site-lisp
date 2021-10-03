@@ -83,7 +83,7 @@
 
      ([f4]     find-file-at-point)
      ([C-f4]   find-file-at-point-full-window)
-     ([S-f4]   visit-file-line)
+     ([S-f4]   visit-parsed-file-location)
      ([M-f4]   run-file-at-point)
      ([S-M-f4] execute-this-file)
 

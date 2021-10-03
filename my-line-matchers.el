@@ -49,8 +49,9 @@
 
 (make-variable-buffer-local 'file-line-matchers)
 
-(defun visit-file-line ()
-  "Visit line of file given in grep output"
+(defun visit-parsed-file-location ()
+  "Visit location in file as parsed from current line of current buffer
+   (eg output from a search utility or stack trace or compiler output)"
   (interactive)
   (let ( (fun-and-args
 	  (block nil
