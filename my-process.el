@@ -5,6 +5,9 @@
   (set-process-query-on-exit-flag process nil) )
 
 (defun start-process-if-not-going (name startup-command &optional move-to-top)
+  "Start process with NAME in the current buffer if it doesn't already exist, using STARTUP-COMMAND.
+   If MOVE-TO-TOP, then move to top (actually 1st unindented line) when that
+   output appears."
   (let ( (process (get-buffer-process (current-buffer))) )
     (if process
 	(if (not (eq (process-status process) 'run))
@@ -50,12 +53,16 @@
     nil) )
 
 (defun do-not-move-point-process-filter (process string)
+  "A process filter that inserts a STRING at end of PROCESS buffer, without moving current point"
   (save-excursion
     (set-buffer (process-buffer process))
     (goto-char (point-max))
     (insert string) ) )
 
 (defun make-goto-first-line-process-filter ()
+  "Create process filter that inserts a string at the end of the process buffer, and, 
+   the first time a unindented line appears in the output, goes to that line (otherwise
+   dont' move current point)."
   (lexical-let ( (first-time t) )
     (lambda (process string)
       (if first-time
@@ -69,6 +76,8 @@
         (do-not-move-point-process-filter process string) ) ) ) )
 
 (defun write-end-of-buffer-sentinel (process event)
+  "A sentinel for handling process signals, which writes EVENT at the end of the PROCESS buffer
+   (if the buffer exists and is 'live')."
   (let ( (buffer (process-buffer process)) )
     (if (and buffer (buffer-live-p buffer))
         (save-excursion
@@ -77,30 +86,13 @@
             (insert (concat "\nProcess " 
                             (process-name process) " " event)) ) ) ) ) )
 
-(defun stop-start-process (name process-variable process-buffer-name
-				executable args &optional move-to-top)
-  (save-this-buffer-and-others)
-  (let ( (process (symbol-value process-variable)) )
-    (if (not (equal process-buffer-name (buffer-name (current-buffer))))
-	(progn
-	  (switch-to-buffer-other-window process-buffer-name) ) )
-    (if (and process (not (memq (process-status process) '(exit signal))))
-	(progn
-	  (delete-process process)
-	  (set process-variable nil)
-	  (message "%s STOPPED" name) )
-      (progn
-	(clear-buffer)
-	(message "Starting new process %s %s" executable args)
-	(let ( (new-process (apply #'start-process name process-buffer-name executable args)) )
-	  (set process-variable new-process)
-	  (set-process-killable-without-query new-process)
-	  (message "%s STARTED" name)
-          (if move-to-top 
-              (set-process-filter new-process 'do-not-move-point-process-filter) ) ) ) ) ) )
-
 (defun stop-then-start-process (name process-variable process-buffer-name
 				     executable args &optional move-to-top)
+  "If PROCESS-VARIABLE has a value, switch to buffer with name PROCESS-BUFFER-NAME for that process.
+   If the process exists and is running, delete the process.
+   Then, clear the process buffer and start a new process named NAME with EXECUTABLE and ARGS.
+   If MOVE-TO-TOP, then move to 1st unindented line of output when it appears.
+   Set the new process to be the value of PROCESS-VARIABLE."
   (save-this-buffer-and-others)
   (let ( (process (symbol-value process-variable)) )
     (if (not (equal process-buffer-name (buffer-name (current-buffer))))
@@ -120,17 +112,6 @@
                                       :sentinel #'write-end-of-buffer-sentinel) ) )
       (set process-variable new-process)
       (message "%s STARTED" name) ) ) )
-
-(defun start-process-showing-console (name process-buffer-name
-				     executable &rest args)
-  "Start a server process, where any stopping of existing processes is handled by the script"
-  (save-this-buffer-and-others)
-  (if (not (equal process-buffer-name (buffer-name (current-buffer))))
-      (progn
-	(switch-to-buffer-other-window process-buffer-name) ) )
-  (clear-buffer)
-  (let ( (new-process (apply #'start-process name process-buffer-name executable args)) )
-    (set-process-query-on-exit-flag new-process nil) ) )
 
 (defvar *related-output-process* nil 
   "A process associated with a buffer that will be killed by kill-buffer-process if the current buffer has no process")
