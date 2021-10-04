@@ -33,10 +33,12 @@
 (defvar scroll-sideways-increment 30 "Amount to scroll sideways in one go")
 
 (defun scroll-left-a-bit ()
+  "Scroll buffer left a bit"
   (interactive)
   (scroll-left scroll-sideways-increment) )
 
 (defun scroll-right-a-bit ()
+  "Scroll buffer right a bit"
   (interactive)
   (scroll-right scroll-sideways-increment) )
 

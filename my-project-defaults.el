@@ -31,3 +31,6 @@
 
 (set-project-type-default-values 'javascript
   '( (:key value) ) )
+
+(set-project-type-default-values 'backup
+  '( (:key value) ) )

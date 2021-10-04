@@ -1,6 +1,7 @@
 ;; Copyright (C) 2008 Philip Dorrell
 
-(defun process-kill-without-query(process)
+(defun set-process-killable-without-query(process)
+  "Set flag so that PROCESS can be killed without a confirmation query"
   (set-process-query-on-exit-flag process nil) )
 
 (defun start-process-if-not-going (name startup-command &optional move-to-top)
@@ -14,7 +15,7 @@
 	(setq process 
 	      (apply 'start-process 
 		     (append (list name (current-buffer)) startup-command) ) ) )
-    (process-kill-without-query process)
+    (set-process-killable-without-query process)
     (if move-to-top (set-process-filter process (make-goto-first-line-process-filter)))
     process) )
  
@@ -93,7 +94,7 @@
 	(message "Starting new process %s %s" executable args)
 	(let ( (new-process (apply #'start-process name process-buffer-name executable args)) )
 	  (set process-variable new-process)
-	  (process-kill-without-query new-process)
+	  (set-process-killable-without-query new-process)
 	  (message "%s STARTED" name)
           (if move-to-top 
               (set-process-filter new-process 'do-not-move-point-process-filter) ) ) ) ) ) )

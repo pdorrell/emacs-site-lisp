@@ -4,7 +4,7 @@
   "Start a shell that can be killed no questions asked (unless win9x)"
   (interactive)
   (shell)
-  (process-kill-without-query 
+  (set-process-killable-without-query 
    (get-buffer-process (current-buffer)) ) )
 
 (defun put-command-in-shell (command)
