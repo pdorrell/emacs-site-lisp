@@ -153,7 +153,7 @@
     script) )
 
 (defun run-project-command (run-script-fun-key working-dir-getter-key command-script command-args-getter-key
-                                               &optional description-spec output-buffer-dir-getter-key)
+                                               &optional description-spec output-buffer-dir-getter-key line-matchers-var)
   (save-this-buffer-and-others)
   (let* ( (run-script-fun (get-run-project-fun 'run-script-fun run-script-fun-key))
           (working-dir-getter (get-run-project-fun 'working-dir-getter working-dir-getter-key))
@@ -174,7 +174,9 @@
         (error "Failed to find working directory from %s (%s)" working-dir-getter-key working-dir-getter) )
     (funcall run-script-fun resolved-script-path working-dir output-buffer-name (append script-args command-args))
     (with-current-buffer output-buffer-name
-      (setq-local default-directory (or output-buffer-dir working-dir)) ) ) )
+      (setq-local default-directory (or output-buffer-dir working-dir))
+      (if line-matchers-var
+          (setq file-line-matchers (symbol-value line-matchers-var)) ) ) ) )
 
 (defun project-run-this-file()
   "Run the current file"

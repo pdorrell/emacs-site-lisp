@@ -17,8 +17,12 @@
                        (list 'fail ',expression calculated-value expected-value) ) ) )
                (setq *test-results* (cons test-report *test-results*)) )
            (if passed
-             (message "Test passed %S = %S" ',expression expected-value)
-             (message "Test failure %S != expected %S" calculated-value expected-value) ) ) ) ) )
+               (message "Test passed %S = %S" ',expression expected-value)
+             (let ( (failure-message (format "Test failure %S != expected %S" 
+                                             calculated-value expected-value)) )
+               (if load-file-name
+                   (message failure-message)
+                 (throw 'fail failure-message) ) ) ) ) ) ) )
 
 (defun show-test-results (label test-results)
   (let ( (pass-count 0)
@@ -68,4 +72,3 @@
 (defun show-test-results-if-any-failures()
   (if (> *test-failures-count* 0)
       (display-buffer "*test-results*") ) )
-

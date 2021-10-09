@@ -102,12 +102,16 @@
   (match-regexp-list-in-string regexp-list (buffer-line (point))) )
 
 (defun test-regexp-list (regexp-list &rest string-result-pairs)
-  (dolist (string-result string-result-pairs)
-    (cons-bind string result string-result
-      (run-test
-        (match-regexp-list-in-string regexp-list string)
-        result) ) )
-  (message "test-regexp-list all passed") )
+  (let ( (test-failure 
+          (catch 'fail
+            (dolist (string-result string-result-pairs)
+              (cons-bind string result string-result
+                (run-test
+                  (match-regexp-list-in-string regexp-list string)
+                  result) ) ) ) ) )
+    (if test-failure
+        (message test-failure)
+      (message "test-regexp-list all passed") ) ) )
 
 (test-regexp-list
  '("^\\([0-9]+\\)jim\\([a-z]*\\)$" 1 2)

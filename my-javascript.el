@@ -22,6 +22,18 @@
   (let ( (run-javascript-function (project-value :run-javascript-function #'nodejs-run-file)) )
     (apply run-javascript-function (cons file args)) ) )
 
+(defconst webpack-syntax-error-line-matcher
+  (list (make-regex
+         '(seq start "SyntaxError:" some-whitespace (group "[^:]+") ":" 
+               ".*" 
+               (exact "(") (group int) ":" int (exact ")") end) )
+         1 2) )
+
+(test-regexp-list 
+ webpack-syntax-error-line-matcher
+ '("SyntaxError: /some/file/src/models/TodoModel.js: Unexpected token, expected \"{\" (9:42)"
+    . ("/some/file/src/models/TodoModel.js" "9")) )
+
 (defvar *nodejs-process* nil)
 
 (defconst node-exception-line-matcher
