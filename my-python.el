@@ -45,7 +45,7 @@
 (defun python-expand-to-print()
   (interactive)
   (beginning-of-line)
-  (search-forward-regexp "\\S-.+")
+  (search-forward-regexp "\\S-.*")
   (let ( (expression (match-string 0)) )
     (replace-match (concat "print(\"" expression " = %r\" % (" expression ",))")) ) )
 
