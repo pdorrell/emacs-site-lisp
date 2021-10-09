@@ -30,7 +30,8 @@
   '( (:sass-watch-command (other-window base-dir "run-sass-watch" nil ("SASS-WATCH" . nil) )) ) )
 
 (set-project-type-default-values 'javascript
-  '( (:key value) ) )
+  '( (:key value)
+     (:run-alternate-command (other-window base-dir "run-npm-start" nil) )) )
 
 (set-project-type-default-values 'backup
   '( (:key value) ) )
