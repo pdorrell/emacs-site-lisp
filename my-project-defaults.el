@@ -31,7 +31,7 @@
 
 (set-project-type-default-values 'javascript
   '( (:key value)
-     (:run-alternate-command (other-window base-dir "run-npm-start" nil) )) )
+     (:run-alternate-command (other-window base-dir "run-npm-start" nil nil nil webpack-line-matchers) )) )
 
 (set-project-type-default-values 'backup
   '( (:key value) ) )

@@ -32,7 +32,14 @@
 (test-regexp-list 
  webpack-syntax-error-line-matcher
  '("SyntaxError: /some/file/src/models/TodoModel.js: Unexpected token, expected \"{\" (9:42)"
-    . ("/some/file/src/models/TodoModel.js" "9")) )
+    . ("/some/file/src/models/TodoModel.js" "9"))
+ '("SyntaxError: /some/file/src/models/TodoModel.js: Unexpected token '(', expected \"{\" (9:42)"
+    . ("/some/file/src/models/TodoModel.js" "9"))
+ )
+
+(defconst webpack-line-matchers 
+  '((visit-file-at-line-number webpack-syntax-error-line-matcher))
+  )
 
 (defvar *nodejs-process* nil)
 
