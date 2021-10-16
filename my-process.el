@@ -19,7 +19,7 @@
 	      (apply 'start-process 
 		     (append (list name (current-buffer)) startup-command) ) ) )
     (set-process-killable-without-query process)
-    (if move-to-top (set-process-filter process (make-goto-first-line-process-filter)))
+    (if move-to-top (set-process-filter process (make-goto-first-unindented-line-process-filter)))
     process) )
  
 (defun run-process-with-line (name startup-command input-line &optional move-to-top)
@@ -59,7 +59,7 @@
     (goto-char (point-max))
     (insert string) ) )
 
-(defun make-goto-first-line-process-filter ()
+(defun make-goto-first-unindented-line-process-filter ()
   "Create process filter that inserts a string at the end of the process buffer, and, 
    the first time an unindented line appears in the output, goes to that line (otherwise
    dont' move current point)."
@@ -109,7 +109,7 @@
                                       :buffer process-buffer-name
                                       :command (cons executable args)
                                       :noquery t
-                                      :filter (if move-to-top (make-goto-first-line-process-filter))
+                                      :filter (if move-to-top (make-goto-first-unindented-line-process-filter))
                                       :sentinel #'write-end-of-buffer-sentinel) ) )
       (set process-variable new-process)
       (message "%s STARTED" name) ) ) )
