@@ -160,17 +160,17 @@ is found at all, the definition file is nil if the project is defined by a sub-d
         (message "No project file exists at %s" current-project-base-directory)
         (maybe-create-new-project-file) ) ) ) )
 
-(defun visit-project-file-menu-other-window ()
+(defun visit-project-file-menu ()
   "Visit file-menu file for project"
   (interactive)
   (let* ( (project-base-directory (get-current-project-base-directory))
           (file-menu-file (expand-file-name "_" project-base-directory)) )
     (if (file-exists-p file-menu-file)
         (progn
-          (find-file-other-window file-menu-file)
+          (find-file file-menu-file)
           (message file-menu-file) )
       (progn
-        (find-file-other-window project-base-directory)
+        (find-file project-base-directory)
         (message "File menu %s does not exist" file-menu-file) ) ) ) )
 
 ;; TODO - copy from a template file
