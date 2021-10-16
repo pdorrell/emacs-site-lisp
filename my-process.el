@@ -61,19 +61,20 @@
 
 (defun make-goto-first-line-process-filter ()
   "Create process filter that inserts a string at the end of the process buffer, and, 
-   the first time a unindented line appears in the output, goes to that line (otherwise
+   the first time an unindented line appears in the output, goes to that line (otherwise
    dont' move current point)."
-  (lexical-let ( (first-time t) )
+  (lexical-let ( (unindented-line-not-yet-found t) )
     (lambda (process string)
-      (if first-time
-          (let ( (old-buffer (current-buffer))
-	         (buffer (process-buffer process)) )
-            (when buffer
-              (insert string)
+      (let ( first-unindented-line-pos )
+        (save-excursion
+          (goto-char (point-max))
+          (insert string)
+          (if unindented-line-not-yet-found
               (if (goto-first-unindented-line)
-                  (setq first-time nil) ) )
-            (set-buffer old-buffer) )
-        (do-not-move-point-process-filter process string) ) ) ) )
+                  (setq first-unindented-line-pos (point)) ) ) )
+        (when (and unindented-line-not-yet-found first-unindented-line-pos)
+          (goto-char first-unindented-line-pos)
+          (setq unindented-line-has-been-found t) ) ) ) ) )
 
 (defun write-end-of-buffer-sentinel (process event)
   "A sentinel for handling process signals, which writes EVENT at the end of the PROCESS buffer
