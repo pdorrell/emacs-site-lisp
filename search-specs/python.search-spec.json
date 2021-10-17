@@ -1,7 +1,7 @@
 {
-  "included_extensions":  [".py", ".txt", ".el", ".json"],
+  "included_extensions":  [".py", ".txt", ".el", ".json", ".sql"],
   "excluded_extensions":  [".pyc"],
-  "included_files":  ["Makefile", "**/_"],
+  "included_files":  ["Makefile", "**/_", ".mypy.ini"],
   "excluded_files":  [".gitignore"],
-  "excluded_dirs": [".git", "**/__pycache__"]
+  "excluded_dirs": [".git", "**/__pycache__", ".mypy_cache"]
 }

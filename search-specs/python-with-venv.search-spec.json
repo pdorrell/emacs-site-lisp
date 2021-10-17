@@ -1,7 +1,7 @@
 {
   "included_extensions":  [".py", ".txt", ".el", ".json", ".sql"],
   "excluded_extensions":  [".pyc", ".sqlite", ".so"],
-  "included_files":  ["Makefile", "**/_"],
+  "included_files":  ["Makefile", "**/_", ".mypy.ini"],
   "excluded_files":  [".gitignore"],
-  "excluded_dirs": [".git", "**/__pycache__", "_venv"]
+  "excluded_dirs": [".git", "**/__pycache__", "_venv", ".mypy_cache"]
 }
