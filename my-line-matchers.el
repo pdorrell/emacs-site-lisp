@@ -21,6 +21,13 @@
     (goto-line line-number)
     ) )
 
+(defun visit-file-at-line-number-and-pos (file-name line-number-string pos-string)
+  (let ( (line-number (string-to-number line-number-string))
+         (pos (string-to-number pos-string)) )
+    (find-file file-name)
+    (goto-line line-number)
+    (right-char (1- pos)) ) )
+
 (defconst prefixed-grep-n-line-matcher 
   (list
    (make-regex
@@ -34,13 +41,21 @@
    (make-regex
     '(seq start (group "[^:]+") ":" (group int) ":?")
     "^\\([^:]+\\):\\([0-9]+\\):?")
-	1 2)
+   1 2)
   "Line matcher for output lines in style of 'grep -n'")
+
+(defconst typescript-error-line-matcher
+  (list
+   (make-regex
+    '(seq start (group "[^(]+") "(" (group int) "," (group int) "):") )
+   1 2 3)
+  "Line match for output lines from tcs (typescript compilr)")
 
 (defvar file-line-matchers
   '(
     (visit-file-at-line-number grep-n-line-matcher)
     (visit-file-at-line-number python-line-matcher)
+    (visit-file-at-line-number-and-pos typescript-error-line-matcher)
     )
   "List of file line-matchers to use for current buffer, being a list
    of pairs of name of function to act on parsed location and name of variable holding 

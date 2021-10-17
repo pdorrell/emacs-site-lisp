@@ -131,6 +131,7 @@
   "Hook function for typescript-mode"
   (message "typescript-hook")
   (setq programming-language 'typescript)
+  (setq typescript-indent-level 2)
   (setq js-indent-level 2)
   (local-set-key [?\C-m] 'return-and-indent)
   (setq c-basic-offset 2)
