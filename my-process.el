@@ -65,16 +65,18 @@
    dont' move current point)."
   (lexical-let ( (unindented-line-not-yet-found t) )
     (lambda (process string)
-      (let ( first-unindented-line-pos )
-        (save-excursion
-          (goto-char (point-max))
-          (insert string)
-          (if unindented-line-not-yet-found
-              (if (goto-first-unindented-line)
-                  (setq first-unindented-line-pos (point)) ) ) )
-        (when (and unindented-line-not-yet-found first-unindented-line-pos)
-          (goto-char first-unindented-line-pos)
-          (setq unindented-line-has-been-found t) ) ) ) ) )
+      (save-excursion
+        (set-buffer (process-buffer process))
+        (let ( first-unindented-line-pos )
+          (save-excursion
+            (goto-char (point-max))
+            (insert string)
+            (if unindented-line-not-yet-found
+                (if (goto-first-unindented-line)
+                    (setq first-unindented-line-pos (point)) ) ) )
+          (when (and unindented-line-not-yet-found first-unindented-line-pos)
+            (goto-char first-unindented-line-pos)
+          (setq unindented-line-has-been-found t) ) ) ) ) ) )
 
 (defun write-end-of-buffer-sentinel (process event)
   "A sentinel for handling process signals, which writes EVENT at the end of the PROCESS buffer
