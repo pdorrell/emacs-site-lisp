@@ -16,8 +16,12 @@
 	  (setq parent newparent) ) ) )
     (and found parent)) )
 
-(defun compile-with-command (command &optional command-file)
-  (let ( (project-base-dir (get-current-project-base-directory)) )
+(defun compile-with-command (command &optional command-file base-dir-key)
+  (let ( (compilation-base-dir nil) )
+    (if base-dir-key 
+        (setq compilation-base-dir (project-file base-dir-key)) )
+    (if (not compilation-base-dir)
+        (setq compilation-base-dir (get-current-project-base-directory)) )
     (save-this-buffer-and-others)
     (if command-file
 	(let ( (command-file-dir (find-parent-directory-with-file default-directory command-file)) )
@@ -26,10 +30,10 @@
     (compile command)
     (other-window 1)
     (switch-to-buffer "*compilation*")
-    (if project-base-dir
+    (if compilation-base-dir
 	(progn
-	  (message "In compile-with-command, cd compilation buffer to %s" project-base-dir)
-	  (cd project-base-dir) ) )
+	  (message "In compile-with-command, cd compilation buffer to %s" compilation-base-dir)
+	  (cd compilation-base-dir) ) )
     (setq *current-output-buffer* "*compilation*")
     (end-of-buffer) ) )
 
