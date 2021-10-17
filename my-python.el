@@ -49,6 +49,10 @@
   (let ( (expression (match-string 0)) )
     (replace-match (concat "print(\"" expression " = %r\" % (" expression ",))")) ) )
 
+(defun type-check-python()
+  (interactive)
+  (compile-with-command "mypy .") )
+
 (let ( (non-identifier-char-regex "[^A-Za-z0-9_]") )
   (set-language-search-regexes 'python
     :before-identifier (format "(^|%s)" non-identifier-char-regex)
