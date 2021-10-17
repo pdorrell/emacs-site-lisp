@@ -32,7 +32,7 @@
 	  (cd project-base-dir) ) )
     (setq *current-output-buffer* "*compilation*")
     (end-of-buffer) ) )
-  
+
 (defun compile-rake (&optional target)
   "Compile using rake"
   (compile-with-command (if target (concat rake-command " " target) rake-command)) )

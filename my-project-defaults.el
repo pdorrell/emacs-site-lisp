@@ -33,5 +33,10 @@
   '( (:key value)
      (:run-alternate-command (other-window base-dir "run-npm-start" nil nil nil webpack-line-matchers) )) )
 
+(set-project-type-default-values 'typescript
+  '( (:key value)
+     (:build-function compile-typescript)
+     (:run-alternate-command (other-window base-dir "run-npm-start" nil nil nil webpack-line-matchers) )) )
+
 (set-project-type-default-values 'backup
   '( (:key value) ) )

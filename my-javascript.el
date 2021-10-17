@@ -101,7 +101,7 @@
   (local-set-key [f10] 'shift-initial-case)
   (local-set-key [?\C-\S-p] 'javascript-insert-print-this-inspected)
   (setq word-alpha-table javascript-word-table)
-  (setq for-loop-variable-declarer "var")
+  (setq for-loop-variable-declarer "let")
   (setq run-file-function #'javascript-run-file)
   (setq indent-tabs-mode nil)
   (font-lock-mode 1)
@@ -117,7 +117,55 @@
     :before-definition "(function|class|async|const)\s+"
     :after-definition (format "($|%s)" non-identifier-char-regex) ) )
 
-;;-----------------------------------------------------------------
 (set-abbrev-language 'javascript)
 
 (load "javascript-abbrev")
+
+;;--------------------------------------------------------------------------------
+(defun insert-function-arrow() 
+  (interactive)
+  (just-one-space)
+  (insert "=> ") )
+
+(defun typescript-hook ()
+  "Hook function for typescript-mode"
+  (message "typescript-hook")
+  (setq programming-language 'typescript)
+  (setq js-indent-level 2)
+  (local-set-key [?\C-m] 'return-and-indent)
+  (setq c-basic-offset 2)
+  (local-set-key [?\C-f] 'make-for-loop)
+  (local-set-key [?\C-t] 'insert-this-equals)
+  (local-set-key "=" 'insert-spaced-equals)
+  (local-set-key [?\C-=] 'insert-equals)
+  (local-set-key [?\C->] 'insert-function-arrow)
+  (local-set-key "," 'insert-spaced-comma)
+  (local-set-key [f2] 'my-expand-abbrev)
+  (local-set-key [?\C-\S-p] 'javascript-insert-print-this-inspected)
+  (setq word-alpha-table javascript-word-table)
+  (setq for-loop-variable-declarer "let")
+  (setq run-file-function #'javascript-run-file)
+  (setq indent-tabs-mode nil)
+  (font-lock-mode 1)
+  (setq comment-start "/*")
+  (setq comment-end "*/")
+  (setq *trim-trailing-whitespace-on-save* t)
+  (setq require-final-newline t) )
+
+(add-hook 'typescript-mode-hook 'typescript-hook)
+
+(defun compile-typescript()
+  (interactive)
+  (compile-with-command "npm run type-check") )
+
+(let ( (non-identifier-char-regex "[^A-Za-z0-9_]") )
+  (set-language-search-regexes 'typescript
+    :before-identifier (format "(^|%s)" non-identifier-char-regex)
+    :after-identifier (format "($|%s)" non-identifier-char-regex)
+    :before-definition "(function|class|async|const)\s+"
+    :after-definition (format "($|%s)" non-identifier-char-regex) ) )
+
+(set-abbrev-language 'typescript)
+
+(load "typescript-abbrev")
+;;-----------------------------------------------------------------
