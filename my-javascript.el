@@ -157,7 +157,7 @@
 
 (defun compile-typescript()
   (interactive)
-  (compile-with-command "npm run type-check" nil :typescript-base-dir) )
+  (compile-with-command "npm run type-check --silent" nil :typescript-base-dir) )
 
 (let ( (non-identifier-char-regex "[^A-Za-z0-9_]") )
   (set-language-search-regexes 'typescript

@@ -4,7 +4,7 @@
  'javascript
  '( 
    ("f" "function ")
-   ("p" "console.log(\"")
+   ("p" ("console.log(`" mark "`);" goto-mark))
    
    ("if" ("if (" indent mark ") {" return indent return "}" indent goto-mark))
    ("k" ("/** " mark " */" goto-mark))
