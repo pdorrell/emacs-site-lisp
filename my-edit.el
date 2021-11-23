@@ -4,6 +4,7 @@
 (defun text-hook ()
   "Hook function for text mode"
   (local-unset-key [?\M-S])  ;; remove M-S defn for text mode to unmask global M-S (start-killable-shell)
+  (setq run-file-function #'open-file-in-firefox)
   )
 
 (setq text-mode-hook '(text-hook))

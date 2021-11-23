@@ -42,3 +42,7 @@
 
 (set-project-type-default-values 'backup
   '( (:key value) ) )
+
+(set-project-type-default-values 'vlog
+  '( (:key value) ) )
+  

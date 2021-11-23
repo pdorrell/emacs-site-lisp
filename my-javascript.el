@@ -96,6 +96,7 @@
   (local-set-key [?\C-t] 'insert-this-equals)
   (local-set-key "=" 'insert-spaced-equals)
   (local-set-key [?\C-=] 'insert-equals)
+  (local-set-key [?\C->] 'insert-function-arrow)
   (local-set-key "," 'insert-spaced-comma)
   (local-set-key [f2] 'my-expand-abbrev)
   (local-set-key [f10] 'shift-initial-case)
