@@ -11,6 +11,9 @@
 (set-project-type-default-values 'emacs-site-lisp
   '( (:key value) ) )
 
+(set-project-type-default-values 'general
+  '( (:key value) ))
+
 (set-project-type-default-values 'python
   '( ((:run-this-file . python) (other-window base-dir "run-python" this-file ("PY" . file)))
      (:build-function type-check-python)

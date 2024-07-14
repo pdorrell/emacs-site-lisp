@@ -68,11 +68,13 @@
 (defun git-gui-this-directory()
   "Start git gui in this directory"
   (interactive)
+  (message "starting git-gui-this-directory ...")
   (set-process-query-on-exit-flag (start-process "gitgui" nil *git-executable* "gui") nil) )
 
 (defun gitk-this-directory()
   "Start gitk in this directory"
   (interactive)
+  (message "starting gitk-this-directory ...")
   (set-process-query-on-exit-flag (start-process "gitk" nil *gitk-executable* "--all") nil) )
 
 (defun git-fetch-and-view()

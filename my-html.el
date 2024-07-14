@@ -114,7 +114,7 @@ ie ABBREV-BEFORE-PART-AFTER-PART-S is a list of argument lists to def-html-pair-
   (local-set-key [f10] 'shift-initial-case)
   (local-set-key [?\M-\C-\ ] "&nbsp;")
   (local-set-key [f2] 'expand-html-abbrev)
-  (setq run-file-function #'open-file-in-web-browser)
+  (setq run-file-function #'open-file-in-firefox)
   (local-set-key [?\M-e] 'edit-this-file)
   (local-set-key [?\C-b] 'html-make-bold)
   (local-set-key [?\M-\C-i] 'html-make-italic)

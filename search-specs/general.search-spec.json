@@ -1,5 +1,5 @@
 {
-  "included_extensions":  [".py", ".el", ".js"],
+  "included_extensions":  [".py", ".el", ".js", ".conf", ".json", ".md", ".sh", ".yml"],
   "excluded_extensions":  [".so"],
   "included_files":  ["**/.gitignore", "**/Makefile", "**/_"],
   "excluded_files":  [],
