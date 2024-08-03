@@ -34,6 +34,10 @@
 (set-project-type-default-values 'sass
   '( (:sass-watch-command (other-window base-dir "run-sass-watch" nil ("SASS-WATCH" . nil) )) ) )
 
+(set-project-type-default-values 'lean4
+  '( (:key value) ) )
+
+
 (set-project-type-default-values 'javascript
   '( (:key value)
      (:run-alternate-command (other-window base-dir "run-npm-start" nil nil nil webpack-line-matchers) )) )
