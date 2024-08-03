@@ -11,5 +11,6 @@
 (set-abbrevs
  'lean4
  '(
+   ("ch" "#check ")
    ("d" "def ")
    ("e" "#eval ") ) )
