@@ -65,6 +65,9 @@
 (try-to-load "my-line-matchers")
 (try-to-load "my-shell")
 (try-to-load "my-prog")
+
+(try-to-load "my-lsp")
+
 (try-to-load "my-java")
 (try-to-load "my-javascript")
 (try-to-load "my-html")
@@ -79,6 +82,7 @@
 (try-to-load "my-linux")
 (try-to-load "my-maori")
 (try-to-load "my-idris")
+(try-to-load "my-lean4")
 
 (try-to-load "my-melody-scripter")
 
