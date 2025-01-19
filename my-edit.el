@@ -83,4 +83,4 @@
   "Toggle between large and small frame font"
   (interactive)
   (setq *large-frame-font* (not *large-frame-font*))
-  (set-frame-font (if *large-frame-font* "Liberation Mono-15" "Liberation Mono-13")) )
+  (set-frame-font (if *large-frame-font* *large-font-name* *small-font-name*)) )

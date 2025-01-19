@@ -9,6 +9,9 @@
   (if (is-linux)
     (set-frame-font "Liberation Mono-13") ) )
 
+(set-frame-font *small-font-name*)
+
+
 (setq-default indent-tabs-mode nil)
 
 (setq package-user-dir (expand-file-name "elpa" emacs-customisation-dir))
