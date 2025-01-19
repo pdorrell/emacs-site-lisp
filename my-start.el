@@ -1,5 +1,7 @@
 ;; Copyright (C) 2000-2016 Philip Dorrell
 
+(keymap-unset global-map "M-G")
+
 (setq kmacro-call-mouse-event nil) ;; to stop it hijacking S-mouse-3
 
 (if (boundp 'w32-fixed-font-alist)	
