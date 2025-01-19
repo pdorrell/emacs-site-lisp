@@ -1,0 +1,23 @@
+~/.emacs ~/*.el  ~/_local/emacs  ~/_local/emacs/local-configs2.el  _project.el    emacs-init.el  elpa  *.el  search-specs
+
+my-start.el  my-utils.el  my-abbrev.el   ../sandbox/  file-menu.el  my-modes.el  my-line-filtering.el  my-essential.el  my-file-menu.el  my-file.el
+
+my-testing.el  my-lsp.el my-lean4.el  my-web-lsp.el
+
+html-abbrev.el  my-project.el  my-lean4.el  my-ruby.el  my-html.el  my-java.el  my-javascript.el   my-python.el  my-prog.el  my-shell.el  my-emacs-lisp.el  typescript-abbrev.el
+
+my-idris.el  my-process.el  test.el  javascript-abbrev.el  my-python.el    my-edit.el  my-sql.el
+my-regenerate.el  my-project-runners.el  my-project-defaults.el  my-line-matchers.el     my-global-keyboard-shortcuts.el      my-search.el
+
+my-file.el  _test.js  test.el     test/test-project/    ~/dev/projects/music/jones-client/read_aum_proj.py
+
+run-javascript.js   ../sandbox/test.py  ../sandbox/test.html  ../sandbox/test2.el  ../sandbox/_test.js   test/test-project/src/subdir/hello_world.py
+
+test/test-project/src/subdir/hello_world.py   "../sandbox/spaced name.txt"
+
+/usr/local/share/emacs/27.2/lisp    test/test-project2/        ~/test          .gitignore              bin     ~/todos.txt
+--------------------------------------------------------------------------------
+
+(window-total-height)
+(window-resize (buffer-window) -2)
+(list-processes t)

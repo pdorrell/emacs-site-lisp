@@ -1,0 +1,16 @@
+_project.el
+
+src/subdir/
+  | hello_world.py
+  | main.py
+
+(get-current-project)
+
+(get-current-project-base-directory)
+
+(get-current-project-definition-file)
+
+(gethash default-directory *project-base-directory-by-directory*)
+
+(gethash default-directory *project-definition-file-by-base-directory*)
+
