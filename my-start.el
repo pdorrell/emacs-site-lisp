@@ -6,7 +6,8 @@
 
 (if (boundp 'w32-fixed-font-alist)	
     (set-frame-font "Consolas-11")
-  (set-frame-font "Liberation Mono-13") )
+  (if (is-linux)
+    (set-frame-font "Liberation Mono-13") ) )
 
 (setq-default indent-tabs-mode nil)
 
