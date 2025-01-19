@@ -105,3 +105,4 @@
 
 ;; fix-up
 (global-set-key [S-mouse-3] 'replace-word)
+
