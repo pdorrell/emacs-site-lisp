@@ -116,8 +116,10 @@ processed."
   (find-file-at-point)
   (delete-other-windows) )
 
+(defvar *dev-browser* "chromium-browser")
+
 (defun browse-in-dev-browser(url)
-  (start-process "chromium-dev" nil "chromium-browser" "--allow-file-access-from-files" "--disable-popup-blocking" url) )
+  (start-process "chromium-dev" nil *dev-browser* "--allow-file-access-from-files" "--disable-popup-blocking" url) )
 
 (defun run-file (filename)
   "Run file using OS 'run file' - treat URL's as a special case."
