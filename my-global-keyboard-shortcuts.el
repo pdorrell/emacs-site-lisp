@@ -135,16 +135,20 @@
     ([end]   end-of-line)
     ([C-end] end-of-buffer)
 
+    ([C-left] scroll-left-a-bit)
     ([C-kp-left] scroll-left-a-bit)
     ([M-left]    backward-sexp)
 
+    ([C-right] scroll-right-a-bit)
     ([C-kp-right] scroll-right-a-bit)
     ([M-right]    forward-sexp)
 
+    ([C-up] scroll-up-one)
     ([C-kp-up] scroll-up-one)
     ([M-up]    find-comment-line-bwd)
     ([M-S-up]  point-to-top)
 
+    ([C-down] scroll-down-one)
     ([C-kp-down] scroll-down-one)
 
     ([M-down] find-comment-line-fwd)
