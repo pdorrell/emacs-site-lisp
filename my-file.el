@@ -188,6 +188,7 @@ processed."
   "Unset various local keys that mask preferred global keys"
   (local-unset-key [?\M-\C-d])
   (local-unset-key [?\M-\C-N])
+  (local-unset-key [?\M-G])
   (local-set-key "r" 'wdired-change-to-wdired-mode)
   (font-lock-mode 1) )
 
