@@ -77,10 +77,17 @@
 
 (add-hook 'before-save-hook 'trim-trailing-whitespace-in-buffer)
 
-(setq *large-frame-font* nil)
+(setq *frame-font-index* 0)
 
-(defun toggle-large-frame-font()
+(defvar *frame-fonts*
+  `("Liberation Mono-22" "Liberation Mono-20" "Liberation Mono-24") )
+
+(set-frame-font (elt *frame-fonts* *frame-font-index*))
+
+(defun cycle-frame-fonts()
   "Toggle between large and small frame font"
   (interactive)
-  (setq *large-frame-font* (not *large-frame-font*))
-  (set-frame-font (if *large-frame-font* *large-font-name* *small-font-name*)) )
+  (setq *frame-font-index* (mod (1+ *frame-font-index*) (length *frame-fonts*)))
+  (let ((new-frame-font (elt *frame-fonts* *frame-font-index*)))
+    (message "Setting frame font %s" new-frame-font)
+    (set-frame-font new-frame-font) ) )

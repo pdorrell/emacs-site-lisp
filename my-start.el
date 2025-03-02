@@ -2,12 +2,6 @@
 
 (setq kmacro-call-mouse-event nil) ;; to stop it hijacking S-mouse-3
 
-(if (boundp 'w32-fixed-font-alist)	
-    (set-frame-font "Consolas-11")
-  (if (is-linux)
-    (set-frame-font "Liberation Mono-13") ) )
-
-(set-frame-font *small-font-name*)
 
 
 (setq-default indent-tabs-mode nil)
