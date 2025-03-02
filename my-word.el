@@ -2,19 +2,20 @@
 
 ;;========================================================================
 (defun make-alpha-table (&rest strings)
-  (let ( (table (make-vector 400 nil)) )
+  (let ( (table (make-char-table 'word-table nil)) )
     (dolist (string strings)
       (let ((len (length string)))
 	(dotimes (i len)
-	  (aset table (aref string i) t))))
+          (set-char-table-range table (aref string i) t) ) ) )
     table) )
 
 (defun make-inverse-alpha-table (&rest strings)
-  (let ( (table (make-vector 400 t)) )
+  (let ( (table (make-char-table 'word-table t)) )
     (dolist (string strings)
       (let ((len (length string)))
 	(dotimes (i len)
-	  (aset table (aref string i) nil))))
+          (let ((ch (aref string i)))
+            (set-char-table-range table ch 'false) ) ) ) )
     table) )
 
 (defvar letters-digits-string 
@@ -29,7 +30,7 @@
 (defun buffer-char-in-table (table pos)
   (let ( (ch (char-after pos)) )
     (if ch
-	(aref table ch)
+	(eq (char-table-range table ch) t)
       nil) ) )
 
 (defun word-pos (table pos)
