@@ -80,7 +80,7 @@
 (setq *frame-font-index* 0)
 
 (defvar *frame-fonts*
-  `("Liberation Mono-22" "Liberation Mono-20" "Liberation Mono-24") )
+  `("Liberation Mono-17" "Liberation Mono-20" "Liberation Mono-22") )
 
 (set-frame-font (elt *frame-fonts* *frame-font-index*))
 
