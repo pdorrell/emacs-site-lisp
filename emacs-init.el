@@ -46,7 +46,7 @@
 
 (setq dired-dwim-target t)
 
-(setenv "EMACS_PS1" "\\w> ")
+(setenv "PS1" "\\w> ")
 
 (setq split-height-threshold 40)
 (setq split-width-threshold 1000)
