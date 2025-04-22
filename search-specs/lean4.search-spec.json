@@ -1,0 +1,7 @@
+{
+  "included_extensions":  [".lean", ".el", ".md"],
+  "excluded_extensions":  [],
+  "included_files":  ["**/.gitignore", "**/_"],
+  "excluded_files":  [],
+  "excluded_dirs": ["**/.git"]
+}
