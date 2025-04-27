@@ -20,8 +20,15 @@
      (:run-main-file (other-window base-dir "run-python" main-file 
                                    ("PYMAIN" . file) main-file-output-dir) ) ) )
 
+(set-project-type-default-values 'python-uv
+  '( ((:wrapper . python) "run-with-uv")
+     (:build-function type-check-python)
+     ((:run-this-file . python) (other-window base-dir (:wrapped python "python" "-u") this-file ("PY" . file)))
+     (:run-main-file (other-window base-dir (:wrapped python "python" "-u") main-file ("PYMAIN" . file)
+                                   main-file-output-dir)) ) )
+
 (set-project-type-default-values 'python-with-venv
-  '( ((:wrapper . python) "run-in-venv")
+  '( ((:wrapper . python) "uv")
      (:build-function type-check-python)
      ((:run-this-file . python) (other-window base-dir (:wrapped python "python" "-u") this-file ("PY" . file)))
      (:run-main-file (other-window base-dir (:wrapped python "python" "-u") main-file ("PYMAIN" . file)
