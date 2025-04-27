@@ -4,5 +4,5 @@
   "excluded_extensions":  [".gif", ".png"],
   "included_files":  ["**/_", ".babelrc", ".eslintrc", ".gitignore", ".jshintrc", "LICENSE"],
   "excluded_files":  ["yarn.lock"],
-  "excluded_dirs": ["**/.git", "node_modules"]
+  "excluded_dirs": ["**/.git", "node_modules", "dist"]
 }
