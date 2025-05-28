@@ -9,8 +9,6 @@
 
 (setq sgml-attribute-offset 0) ;; fix for something - used in rjsx-mode
 
-(eval-after-load 'js2-mode '(define-key js2-mode-map [down-mouse-3] nil)) ;; unmask mouse-3 definition
-
 (defun javascript-identifier-at-point ()
   (word-at word-alpha-table (point)) )
 

@@ -1,5 +1,3 @@
-(autoload 'ruby-mode "ruby-mode")
-
 (setq ruby-word-table
       (make-alpha-table letters-digits-string "_") )
 

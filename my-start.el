@@ -66,7 +66,7 @@
 
 (try-to-load "my-lsp")
 
-(try-to-load "my-java")
+;;(try-to-load "my-java")
 ;;(try-to-load "my-javascript")
 ;;(try-to-load "my-html")
 (try-to-load "my-regenerate")
@@ -76,7 +76,7 @@
 (try-to-load "my-python")
 (try-to-load "my-spanish")
 (try-to-load "my-lisp")
-(try-to-load "my-ruby")
+;;(try-to-load "my-ruby")
 (try-to-load "my-linux")
 (try-to-load "my-maori")
 (try-to-load "my-idris")

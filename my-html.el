@@ -1,7 +1,5 @@
 ;; Copyright (C) 2000 Philip Dorrell
 
-(require 'web-mode)
-
 (setq web-mode-markup-indent-offset 2)
 
 ;; Note - this abbreviation system is not very compatible with rjsx-mode 
