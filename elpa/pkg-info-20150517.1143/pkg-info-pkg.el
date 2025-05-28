@@ -1,2 +1,0 @@
-;;; Generated package description from /home/philip/dev/emacs/emacs-site-lisp/elpa/pkg-info-20150517.1143/pkg-info.el  -*- no-byte-compile: t -*-
-(define-package "pkg-info" "20150517.1143" "Information about packages" '((epl "0.8")) :stars '(#("48" 0 2 (font-lock-face paradox-star-face))) :commit "76ba7415480687d05a4353b27fea2ae02b8d9d61" :authors '(("Sebastian Wiesner" . "swiesner@lunaryorn.com")) :maintainer '("Sebastian Wiesner" . "swiesner@lunaryorn.com") :keywords '("convenience") :url "https://github.com/lunaryorn/pkg-info.el")
