@@ -1,5 +1,7 @@
 ;; Add TypeScript-specific sources to the default list
 
+(require 'treesit)
+
 (defvar *treesitter-sources* 
   '(
     (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
