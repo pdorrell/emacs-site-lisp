@@ -16,6 +16,9 @@ run-javascript.js   ../sandbox/test.py  ../sandbox/test.html  ../sandbox/test2.e
 test/test-project/src/subdir/hello_world.py   "../sandbox/spaced name.txt"
 
 /usr/local/share/emacs/27.2/lisp    test/test-project2/        ~/test          .gitignore              bin     ~/todos.txt
+
+/opt/homebrew/Cellar/emacs-plus@29/29.4/share/emacs/29.4/lisp
+
 --------------------------------------------------------------------------------
 
 (window-total-height)
