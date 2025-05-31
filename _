@@ -2,7 +2,7 @@
 
 my-start.el  my-utils.el  my-abbrev.el   ../sandbox/  file-menu.el  my-modes.el  my-line-filtering.el  my-essential.el  my-file-menu.el  my-file.el
 
-my-testing.el  my-lsp.el my-lean4.el  my-web-lsp.el  mac-keypad-fixes.el
+my-testing.el  my-lsp.el my-lean4.el  my-web-lsp.el  mac-keypad-fixes.el  my-treesitter.el
 
 html-abbrev.el  my-project.el  my-lean4.el  my-ruby.el  my-html.el  my-java.el  my-javascript.el   my-python.el  my-prog.el  my-shell.el  my-emacs-lisp.el  typescript-abbrev.el
 

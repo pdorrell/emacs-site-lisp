@@ -17,4 +17,14 @@
 (apply-to-list-of-arg-lists 'set-extension-mode
   '( (".song" melody-scripter-mode)
      (".file-menu" file-menu-mode)
+     
+     (".json" json-ts-mode)
+     (".py" python-ts-mode)
+     (".css" css-ts-mode)
+     (".html" html-ts-mode)
+     (".ruby" ruby-ts-mode)
+     (".rust" rust-ts-mode)
+     (".scss" scss-mode)
+     (".ts" typescript-ts-mode)
+     (".tsx" tsx-ts-mode)
      ) )
