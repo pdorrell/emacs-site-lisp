@@ -13,7 +13,7 @@
   (word-at word-alpha-table (point)) )
 
 ;;-----------------------------------------------------------------
-(add-hook 'js-mode-hook 'javascript-hook)
+(add-hook 'js-ts-mode-hook 'javascript-hook)
 
 (defun javascript-run-file (file &rest args)
   "Run javascript FILE in node with ARGS (or some other way using :run-javascript-function project value)"
@@ -88,7 +88,6 @@
   (message "javascript-hook")
   (setq programming-language 'javascript)
   (setq js-indent-level 2)
-  (local-set-key [?\C-m] 'return-and-indent)
   (setq c-basic-offset 2)
   (local-set-key [?\C-f] 'make-for-loop)
   (local-set-key [?\C-t] 'insert-this-equals)
@@ -129,11 +128,15 @@
 (defun typescript-hook ()
   "Hook function for typescript-mode"
   (message "typescript-hook")
+  
   (setq programming-language 'typescript)
-  (setq typescript-indent-level 2)
-  (setq js-indent-level 2)
-  (local-set-key [?\C-m] 'return-and-indent)
-  (setq c-basic-offset 2)
+
+  (setq typescript-ts-mode-indent-offset 2)
+  (setq indent-tabs-mode nil)
+
+  (setq *trim-trailing-whitespace-on-save* t)
+  (setq require-final-newline t)
+  
   (local-set-key [?\C-f] 'make-for-loop)
   (local-set-key [?\C-t] 'insert-this-equals)
   (local-set-key "=" 'insert-spaced-equals)
@@ -144,15 +147,9 @@
   (local-set-key [?\C-\S-p] 'javascript-insert-print-this-inspected)
   (setq word-alpha-table javascript-word-table)
   (setq for-loop-variable-declarer "let")
-  (setq run-file-function #'javascript-run-file)
-  (setq indent-tabs-mode nil)
-  (font-lock-mode 1)
-  (setq comment-start "/*")
-  (setq comment-end "*/")
-  (setq *trim-trailing-whitespace-on-save* t)
-  (setq require-final-newline t) )
+  (setq run-file-function #'javascript-run-file) )
 
-(add-hook 'typescript-mode-hook 'typescript-hook)
+(add-hook 'typescript-ts-mode-hook 'typescript-hook)
 
 (defun compile-typescript()
   (interactive)

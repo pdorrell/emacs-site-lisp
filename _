@@ -1,4 +1,4 @@
-~/.emacs ~/*.el  ~/_local/emacs  ~/_local/emacs/local-configs2.el  _project.el    emacs-init.el  elpa  *.el  search-specs
+~/.emacs ~/*.el  ~/_local/emacs  ~/_local/emacs/local-configs2.el  _project.el    emacs-init.el  elpa  *.el  search-specs   ~/.emacs.d/
 
 my-start.el  my-utils.el  my-abbrev.el   ../sandbox/  file-menu.el  my-modes.el  my-line-filtering.el  my-essential.el  my-file-menu.el  my-file.el
 
@@ -24,3 +24,4 @@ test/test-project/src/subdir/hello_world.py   "../sandbox/spaced name.txt"
 (window-total-height)
 (window-resize (buffer-window) -2)
 (list-processes t)
+

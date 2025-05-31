@@ -133,6 +133,6 @@ ie ABBREV-BEFORE-PART-AFTER-PART-S is a list of argument lists to def-html-pair-
   (start-process "*firefox*" "*firefox*" "firefox" (concat "file:///" (expand-file-name file))))
   
 
-(add-hook 'web-mode-hook 'web-mode-hook-function)
+(add-hook 'mhtml-mode-hook 'web-mode-hook-function)
 
 (load "html-abbrev")
