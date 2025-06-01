@@ -145,9 +145,13 @@
 
     ([C-up] scroll-up-one)
     ([C-kp-up] scroll-up-one)
+    ([C-S-up] previous-error)
+    ([C-S-kp-up] previous-error)
     ([M-up]    find-comment-line-bwd)
     ([M-S-up]  point-to-top)
 
+    ([C-S-down] next-error)
+    ([C-S-kp-down] next-error)
     ([C-down] scroll-down-one)
     ([C-kp-down] scroll-down-one)
 
