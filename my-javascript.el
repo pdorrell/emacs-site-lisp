@@ -1,5 +1,5 @@
 ;; Copyright (C) 2000-2013 Philip Dorrell
-
+(require 'compile)
 ;;========================================================================
 (setq javascript-word-table
       (make-alpha-table letters-digits-string "_$") )
