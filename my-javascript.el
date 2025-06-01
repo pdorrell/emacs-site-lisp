@@ -165,4 +165,10 @@
 (set-abbrev-language 'typescript)
 
 (load "typescript-abbrev")
-;;-----------------------------------------------------------------
+
+(add-to-list 'compilation-error-regexp-alist-alist
+             '(typescript
+               "^\\([^(\n]+\\)(\\([0-9]+\\),\\([0-9]+\\)): \\(error\\|warning\\)"
+               1 2 3 2))
+
+(add-to-list 'compilation-error-regexp-alist 'typescript)
