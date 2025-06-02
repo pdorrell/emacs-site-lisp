@@ -200,10 +200,13 @@
 (defun project-run-project()
   "Run the project's main file"
   (interactive)
-  (let* ( (run-main-file-command (project-value :run-main-file)) )
+   (let ( (run-main-file-command (project-value :run-main-file)) )
     (if run-main-file-command
         (apply 'run-project-command run-main-file-command)
-      (message "No :run-main-file command defined in project") ) ) )
+      (let ( (run-project-command (project-value :run-project-command)) )
+        (if run-project-command
+            (apply 'run-project-command run-project-command) )
+        (message "No :run-main-file or :run-project-command defined in project") ) ) ) )
 
 (defun run-alternate-command-on-file-or-dir()
   (interactive)

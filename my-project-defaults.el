@@ -52,7 +52,9 @@
 (set-project-type-default-values 'typescript
   '( (:key value)
      (:build-function compile-typescript)
-     (:run-alternate-command (other-window base-dir "run-npm-start" nil nil nil webpack-line-matchers) )) )
+     (:run-project-command (other-window base-dir "run-npm-start" nil nil nil webpack-line-matchers) )
+     (:alternate-file-or-dir-command (other-window base-dir "run-npm-test" this-file-or-dir ("NPM_TEST" . file)))
+     (:run-alternate-command (other-window base-dir "run-npm-full-test" nil nil nil webpack-line-matchers) )) )
 
 (set-project-type-default-values 'backup
   '( (:key value) ) )
