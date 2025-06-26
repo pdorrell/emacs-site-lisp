@@ -41,7 +41,7 @@
 
 (try-to-load "my-essential")
 (try-to-load "my-utils")
-(try-to-load "my-treesitter")
+;; (try-to-load "my-treesitter")
 (try-to-load "my-modes")
 (try-to-load "my-global-keyboard-shortcuts")
 
