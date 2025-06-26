@@ -19,8 +19,9 @@
      (".file-menu" file-menu-mode)
      
      (".sh" bash-ts-mode)
-     (".js" js-mode)
+     (".js" js-ts-mode)
      (".json" json-ts-mode)
+     (".jsx" tsx-ts-mode)
      (".py" python-ts-mode)
      (".css" css-ts-mode)
      (".html" mhtml-mode)
