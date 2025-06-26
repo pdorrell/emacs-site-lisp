@@ -22,7 +22,6 @@
      (".js" js-ts-mode)
      (".json" json-ts-mode)
      (".jsx" tsx-ts-mode)
-     (".py" python-ts-mode)
      (".css" css-ts-mode)
      (".html" mhtml-mode)
      (".ruby" ruby-ts-mode)
