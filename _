@@ -2,7 +2,7 @@
 
 my-start.el  my-utils.el  my-abbrev.el   ../sandbox/  file-menu.el   my-line-filtering.el  my-essential.el  my-file-menu.el  my-file.el
 
-my-testing.el  my-lsp.el my-lean4.el  my-web-lsp.el  mac-keypad-fixes.el  my-treesitter.el  my-modes.el
+my-testing.el  my-lsp.el my-lean4.el  my-web-lsp.el  mac-keypad-fixes.el  my-treesitter.el  my-modes.el  my-images.el
 
 html-abbrev.el  my-project.el  my-lean4.el  my-ruby.el  my-html.el  my-java.el  my-javascript.el   my-python.el  my-prog.el  my-shell.el  my-emacs-lisp.el  typescript-abbrev.el
 
@@ -18,6 +18,7 @@ test/test-project/src/subdir/hello_world.py   "../sandbox/spaced name.txt"
 /usr/local/share/emacs/27.2/lisp    test/test-project2/        ~/test          .gitignore              bin     ~/todos.txt
 
 /opt/homebrew/Cellar/emacs-plus@29/29.4/share/emacs/29.4/lisp
+/opt/homebrew/Cellar/emacs-plus@30/30.1/share/emacs/30.1/lisp
 
 --------------------------------------------------------------------------------
 

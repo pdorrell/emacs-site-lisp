@@ -85,6 +85,8 @@
 
 (try-to-load "my-melody-scripter")
 
+(try-to-load "my-images")
+
 (autoload 'spanish-minor-mode "my-spanish")
 
 (setq transient-mark-mode nil)
