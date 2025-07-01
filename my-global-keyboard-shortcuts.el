@@ -166,6 +166,7 @@
   '( ([pause]   next-error)
      ([S-pause] previous-error) 
      
+     ([kp-delete] kill-region)
      ([delete] kill-region)
      ([insert] yank)
      ) )
