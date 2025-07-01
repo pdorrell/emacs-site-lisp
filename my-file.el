@@ -172,6 +172,13 @@ processed."
 	(insert word)
       (message "No word at mouse position") ) ) )
 
+(add-hook 'find-file-hook
+          (lambda ()
+            (when (and buffer-file-name
+                       (file-exists-p buffer-file-name)
+                       (not (verify-visited-file-modtime (current-buffer))))
+              (revert-buffer t t t))))
+
 ;;-----------------------------------------------------------------
 (defun save-this-buffer-and-others ()
   "Save visited file and any others with prompting"
