@@ -159,7 +159,7 @@
   (set-language-search-regexes 'typescript
     :before-identifier (format "(^|%s)" non-identifier-char-regex)
     :after-identifier (format "($|%s)" non-identifier-char-regex)
-    :before-definition "(function|class|async|const)\s+"
+    :before-definition "(function|class|async|const|interface|type)\s+"
     :after-definition (format "($|%s)" non-identifier-char-regex) ) )
 
 (set-abbrev-language 'typescript)
