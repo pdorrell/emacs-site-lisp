@@ -147,7 +147,8 @@
   (local-set-key [?\C-\S-p] 'javascript-insert-print-this-inspected)
   (setq word-alpha-table javascript-word-table)
   (setq for-loop-variable-declarer "let")
-  (setq run-file-function #'javascript-run-file) )
+  (setq run-file-function #'javascript-run-file) 
+  (treesit-inspect-mode) )
 
 (add-hook 'typescript-ts-mode-hook 'typescript-hook)
 

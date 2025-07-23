@@ -24,6 +24,7 @@
      (".jsx" tsx-ts-mode)
      (".css" css-ts-mode)
      (".html" mhtml-mode)
+     (".py" python-ts-mode)
      (".ruby" ruby-ts-mode)
      (".rust" rust-ts-mode)
      (".scss" scss-mode)

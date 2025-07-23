@@ -1,4 +1,5 @@
 (add-hook 'python-mode-hook 'python-mode-hook-function)
+(add-hook 'python-ts-mode-hook 'python-mode-hook-function)
 
 (setq python-word-table
       (make-alpha-table letters-digits-string "_") )
@@ -36,7 +37,8 @@
   (font-lock-mode 1)
   (setq default-line-filtering-regex python-default-line-filtering-regex)
   (setq *trim-trailing-whitespace-on-save* t)
-  (setq require-final-newline t) )
+  (setq require-final-newline t)
+  (treesit-inspect-mode) )
 
 (defun python-insert-self-dot()
   (interactive)
