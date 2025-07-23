@@ -100,6 +100,7 @@
      ([S-f7]   visit-project-file-menu)
      ([S-M-f7] open-home-file-menu-other-window)
 
+     ([f8] my/toggle-treesit-indent-verbose)
      ([M-f8] run-alternate-command-on-file-or-dir)
      ([S-f8] stop-on-1st-test-failure-minor-mode)
      ([M-S-f8] project-run-alternate-command)

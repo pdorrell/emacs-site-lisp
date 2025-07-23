@@ -227,5 +227,9 @@
 (defun test-file (file-name)
   (expand-file-name file-name *test-files-directory*) )
 
-(run-test (+ 3 4) 7)
-(run-test (+ 3 4) 7)
+(defun my/toggle-treesit-indent-verbose ()
+  "Toggle tree-sitter indent verbosity."
+  (interactive)
+  (setq treesit--indent-verbose (not treesit--indent-verbose))
+  (message "Tree-sitter indent verbose: %s" 
+           (if treesit--indent-verbose "ON" "OFF")))
