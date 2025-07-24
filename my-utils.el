@@ -233,3 +233,44 @@
   (setq treesit--indent-verbose (not treesit--indent-verbose))
   (message "Tree-sitter indent verbose: %s" 
            (if treesit--indent-verbose "ON" "OFF")))
+
+(defun test-auto-mode-comprehensive (filename)
+  "Show comprehensive mode resolution info for FILENAME."
+  (interactive "sFilename: ")
+  (let ((auto-mode-match nil)
+        (remapped nil))
+    
+    ;; Check auto-mode-alist
+    (dolist (entry auto-mode-alist)
+      (when (and (null auto-mode-match)
+                 (string-match (car entry) filename))
+        (setq auto-mode-match (cdr entry))))
+    
+    ;; Check remapping
+    (when auto-mode-match
+      (setq remapped (cdr (assq auto-mode-match major-mode-remap-alist))))
+    
+    (with-output-to-temp-buffer "*Mode Resolution Test*"
+      (princ (format "Mode resolution for '%s':\n\n" filename))
+      (princ (format "1. auto-mode-alist match: %s\n" 
+                    (or auto-mode-match "none")))
+      (princ (format "2. major-mode-remap-alist: %s\n" 
+                    (if remapped 
+                        (format "%s -> %s" auto-mode-match remapped)
+                      "no remapping")))
+      
+      ;; Check tree-sitter for Python files
+      (when (and (string-match "\\.py\\'" filename)
+                 (eq auto-mode-match 'python-ts-mode))
+        (princ (format "\n3. Tree-sitter checks:\n"))
+        (princ (format "   - treesit-ready-p 'python: %s\n" 
+                      (condition-case nil
+                          (treesit-ready-p 'python)
+                        (error "not available"))))
+        (princ (format "   - python grammar installed: %s\n"
+                      (condition-case nil
+                          (treesit-language-available-p 'python)
+                        (error "not available")))))
+      
+      (princ (format "\n4. Final mode would be: %s\n" 
+                    (or remapped auto-mode-match "fundamental-mode"))))))

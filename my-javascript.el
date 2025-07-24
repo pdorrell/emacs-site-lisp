@@ -147,8 +147,7 @@
   (local-set-key [?\C-\S-p] 'javascript-insert-print-this-inspected)
   (setq word-alpha-table javascript-word-table)
   (setq for-loop-variable-declarer "let")
-  (setq run-file-function #'javascript-run-file) 
-  (treesit-inspect-mode) )
+  (setq run-file-function #'javascript-run-file) )
 
 (add-hook 'typescript-ts-mode-hook 'typescript-hook)
 
@@ -173,3 +172,28 @@
                1 2 3 2))
 
 (add-to-list 'compilation-error-regexp-alist 'typescript)
+
+
+(defun my-typescript-ts-mode-setup ()
+  (setq-local treesit-simple-indent-rules
+              (cons
+               `(typescript
+                 ;; Align parameters with first parameter (1 space after paren)
+                 ((and (parent-is "formal_parameters")
+                       (not (node-is ",")))
+                  first-sibling 1)  ; Changed from 0 to 1
+                 ;; Method bodies
+                 ((n-p-gp nil "statement_block" "method_definition")
+                  grand-parent typescript-ts-mode-indent-offset)
+                 ;; Function declaration bodies
+                 ((n-p-gp nil "statement_block" "function_declaration")
+                  grand-parent typescript-ts-mode-indent-offset)
+                 ;; Arrow function bodies
+                 ((n-p-gp nil "statement_block" "arrow_function")
+                  grand-parent typescript-ts-mode-indent-offset)
+                 ;; Add all the default rules after our custom ones
+                 ,@(alist-get 'typescript treesit-simple-indent-rules))
+               (remove (assq 'typescript treesit-simple-indent-rules)
+                       treesit-simple-indent-rules))))
+
+(add-hook 'typescript-ts-mode-hook #'my-typescript-ts-mode-setup)

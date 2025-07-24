@@ -1,4 +1,4 @@
-(add-hook 'python-mode-hook 'python-mode-hook-function)
+;;(add-hook 'python-mode-hook 'python-mode-hook-function)
 (add-hook 'python-ts-mode-hook 'python-mode-hook-function)
 
 (setq python-word-table
@@ -30,15 +30,12 @@
   (local-set-key [f10] 'shift-initial-case)
   (local-set-key [C-S-f8] 'python-run-nosetest-test-method)
   (local-set-key [?\C-t] 'insert-self-equals)
-  (local-set-key [?\C-m] 'return-and-indent)
   (local-set-key [?\M-s] 'python-insert-self-dot)
   (local-set-key [?\C-P] 'python-expand-to-print)
   (setq word-alpha-table python-word-table)
-  (font-lock-mode 1)
   (setq default-line-filtering-regex python-default-line-filtering-regex)
   (setq *trim-trailing-whitespace-on-save* t)
-  (setq require-final-newline t)
-  (treesit-inspect-mode) )
+  (setq require-final-newline t) )
 
 (defun python-insert-self-dot()
   (interactive)

@@ -33,3 +33,6 @@
      (".tsx" tsx-ts-mode)
      (".yaml" yaml-ts-mode)
      ) )
+
+(add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
+
