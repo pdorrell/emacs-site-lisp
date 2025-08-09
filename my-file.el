@@ -181,10 +181,10 @@ processed."
 
 ;;-----------------------------------------------------------------
 (defun save-this-buffer-and-others ()
-  "Save visited file and any others with prompting"
+  "Save visited file and any others with prompting (except don't worry about other menu files)"
   (interactive)
   (if (buffer-file-name) (save-buffer))
-  (save-some-buffers) ) 
+  (save-non-menufile-buffers) ) 
 
 (defun dired-default-directory ()
   "Dired current directory"

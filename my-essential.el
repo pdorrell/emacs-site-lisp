@@ -12,11 +12,23 @@
   (setq debug-on-error (not debug-on-error))
   (message "Set debug %s" (if debug-on-error "on" "off")) )
 
+(defun save-non-menufile-buffers (&optional arg)
+  "Save some buffers, but skip files named '_'."
+  (interactive "P")
+  (let ((original-buffer (current-buffer)))
+    (save-some-buffers 
+     arg
+     (lambda ()
+       (let ((filename (buffer-file-name)))
+         (not (and filename
+                   (string= (file-name-nondirectory filename) "_"))))))
+    (set-buffer original-buffer)))
+
 (defun save-some-buffers-and-eval-defun()
   "For some reason this doesn't work, due to non-standard arguments to eval-defun"
   (interactive)
   (if (buffer-file-name) (save-buffer))
-  (save-some-buffers)
+  (save-non-menufile-buffers)
   (eval-defun) )
 
 ;;========================================================================
