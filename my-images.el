@@ -9,6 +9,10 @@
 (require 'dired)
 (require 'image-mode)
 
+(with-eval-after-load 'image-file
+  (add-to-list 'image-file-name-extensions "heic"))
+
+
 (defun image-get-next-file ()
   "Return the filename of the next image file in the current directory, or nil.
 Uses the current buffer's file as the starting point."
