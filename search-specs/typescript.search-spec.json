@@ -3,6 +3,6 @@
                            ".el", ".html", ".md", ".scss", ".txt", ".json"],
   "excluded_extensions":  [".gif", ".png"],
   "included_files":  ["**/_", ".babelrc", ".eslintrc", ".gitignore", ".jshintrc", "LICENSE", ".eslintignore"],
-  "excluded_files":  ["yarn.lock", "**/.DS_Store", "package-lock.json"],
+  "excluded_files":  ["yarn.lock", "**/.DS_Store", "package-lock.json", "**/_"],
   "excluded_dirs": ["**/.git", "node_modules", "dist", "coverage"]
 }
