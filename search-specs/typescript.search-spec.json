@@ -2,7 +2,7 @@
   "included_extensions":  [".ts", ".tsx", ".jsx", ".js", ".css", ".scss", ".mjs", ".cjs",
                            ".el", ".html", ".md", ".scss", ".txt", ".json"],
   "excluded_extensions":  [".gif", ".png"],
-  "included_files":  ["**/_", ".babelrc", ".eslintrc", ".gitignore", ".jshintrc", "LICENSE", ".eslintignore"],
-  "excluded_files":  ["yarn.lock", "**/.DS_Store", "package-lock.json", "**/_"],
-  "excluded_dirs": ["**/.git", "node_modules", "dist", "coverage"]
+  "included_files":  [".babelrc", ".eslintrc", ".gitignore", ".jshintrc", "LICENSE", ".eslintignore"],
+  "excluded_files":  ["yarn.lock", "**/.DS_Store", "package-lock.json", "**/_", "**/#_#"],
+  "excluded_dirs": ["**/.git", "node_modules", "dist", "coverage", "deploy"]
 }
