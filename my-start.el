@@ -2,7 +2,8 @@
 
 (setq kmacro-call-mouse-event nil) ;; to stop it hijacking S-mouse-3
 
-
+(setq comint-password-prompt-regexp
+      "\\(?:BECOME\\)?\\s-*[Pp]assword:\\s-*\\'")
 
 (setq-default indent-tabs-mode nil)
 
