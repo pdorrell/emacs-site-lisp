@@ -1,5 +1,7 @@
 (require 'cl-extra)
 
+(defvar sandbox-dir-wrappers nil)
+
 (defun project-value-for-language(value-key language)
   (project-value (cons value-key language)) )
 
@@ -152,6 +154,13 @@
           script-description) )
     script) )
 
+(defun sandbox-wrapped (command directory)
+  (or (dolist (sandbox-dir-wrapper sandbox-dir-wrappers)
+        (if (string-prefix-p (car sandbox-dir-wrapper) directory)
+            (return (cons (cdr sandbox-dir-wrapper) command)) ) )
+      command) )
+
+
 (defun run-project-command (run-script-fun-key working-dir-getter-key command-script command-args-getter-key
                                                &optional description-spec output-buffer-dir-getter-key line-matchers-var)
   (save-this-buffer-and-others)
@@ -165,14 +174,17 @@
           (working-dir (funcall working-dir-getter))
           (command-arg-or-args (funcall command-args-getter))
           (command-args (if (listp command-arg-or-args) command-arg-or-args (list command-arg-or-args))) 
+          (command (sandbox-wrapped (cons resolved-script-path (append script-args command-args))
+                                    default-directory))
           (script-description (get-script-description description-spec script command-args))
           (output-buffer-name (concat "*" (get-project-name) "-" script-description "*"))
           (output-buffer-dir (if output-buffer-dir-getter-key
                                  (funcall (get-run-project-fun 'output-buffer-dir-getter output-buffer-dir-getter-key))
-                               nil) ) )
+                               nil) )
+          )
     (if (null working-dir)
         (error "Failed to find working directory from %s (%s)" working-dir-getter-key working-dir-getter) )
-    (funcall run-script-fun resolved-script-path working-dir output-buffer-name (append script-args command-args))
+    (funcall run-script-fun (car command) working-dir output-buffer-name (cdr command))
     (with-current-buffer output-buffer-name
       (setq-local default-directory (or output-buffer-dir working-dir))
       (if line-matchers-var
