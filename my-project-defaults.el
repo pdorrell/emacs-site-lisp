@@ -56,6 +56,10 @@
      (:alternate-file-or-dir-command (other-window base-dir "run-npm-test" this-file-or-dir ("NPM_TEST" . file)))
      (:run-alternate-command (other-window base-dir "run-npm-full-test" nil nil nil webpack-line-matchers) )) )
 
+(set-project-type-default-values 'astro
+  '( (:key value)
+     (:run-project-command (other-window base-dir "run-npm-dev" nil nil nil webpack-line-matchers) ) ) )
+
 (set-project-type-default-values 'backup
   '( (:key value) ) )
 

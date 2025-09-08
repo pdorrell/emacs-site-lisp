@@ -1,0 +1,8 @@
+{
+  "included_extensions":  [".astro", ".ts", ".js", ".css", ".scss", ".mjs", ".cjs",
+                           ".el", ".html", ".md", ".scss", ".txt", ".json"],
+  "excluded_extensions":  [".gif", ".png", ".ico"],
+  "included_files":  [".gitignore", ".jshintrc", "LICENSE"],
+  "excluded_files":  ["**/.DS_Store", "package-lock.json", "**/_", "**/#_#"],
+  "excluded_dirs": ["**/.git", "node_modules", ".astro", "dist", "deploy"]
+}
