@@ -141,7 +141,7 @@ Argument LANGUAGE is either `typescript' or `tsx'."
     `((,language
        ((parent-is "rubbish") column-0 0)
        ((parent-is "program") column-0 0)
-       ,@(mapcan #'ts-indent-end-node end-nodes)
+       ,@(mapcan #'ts-indent-end-node `("}" ")" "]" ">"))
        ((and (parent-is "comment") c-ts-common-looking-at-star)
         c-ts-common-comment-start-after-first-star -1)
        ((parent-is "comment") prev-adaptive-prefix 0)
