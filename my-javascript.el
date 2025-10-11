@@ -121,6 +121,9 @@
 
 ;;--------------------------------------------------------------------------------
 
+(defun my-ts-bracketed-item-rules(parent-name)
+  `( ((parent-is ,parent-name) parent-bol typescript-ts-mode-indent-offset) ) )
+
 (defun typescript-ts-mode--indent-rules (language)
   "Rules used for indentation.
 Argument LANGUAGE is either `typescript' or `tsx'."
@@ -149,7 +152,7 @@ Argument LANGUAGE is either `typescript' or `tsx'."
         typescript-ts-mode--anchor-decl 1)
        ((parent-is "arguments") parent-bol typescript-ts-mode-indent-offset)
        ((parent-is "array") parent-bol typescript-ts-mode-indent-offset)
-       ((parent-is "formal_parameters") parent-bol typescript-ts-mode-indent-offset)
+       ,@(my-ts-bracketed-item-rules "formal_parameters")
        ((parent-is "template_string") no-indent) ; Don't indent the string contents.
        ((parent-is "template_substitution") parent-bol typescript-ts-mode-indent-offset)
        ((parent-is "object_pattern") parent-bol typescript-ts-mode-indent-offset)
@@ -179,6 +182,8 @@ Argument LANGUAGE is either `typescript' or `tsx'."
 		     ((parent-is "jsx_self_closing_element") parent typescript-ts-mode-indent-offset))))
        ;; FIXME(Theo): This no-node catch-all should be removed.  When is it needed?
        (no-node parent-bol 0)))) )
+
+(typescript-ts-mode--indent-rules 'typescript)
 
 
 (defun insert-function-arrow() 
