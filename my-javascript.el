@@ -121,16 +121,16 @@
 
 ;;--------------------------------------------------------------------------------
 
-(defun my-ts-bracketed-item-rules(parent-name)
+(defun ts-indent-end-node(end-node)
   `( 
-    (match nil ,parent-name nil nil 0)
-    ((parent-is ,parent-name) first-sibling 0) 
+    ((node-is ,end-node) grand-parent 0)
     ) )
 
-(my-ts-bracketed-item-rules "formal_parameters")
-
-(defun ts-indent-end-node(end-node)
-  `( ((node-is ,end-node) grand-parent 0) ) )
+(defun ts-indent-bracketed-item(parent-name)
+  `(
+     ((match nil ,parent-name nil nil 1) parent-bol typescript-ts-mode-indent-offset)
+     ((parent-is ,parent-name) first-sibling 1)
+     ) )
 
 (defun typescript-ts-mode--indent-rules (language)
   "Rules used for indentation. Argument LANGUAGE is either `typescript' or `tsx'."
@@ -155,8 +155,7 @@
       typescript-ts-mode--anchor-decl 1)
      ((parent-is "arguments") parent-bol typescript-ts-mode-indent-offset)
      ((parent-is "array") parent-bol typescript-ts-mode-indent-offset)
-     ((match nil "formal_parameters" nil nil 1) parent-bol typescript-ts-mode-indent-offset)
-     ((parent-is "formal_parameters") first-sibling 1)
+     ,@(mapcan #'ts-indent-bracketed-item '("formal_parameters"))
      ((parent-is "template_string") no-indent) ; Don't indent the string contents.
      ((parent-is "template_substitution") parent-bol typescript-ts-mode-indent-offset)
      ((parent-is "object_pattern") parent-bol typescript-ts-mode-indent-offset)
