@@ -132,6 +132,12 @@
      ((parent-is ,parent-name) first-sibling 1)
      ) )
 
+(defun ts-indent-unbracketed-item(parent-name)
+  `(
+     ((match nil ,parent-name nil nil 1) parent-bol typescript-ts-mode-indent-offset)
+     ((parent-is ,parent-name) first-sibling 0)
+     ) )
+
 (defun typescript-ts-mode--indent-rules (language)
   "Rules used for indentation. Argument LANGUAGE is either `typescript' or `tsx'."
   `((,language
@@ -155,8 +161,9 @@
       typescript-ts-mode--anchor-decl 1)
 
      ,@(mapcan #'ts-indent-bracketed-item 
-               '("formal_parameters" "object_type"))
-     ((parent-is "arguments") parent-bol typescript-ts-mode-indent-offset)
+               '("formal_parameters" "object_type" "arguments" "parenthesized_expression"))
+     ,@(mapcan #'ts-indent-unbracketed-item 
+               `("binary_expression"))
      ((parent-is "array") parent-bol typescript-ts-mode-indent-offset)
      ((parent-is "template_string") no-indent) ; Don't indent the string contents.
      ((parent-is "template_substitution") parent-bol typescript-ts-mode-indent-offset)
@@ -166,8 +173,6 @@
      ((parent-is "class_body") parent-bol typescript-ts-mode-indent-offset)
      ((parent-is "interface_body") parent-bol typescript-ts-mode-indent-offset)
      ((parent-is "arrow_function") parent-bol typescript-ts-mode-indent-offset)
-     ((parent-is "parenthesized_expression") parent-bol typescript-ts-mode-indent-offset)
-     ((parent-is "binary_expression") parent-bol typescript-ts-mode-indent-offset)
      ((match "while" "do_statement") parent-bol 0)
      ((match "else" "if_statement") parent-bol 0)
      ((parent-is ,(rx (or (seq (or "if" "for" "for_in" "while" "do") "_statement")
