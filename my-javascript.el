@@ -123,11 +123,14 @@
 
 (defun my-ts-bracketed-item-rules(parent-name)
   `( 
-    ;;((and (parent-is ,parent-name) (no-node prev-sibling)) parent-bol typescript-ts-mode-indent-offset)
+    (match nil ,parent-name nil nil 0)
     ((parent-is ,parent-name) first-sibling 0) 
     ) )
 
 (my-ts-bracketed-item-rules "formal_parameters")
+
+(defun ts-indent-end-node(end-node)
+  `( ((node-is ,end-node) grand-parent 0) ) )
 
 (defun typescript-ts-mode--indent-rules (language)
   "Rules used for indentation.
@@ -138,14 +141,14 @@ Argument LANGUAGE is either `typescript' or `tsx'."
     `((,language
        ((parent-is "rubbish") column-0 0)
        ((parent-is "program") column-0 0)
-       ,@(mapcar (lambda (end-node) `((node-is ,end-node) parent-bol 0)) end-nodes)
+       ,@(mapcan #'ts-indent-end-node end-nodes)
        ((and (parent-is "comment") c-ts-common-looking-at-star)
         c-ts-common-comment-start-after-first-star -1)
        ((parent-is "comment") prev-adaptive-prefix 0)
        ((parent-is "ternary_expression") parent-bol typescript-ts-mode-indent-offset)
        ((parent-is "member_expression") parent-bol typescript-ts-mode-indent-offset)
        ((parent-is "named_imports") parent-bol typescript-ts-mode-indent-offset)
-       ((parent-is "statement_block") parent-bol typescript-ts-mode-indent-offset)
+       ((parent-is "statement_block") grand-parent typescript-ts-mode-indent-offset)
        ((or (node-is "case")
             (node-is "default"))
         parent-bol typescript-ts-mode-indent-offset)
