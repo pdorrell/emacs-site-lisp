@@ -68,6 +68,7 @@
      ([?\C-+] cycle-frame-fonts)
      ([?\C-'] start-single-quoted-string)
      ([?\C-\"] start-double-quoted-string)
+     ([?\C-\M-\;] normal-mode)
      ) )
 
 (set-keyboard-shortcuts 'multi-key

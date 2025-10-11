@@ -63,3 +63,12 @@ Matched rule: ((parent-is "statement_block") parent-bol typescript-ts-mode-inden
 I want to know why const seems to be indented relative to worldToScreenPosition in the second case,
 and not to the 'private calculateGridLines'. I thought that 'private calculateGridLines' would be the
 beginning of its "parent".
+
+In emacs, Python treesitter-mode, if I indent on a line after any kind of opening bracket ie (, [ or {, and the bracket
+is not the last item on the line, then the indent of the new line is set by the position of the bracket.
+
+In typescript treesitter mode this is not the case.
+
+Do we know why that is the case? Is there a way to have opening brackets with something following the opening bracket
+on the same line set the indent for the next line
+in typescript the same way it happens for Python?
