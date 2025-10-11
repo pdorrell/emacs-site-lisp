@@ -153,14 +153,15 @@
      ((parent-is "type_parameters") parent-bol typescript-ts-mode-indent-offset)
      ((parent-is ,(rx (or "variable" "lexical") "_" (or "declaration" "declarator")))
       typescript-ts-mode--anchor-decl 1)
+
+     ,@(mapcan #'ts-indent-bracketed-item 
+               '("formal_parameters" "object_type"))
      ((parent-is "arguments") parent-bol typescript-ts-mode-indent-offset)
      ((parent-is "array") parent-bol typescript-ts-mode-indent-offset)
-     ,@(mapcan #'ts-indent-bracketed-item '("formal_parameters"))
      ((parent-is "template_string") no-indent) ; Don't indent the string contents.
      ((parent-is "template_substitution") parent-bol typescript-ts-mode-indent-offset)
      ((parent-is "object_pattern") parent-bol typescript-ts-mode-indent-offset)
      ((parent-is "object") parent-bol typescript-ts-mode-indent-offset)
-     ((parent-is "object_type") parent-bol typescript-ts-mode-indent-offset)
      ((parent-is "enum_body") parent-bol typescript-ts-mode-indent-offset)
      ((parent-is "class_body") parent-bol typescript-ts-mode-indent-offset)
      ((parent-is "interface_body") parent-bol typescript-ts-mode-indent-offset)
