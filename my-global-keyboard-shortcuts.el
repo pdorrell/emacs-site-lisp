@@ -180,6 +180,12 @@
      ([S-mouse-3]   replace-word)
      ) )
 
+;; Emacs 29+ only
+(with-eval-after-load 'markdown-mode
+  ;; Remove the binding entirely, allowing parent keymaps to take effect if present
+  (keymap-unset markdown-mode-map "M-n" 'remove))
+
+
 ;;-----------------------------------------------------------------
 ;;    ([?\M-\C-S] spanish-minor-mode)
 ;;    ([f8] spanish-toggle-accent)
